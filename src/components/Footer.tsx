@@ -47,7 +47,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="inline-flex mb-5">
               <span className="text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
-                inframi<span className="text-[#5b8def]">Q</span>
+infram<span className="text-[#5b8def]">IQ</span>
               </span>
             </Link>
             <p className="text-[13px] text-[#555] leading-[1.7] mb-5 max-w-[200px]">

@@ -57,7 +57,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <span className="text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
-                inframi<span className="text-[#5b8def]">Q</span>
+infram<span className="text-[#5b8def]">IQ</span>
               </span>
             </Link>
 

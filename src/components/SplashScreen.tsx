@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const WORD = "inframiQ";
+const WORD = "inframIQ";
 
 export default function SplashScreen() {
   const [visible, setVisible] = useState(true);
@@ -62,11 +62,11 @@ export default function SplashScreen() {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   className={`text-[56px] sm:text-[72px] font-semibold tracking-tight select-none ${
-                    char === "Q" ? "text-[#5b8def]" : "text-[#f0f0f0]"
+                    char === "I" || char === "Q" ? "text-[#5b8def]" : "text-[#f0f0f0]"
                   }`}
                   style={{
                     textShadow:
-                      char === "Q"
+                      char === "I" || char === "Q"
                         ? "0 0 24px rgba(91,141,239,0.45)"
                         : "0 0 24px rgba(255,255,255,0.08)",
                   }}

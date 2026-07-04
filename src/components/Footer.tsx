@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const footerNav = {
   Company: [
-    { label: "About", href: "#about" },
+    { label: "About", href: "/about" },
     { label: "Careers", href: "#" },
     { label: "Press", href: "#" },
     { label: "Blog", href: "#" },
@@ -23,10 +23,9 @@ const footerNav = {
     { label: "API Reference", href: "#" },
   ],
   Contact: [
-    { label: "Request a Demo", href: "#demo" },
     { label: "Enterprise Sales", href: "#" },
     { label: "Support", href: "#" },
-    { label: "security@inframiq.io", href: "mailto:security@inframiq.io" },
+    { label: "inframiqsolutions@gmail.com", href: "mailto:inframiqsolutions@gmail.com" },
   ],
 };
 
@@ -47,11 +46,9 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="inline-flex mb-5">
-              <div className="h-7 px-3 rounded border border-white/[0.14] bg-white/[0.04] flex items-center justify-center">
-                <span className="text-[11px] font-medium text-white/40 tracking-[0.14em] uppercase select-none">
-                  Logo
-                </span>
-              </div>
+              <span className="text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
+                inframi<span className="text-[#5b8def]">Q</span>
+              </span>
             </Link>
             <p className="text-[13px] text-[#555] leading-[1.7] mb-5 max-w-[200px]">
               Intelligent security infrastructure for modern enterprises.

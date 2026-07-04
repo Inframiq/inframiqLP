@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Activity, Lock, Layers, Eye, FileCheck, ArrowUpRight } from "lucide-react";
+import { ShieldCheck, Activity, Lock, Layers, Eye, FileCheck } from "lucide-react";
 
 const pillars = [
   {
@@ -128,21 +128,11 @@ export default function WhySection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 flex items-center justify-between pt-6 border-t border-white/[0.05]"
+          className="mt-8 pt-6 border-t border-white/[0.05]"
         >
           <p className="text-[13px] text-[#505050]">
             Trusted by security teams across financial services, healthcare, and government.
           </p>
-          <a
-            href="#demo"
-            className="flex items-center gap-1.5 text-[13px] text-[#8a8a8a] hover:text-white transition-colors duration-150 group"
-          >
-            Talk to our team
-            <ArrowUpRight
-              size={13}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150"
-            />
-          </a>
         </motion.div>
       </div>
     </section>

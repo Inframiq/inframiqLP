@@ -172,7 +172,7 @@ function InfrastructureVisual() {
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-[60px] overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center pt-[60px] overflow-hidden noise">
       {/* Background — subtle dot grid */}
       <div className="absolute inset-0 dot-grid opacity-100 pointer-events-none" />
 
@@ -185,19 +185,32 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Blue ambient glow — left column */}
+      {/* Mesh blob — primary, top-left */}
       <div
         className="absolute pointer-events-none"
         style={{
-          top: "5%",
-          left: "-8%",
-          width: "52%",
-          height: "80%",
-          background: "radial-gradient(ellipse at center, rgba(91,141,239,0.07) 0%, transparent 68%)",
+          top: "-10%",
+          left: "-12%",
+          width: "68%",
+          height: "95%",
+          background: "radial-gradient(ellipse at 42% 42%, rgba(91,141,239,0.11) 0%, rgba(91,141,239,0.03) 42%, transparent 68%)",
+          filter: "blur(52px)",
+        }}
+      />
+      {/* Mesh blob — secondary, bottom-right */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: "0%",
+          right: "-5%",
+          width: "48%",
+          height: "55%",
+          background: "radial-gradient(ellipse at 58% 58%, rgba(91,141,239,0.055) 0%, transparent 65%)",
+          filter: "blur(60px)",
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-6 lg:px-8 w-full py-24">
+      <div className="relative z-[1] max-w-6xl mx-auto px-6 lg:px-8 w-full py-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* Left: Copy */}
@@ -250,12 +263,6 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.24 }}
               className="flex flex-wrap items-center gap-3"
             >
-              <Link
-                href="#demo"
-                className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-white text-[#0c0c0c] text-[13.5px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.08)]"
-              >
-                Request a Demo
-              </Link>
               <Link
                 href="/products"
                 className="inline-flex items-center gap-1.5 h-10 px-5 rounded-md border border-white/[0.1] text-[#b0b0b0] text-[13.5px] font-medium hover:border-white/[0.18] hover:text-white transition-all duration-150"

@@ -96,7 +96,7 @@ const products: Product[] = [
       "Immutable audit log for compliance",
       "Native integration with Microsoft 365 and Google Workspace",
     ],
-    status: "Available",
+    status: "Coming Soon",
     hasPage: false,
     visual: <MailShieldPreview />,
   },
@@ -176,19 +176,23 @@ function ProductRow({
 
       {/* CTA */}
       <div>
-        {product.hasPage ? (
-          <Link
-            href={`/products/${product.slug}`}
-            className="inline-flex items-center gap-2 h-9 px-5 rounded-md border border-white/[0.12] text-[13px] font-medium text-[#c0c0c0] hover:border-white/[0.22] hover:text-white hover:bg-white/[0.03] transition-all duration-150 group"
+        <div className="flex items-center gap-3">
+          {product.hasPage && (
+            <Link
+              href={`/products/${product.slug}`}
+              className="inline-flex items-center gap-2 h-9 px-5 rounded-md border border-white/[0.12] text-[13px] font-medium text-[#c0c0c0] hover:border-white/[0.22] hover:text-white hover:bg-white/[0.03] transition-all duration-150 group"
+            >
+              Visit Product
+              <ArrowRight size={12} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
+            </Link>
+          )}
+          <a
+            href={`mailto:inframiqsolutions@gmail.com?subject=Demo Request — ${product.name}`}
+            className="inline-flex items-center gap-2 h-9 px-5 rounded-md bg-white text-[#0c0c0c] text-[13px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
           >
-            Visit Product
-            <ArrowRight size={12} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
-          </Link>
-        ) : (
-          <span className="inline-flex items-center gap-2 h-9 px-5 rounded-md border border-white/[0.06] text-[13px] font-medium text-[#3a3a3a] cursor-not-allowed select-none">
-            Coming Soon
-          </span>
-        )}
+            Request a Demo
+          </a>
+        </div>
       </div>
     </motion.div>
   );
@@ -307,33 +311,6 @@ export default function ProductCatalog() {
         </div>
       </section>
 
-      {/* Bottom CTA strip */}
-      <section className="border-t border-white/[0.05] py-16">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
-          >
-            <div>
-              <p className="text-[16px] font-medium text-[#d0d0d0] mb-1">
-                Interested in enterprise deployment?
-              </p>
-              <p className="text-[13.5px] text-[#555]">
-                Our team can walk you through a tailored implementation plan for your environment.
-              </p>
-            </div>
-            <Link
-              href="/#demo"
-              className="flex-shrink-0 inline-flex items-center gap-2 h-9 px-5 rounded-md bg-white text-[#0c0c0c] text-[13px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
-            >
-              Request a Demo
-            </Link>
-          </motion.div>
-        </div>
-      </section>
     </>
   );
 }

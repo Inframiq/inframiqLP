@@ -130,7 +130,7 @@ export default function DashboardSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="rounded-xl border border-white/[0.07] bg-[#0f0f0f] overflow-hidden"
+          className="rounded-xl border border-white/[0.07] bg-[#0f0f0f] overflow-hidden noise"
           style={{ boxShadow: "0 24px 80px rgba(0,0,0,0.5)" }}
         >
           {/* Window chrome */}
@@ -140,10 +140,12 @@ export default function DashboardSection() {
               <div className="w-2.5 h-2.5 rounded-full bg-white/[0.08]" />
               <div className="w-2.5 h-2.5 rounded-full bg-white/[0.08]" />
             </div>
-            <div className="flex items-center gap-2 bg-white/[0.04] rounded px-3 py-1">
-              <span className="text-[11px] font-mono text-[#4a4a4a]">command.inframiq.io — Security Operations</span>
+            <div className="flex items-center gap-2 bg-white/[0.04] rounded px-3 py-1 min-w-0 mx-3">
+              <span className="text-[11px] font-mono text-[#4a4a4a] truncate">
+                <span className="hidden sm:inline">command.inframiq.io — </span>Security Operations
+              </span>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
               <span className="text-[10px] text-[#4a4a4a] font-medium uppercase tracking-wide">Live</span>
             </div>
@@ -213,44 +215,64 @@ export default function DashboardSection() {
                   Security Event Log
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-[#444] font-mono">
-                    AUTO-REFRESH
-                  </span>
+                  <span className="text-[10px] text-[#444] font-mono">AUTO-REFRESH</span>
                   <span className="w-1 h-1 rounded-full bg-emerald-400 status-pulse" />
                 </div>
               </div>
 
-              {/* Column headers */}
-              <div className="grid grid-cols-[80px_100px_110px_1fr_70px_72px] gap-0 px-4 py-2 border-b border-white/[0.04]">
-                {["Event ID", "Time", "Source IP", "Type", "Severity", "Status"].map((h) => (
-                  <span key={h} className="text-[10px] font-medium text-[#444] uppercase tracking-wider">
-                    {h}
-                  </span>
-                ))}
+              {/* Desktop table — hidden on mobile */}
+              <div className="hidden lg:block">
+                <div className="grid grid-cols-[80px_100px_110px_1fr_70px_72px] px-4 py-2 border-b border-white/[0.04]">
+                  {["Event ID", "Time", "Source IP", "Type", "Severity", "Status"].map((h) => (
+                    <span key={h} className="text-[10px] font-medium text-[#444] uppercase tracking-wider">
+                      {h}
+                    </span>
+                  ))}
+                </div>
+                <div className="divide-y divide-white/[0.03]">
+                  {eventLog.map((evt, i) => (
+                    <motion.div
+                      key={evt.id}
+                      initial={{ opacity: 0, x: -6 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      transition={{ delay: 0.5 + i * 0.07 }}
+                      className="grid grid-cols-[80px_100px_110px_1fr_70px_72px] px-4 py-2.5 hover:bg-white/[0.015] transition-colors duration-100"
+                    >
+                      <span className="text-[11px] font-mono text-[#555]">{evt.id}</span>
+                      <span className="text-[11px] font-mono text-[#555]">{evt.time}</span>
+                      <span className="text-[11px] font-mono text-[#666]">{evt.source}</span>
+                      <span className="text-[11px] text-[#8a8a8a] pr-2 truncate">{evt.type}</span>
+                      <span className={`text-[11px] font-medium ${severityStyle[evt.severity]}`}>{evt.severity}</span>
+                      <span>
+                        <span className={`inline-flex text-[10px] font-medium px-1.5 py-0.5 rounded border ${statusStyle[evt.status]}`}>
+                          {evt.status}
+                        </span>
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
-              {/* Rows */}
-              <div className="divide-y divide-white/[0.03]">
+              {/* Mobile event list — hidden on desktop */}
+              <div className="lg:hidden divide-y divide-white/[0.03]">
                 {eventLog.map((evt, i) => (
                   <motion.div
                     key={evt.id}
-                    initial={{ opacity: 0, x: -6 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.5 + i * 0.07 }}
-                    className="grid grid-cols-[80px_100px_110px_1fr_70px_72px] gap-0 px-4 py-2.5 hover:bg-white/[0.015] transition-colors duration-100"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: 0.4 + i * 0.07 }}
+                    className="px-4 py-3 flex items-center justify-between gap-3"
                   >
-                    <span className="text-[11px] font-mono text-[#555]">{evt.id}</span>
-                    <span className="text-[11px] font-mono text-[#555]">{evt.time}</span>
-                    <span className="text-[11px] font-mono text-[#666]">{evt.source}</span>
-                    <span className="text-[11px] text-[#8a8a8a] pr-2 truncate">{evt.type}</span>
-                    <span className={`text-[11px] font-medium ${severityStyle[evt.severity]}`}>
-                      {evt.severity}
-                    </span>
-                    <span>
+                    <div className="min-w-0">
+                      <p className="text-[12px] text-[#8a8a8a] truncate">{evt.type}</p>
+                      <p className="text-[10px] font-mono text-[#505050] mt-0.5">{evt.source} · {evt.time}</p>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className={`text-[10px] font-medium ${severityStyle[evt.severity]}`}>{evt.severity}</span>
                       <span className={`inline-flex text-[10px] font-medium px-1.5 py-0.5 rounded border ${statusStyle[evt.status]}`}>
                         {evt.status}
                       </span>
-                    </span>
+                    </div>
                   </motion.div>
                 ))}
               </div>

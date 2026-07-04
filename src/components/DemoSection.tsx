@@ -68,10 +68,10 @@ export default function DemoSection() {
             <div className="mt-12 pt-8 border-t border-white/[0.05]">
               <p className="text-[12px] text-[#404040] mb-2">Prefer email?</p>
               <a
-                href="mailto:demo@inframiq.io"
+                href="mailto:inframiqsolutions@gmail.com"
                 className="text-[13px] text-[#7a7a7a] hover:text-white transition-colors"
               >
-                demo@inframiq.io
+                inframiqsolutions@gmail.com
               </a>
             </div>
           </motion.div>
@@ -83,7 +83,7 @@ export default function DemoSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
           >
-            <div className="rounded-xl border border-white/[0.07] bg-[#0f0f0f] p-7">
+            <div className="rounded-xl border border-white/[0.07] bg-[#0f0f0f] p-7 noise">
               {submitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.97 }}

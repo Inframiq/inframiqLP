@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 const values = [
   {
@@ -279,18 +278,11 @@ export default function AboutContent() {
               as the company grows.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <Link
-                href="/#demo"
-                className="inline-flex items-center gap-2 h-9 px-5 rounded-md bg-white text-[#0c0c0c] text-[13px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
-              >
-                Work with us
-                <ArrowRight size={12} />
-              </Link>
               <a
-                href="mailto:hello@inframiq.io"
+                href="mailto:inframiqsolutions@gmail.com"
                 className="inline-flex items-center gap-1.5 h-9 px-5 rounded-md border border-white/[0.1] text-[#909090] text-[13px] font-medium hover:border-white/[0.18] hover:text-white transition-all duration-150"
               >
-                hello@inframiq.io
+                inframiqsolutions@gmail.com
               </a>
             </div>
           </motion.div>

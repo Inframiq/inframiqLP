@@ -136,14 +136,14 @@ function InfrastructureVisual() {
         <div className="flex items-center gap-2 mb-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
           <span className="text-[11px] text-[#6a6a6a] font-medium tracking-wide uppercase">
-            System Status
+            Product Status
           </span>
         </div>
         <div className="space-y-1.5">
           {[
-            { label: "Threat Detection", status: "Active" },
-            { label: "Network Monitor", status: "Active" },
             { label: "Mail Shield", status: "Active" },
+            { label: "Simulyn", status: "Active" },
+            { label: "Platform Core", status: "Active" },
           ].map((item) => (
             <div key={item.label} className="flex items-center justify-between gap-4">
               <span className="text-[11px] text-[#6a6a6a]">{item.label}</span>
@@ -160,11 +160,11 @@ function InfrastructureVisual() {
         transition={{ delay: 1.7, duration: 0.5 }}
         className="absolute bottom-6 left-0 bg-[#111111] border border-white/[0.07] rounded-lg px-4 py-3"
       >
-        <p className="text-[11px] text-[#555] mb-1">Threats Blocked (30d)</p>
+        <p className="text-[11px] text-[#555] mb-1">Products Shipped</p>
         <p className="text-[22px] font-semibold text-white tracking-tight leading-none">
-          1.2M
+          2 live · 1 in build
         </p>
-        <p className="text-[11px] text-emerald-400 mt-1">↑ 4.1% vs last month</p>
+        <p className="text-[11px] text-emerald-400 mt-1">↑ more in development</p>
       </motion.div>
     </div>
   );
@@ -270,22 +270,6 @@ export default function HeroSection() {
                 View Products
                 <ArrowRight size={13} className="opacity-60" />
               </Link>
-            </motion.div>
-
-            {/* Trust strip */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.45 }}
-              className="mt-12 pt-8 border-t border-white/[0.06] flex flex-wrap items-center gap-x-6 gap-y-2"
-            >
-              {["SOC 2 Type II", "ISO 27001", "Zero-Trust Architecture", "99.9% Uptime SLA"].map(
-                (item) => (
-                  <span key={item} className="text-[12px] text-[#4a4a4a] font-medium">
-                    {item}
-                  </span>
-                )
-              )}
             </motion.div>
           </div>
 

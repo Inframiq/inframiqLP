@@ -51,17 +51,17 @@ export default function TrustSection() {
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
             <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
-            <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Enterprise Trust</span>
+            <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Trust, By Design</span>
           </div>
           <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0] mb-5">
-            Built for organizations
+            Trust that scales
             <br />
-            <span className="text-[#606060]">where security is non-negotiable.</span>
+            <span className="text-[#606060]">from enterprise to everyday.</span>
           </h2>
           <p className="text-[15px] text-[#7a7a7a] leading-[1.75]">
-            Inframiq serves enterprises in regulated industries where a breach is not
-            just a technical incident — it is a business and reputational event with
-            lasting consequences.
+            Whether it&apos;s an enterprise security platform or a tool someone
+            reaches for every day, Inframiq engineers with the same discipline —
+            reliable, secure, and held to a standard regulated industries depend on.
           </p>
         </motion.div>
 

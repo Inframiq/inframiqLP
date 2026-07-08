@@ -225,7 +225,7 @@ export default function HeroSection() {
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07]">
                 <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
                 <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">
-                  Enterprise Cybersecurity
+                  Engineered End to End
                 </span>
               </div>
             </motion.div>
@@ -237,11 +237,11 @@ export default function HeroSection() {
               transition={{ duration: 0.55, delay: 0.08 }}
               className="text-[42px] sm:text-[52px] lg:text-[56px] font-semibold leading-[1.08] tracking-[-0.03em] text-[#f0f0f0] mb-6"
             >
-              Intelligent security
+              Intelligent products
               <br />
-              infrastructure for
+              for security, business,
               <br />
-              <span className="text-[#7a7a7a]">modern enterprises.</span>
+              <span className="text-[#7a7a7a]">and everyday life.</span>
             </motion.h1>
 
             {/* Subheading */}
@@ -251,9 +251,9 @@ export default function HeroSection() {
               transition={{ duration: 0.55, delay: 0.16 }}
               className="text-[16px] text-[#7a7a7a] leading-[1.7] max-w-[440px] mb-10"
             >
-              Inframiq builds proactive security systems and resilient digital
-              infrastructure for organizations that operate at scale and cannot
-              afford to be vulnerable.
+              Inframiq engineers and delivers products directly to the people
+              who rely on them — from enterprise-grade security infrastructure
+              to precision-built tools for businesses and individuals alike.
             </motion.p>
 
             {/* CTAs */}

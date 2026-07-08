@@ -6,39 +6,39 @@ import { ShieldCheck, Activity, Lock, Layers, Eye, FileCheck } from "lucide-reac
 const pillars = [
   {
     icon: ShieldCheck,
-    title: "Proactive threat prevention",
+    title: "Security-grade engineering",
     description:
-      "Our systems identify and neutralize threats before they reach critical infrastructure — not after the fact.",
+      "Whether it's a phishing email or an everyday app, every product is built with the same rigor: proactive, tested, and hardened against failure.",
   },
   {
     icon: Activity,
-    title: "Infrastructure resilience",
+    title: "Built for reliability",
     description:
-      "Designed for organizations where downtime has real consequences. Redundant, self-healing architectures built to endure.",
+      "Redundant, self-healing systems designed to stay online and perform — from enterprise security infrastructure to tools people use every day.",
   },
   {
     icon: Lock,
-    title: "Zero-trust by design",
+    title: "Privacy by design",
     description:
-      "No implicit trust at any layer. Every request is authenticated and authorized, continuously. Built on the NIST framework.",
+      "No implicit trust, no unnecessary data collection. Every product respects the people using it, not just the businesses buying it.",
   },
   {
     icon: Layers,
-    title: "Scalable enterprise systems",
+    title: "Scales with you",
     description:
-      "From mid-market to global enterprise. Inframiq scales without architectural compromise or performance degradation.",
+      "From individual users and students to global enterprises. Our products are built to grow without architectural compromise.",
   },
   {
     icon: Eye,
-    title: "Intelligent monitoring",
+    title: "Thoughtful by default",
     description:
-      "Persistent visibility across your entire environment — cloud, on-premise, and hybrid — with machine learning anomaly detection.",
+      "Intelligent systems paired with careful, considered design — products that get smarter and simpler the more you use them.",
   },
   {
     icon: FileCheck,
-    title: "Compliance by default",
+    title: "Compliance where it matters",
     description:
-      "Audit trails, data residency controls, and compliance reporting built into every product layer — not added later. SOC 2, HIPAA, GDPR, and more.",
+      "Audit trails, data residency controls, and compliance reporting for the products that need it. SOC 2, HIPAA, GDPR, and more.",
   },
 ];
 
@@ -69,9 +69,9 @@ export default function WhySection() {
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Why Inframiq</span>
             </div>
             <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0]">
-              Security that works
+              Every product,
               <br />
-              <span className="text-[#606060]">before the breach.</span>
+              <span className="text-[#606060]">built to the same standard.</span>
             </h2>
           </motion.div>
 
@@ -83,10 +83,10 @@ export default function WhySection() {
             className="flex flex-col justify-end"
           >
             <p className="text-[15px] text-[#7a7a7a] leading-[1.75]">
-              Most security vendors react to threats. Inframiq is built to prevent
-              them — with intelligent systems that understand your infrastructure,
-              learn your patterns, and adapt continuously to an evolving threat
-              landscape.
+              Most companies ship first and refine later. Inframiq builds with
+              intent — whether the problem is a phishing email, a pricing
+              decision, or an everyday workflow, we engineer intelligent systems
+              that understand it deeply and get it right the first time.
             </p>
           </motion.div>
         </div>
@@ -131,7 +131,8 @@ export default function WhySection() {
           className="mt-8 pt-6 border-t border-white/[0.05]"
         >
           <p className="text-[13px] text-[#505050]">
-            Trusted by security teams across financial services, healthcare, and government.
+            Trusted by security teams, business leaders, and everyday users across
+            financial services, healthcare, education, and government.
           </p>
         </motion.div>
       </div>

@@ -15,9 +15,9 @@ const values = [
       "We tell clients what we know, what we don't know, and where their exposure lies. No marketing language, no obscured risk. Honest assessments, clear recommendations.",
   },
   {
-    title: "Minimal attack surface",
+    title: "Minimal, focused products",
     description:
-      "We build lean systems. Fewer dependencies, fewer integrations, fewer trust boundaries. Every additional component is a liability we consciously choose to accept or decline.",
+      "We build lean, focused products — one problem, solved well. Every additional feature or dependency is a liability we consciously choose to accept or decline.",
   },
   {
     title: "Long-term thinking",
@@ -27,9 +27,9 @@ const values = [
 ];
 
 const timeline = [
-  { year: "Founded", event: "Inframiq established with a focus on enterprise email security infrastructure." },
+  { year: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
   { year: "First Product", event: "Mail Shield launched — addressing phishing and domain impersonation at scale." },
-  { year: "Today", event: "Expanding platform to cover the full enterprise security stack." },
+  { year: "Today", event: "Expanding into a growing portfolio of products — spanning enterprise security to everyday life — engineered with the same uncompromising rigor." },
 ];
 
 const fadeUp = {
@@ -75,15 +75,16 @@ export default function AboutContent() {
             </div>
 
             <h1 className="text-[42px] lg:text-[52px] font-semibold tracking-[-0.03em] leading-[1.08] text-[#f0f0f0] mb-6 max-w-2xl">
-              Built for organizations
+              Built for people
               <br />
-              <span className="text-[#5a5a5a]">that cannot afford to fail.</span>
+              <span className="text-[#5a5a5a]">who expect things to just work.</span>
             </h1>
 
             <p className="text-[16px] text-[#6a6a6a] leading-[1.8] max-w-xl">
-              Inframiq is a cybersecurity and digital infrastructure company focused
-              on proactive protection systems and secure communication technologies
-              for enterprises that operate in high-stakes environments.
+              Inframiq engineers intelligent software with uncompromising
+              precision — from enterprise-grade security infrastructure to the
+              refined, everyday tools businesses and individuals rely on.
+              Different products. One exacting standard.
             </p>
           </motion.div>
         </div>
@@ -104,18 +105,19 @@ export default function AboutContent() {
                 <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Our mission</span>
               </div>
               <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#e8e8e8] mb-5 leading-tight">
-                Make serious security
-                accessible to every enterprise.
+                Bring uncompromising engineering
+                to everyone.
               </h2>
               <p className="text-[14px] text-[#626262] leading-[1.8] mb-5">
-                For too long, enterprise-grade security has been the exclusive domain
-                of organizations with nine-figure security budgets and in-house research
+                For too long, real engineering rigor has been the exclusive domain
+                of organizations with nine-figure budgets and in-house research
                 teams. We believe that should change.
               </p>
               <p className="text-[14px] text-[#626262] leading-[1.8]">
-                Inframiq packages the same depth of protection that governments and
-                large financial institutions rely on — into products that mid-market
-                and enterprise organizations can deploy, operate, and trust.
+                Inframiq packages the same depth of engineering that governments and
+                large financial institutions rely on — into products anyone can
+                use, from enterprise security platforms to the everyday tools
+                businesses and individuals reach for.
               </p>
             </motion.div>
 
@@ -132,20 +134,20 @@ export default function AboutContent() {
               <div className="space-y-4">
                 {[
                   {
-                    label: "Email Security",
-                    desc: "Phishing prevention, domain impersonation detection, and secure communication infrastructure.",
+                    label: "Security & Infrastructure",
+                    desc: "Phishing prevention, domain impersonation detection, and resilient infrastructure for organizations that can't afford downtime.",
                   },
                   {
-                    label: "Threat Intelligence",
-                    desc: "Proactive monitoring and classification of threats specific to your industry and infrastructure profile.",
+                    label: "Business & Pricing Tools",
+                    desc: "Simulation and decision tools — like Simulyn — that help teams model pricing and outcomes before committing.",
                   },
                   {
-                    label: "Infrastructure Resilience",
-                    desc: "Systems designed to remain operational and defensible under active attack or failure conditions.",
+                    label: "Everyday Productivity",
+                    desc: "Refined, thoughtfully engineered software for students and individuals — held to the same exacting standard as our enterprise products.",
                   },
                   {
                     label: "Compliance Tooling",
-                    desc: "Audit trails, data residency controls, and reporting for regulated industries.",
+                    desc: "Audit trails, data residency controls, and reporting for the products that need it.",
                   },
                 ].map((item, i) => (
                   <motion.div
@@ -226,10 +228,12 @@ export default function AboutContent() {
                 Where we are today
               </h2>
               <p className="text-[14px] text-[#626262] leading-[1.8]">
-                Inframiq is an early-stage company with a clear and focused product roadmap.
-                We are building deliberately — one product, properly, before the next.
-                Our first product, Mail Shield, addresses one of the most prevalent enterprise
-                attack vectors: email-based intrusion.
+                Inframiq is an early-stage company with a clear and deliberate roadmap.
+                We build with precision — one product, perfected, before the next.
+                Mail Shield addresses one of the most prevalent enterprise attack vectors,
+                and Simulyn is next, bringing the same rigor to business pricing decisions.
+                Several more products, spanning security, business, and everyday life, are
+                already in active development.
               </p>
             </motion.div>
 
@@ -273,9 +277,9 @@ export default function AboutContent() {
               Team profiles coming soon.
             </h2>
             <p className="text-[14px] text-[#555] max-w-lg leading-relaxed mb-8">
-              We are a small team of security engineers, infrastructure architects, and
-              enterprise software specialists. Detailed team profiles will be published
-              as the company grows.
+              We are a small team of engineers and designers building both enterprise
+              security systems and everyday software products. Detailed team profiles
+              will be published as the company grows.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <a

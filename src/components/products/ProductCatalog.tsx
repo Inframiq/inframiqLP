@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Mail, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Mail, Calculator, CheckCircle2, type LucideIcon } from "lucide-react";
 
 // ─── Product data ────────────────────────────────────────────────────────────
 // Add future products to this array. Each entry renders its own catalog row.
@@ -11,6 +11,7 @@ interface Product {
   slug: string;
   name: string;
   category: string;
+  categoryIcon: LucideIcon;
   tagline: string;
   description: string;
   features: string[];
@@ -79,6 +80,62 @@ function MailShieldPreview() {
   );
 }
 
+// ─── Simulyn visual preview ──────────────────────────────────────────────────
+
+function SimulynPreview() {
+  const scenarios = [
+    { plan: "Starter", seats: "25 seats", price: "$1,250/mo" },
+    { plan: "Growth", seats: "100 seats", price: "$4,800/mo" },
+    { plan: "Scale", seats: "500 seats", price: "$21,000/mo" },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col rounded-lg border border-white/[0.07] bg-[#0d0d0d] overflow-hidden">
+      {/* Window chrome */}
+      <div className="flex items-center gap-1.5 px-3.5 py-2.5 border-b border-white/[0.05] bg-[#0b0b0b] flex-shrink-0">
+        <div className="w-2 h-2 rounded-full bg-white/[0.07]" />
+        <div className="w-2 h-2 rounded-full bg-white/[0.07]" />
+        <div className="w-2 h-2 rounded-full bg-white/[0.07]" />
+        <span className="ml-2 text-[10px] font-mono text-[#3a3a3a]">Simulyn — Pricing Model</span>
+        <div className="ml-auto flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
+          <span className="text-[9px] text-[#3a3a3a] uppercase tracking-wide">Live</span>
+        </div>
+      </div>
+
+      {/* Column headers */}
+      <div className="grid grid-cols-[1fr_1fr_1fr] px-3.5 py-1.5 border-b border-white/[0.04] flex-shrink-0">
+        {["Plan", "Volume", "Est. Revenue"].map((h) => (
+          <span key={h} className="text-[9px] font-medium text-[#383838] uppercase tracking-wider">{h}</span>
+        ))}
+      </div>
+
+      {/* Rows */}
+      <div className="flex-1 divide-y divide-white/[0.03] overflow-hidden">
+        {scenarios.map((row, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -6 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 + i * 0.09 }}
+            className="grid grid-cols-[1fr_1fr_1fr] px-3.5 py-2.5 items-center"
+          >
+            <span className="text-[11px] text-[#8a8a8a] font-medium truncate pr-2">{row.plan}</span>
+            <span className="text-[10.5px] font-mono text-[#6a6a6a] truncate pr-2">{row.seats}</span>
+            <span className="text-[10.5px] font-mono text-[#5b8def]">{row.price}</span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <div className="px-3.5 py-2 border-t border-white/[0.04] flex-shrink-0">
+        <span className="text-[9px] font-mono text-[#303030]">Margin 68% · Break-even Month 4</span>
+      </div>
+    </div>
+  );
+}
+
 // ─── Products list ─────────────────────────────────────────────────────────
 
 const products: Product[] = [
@@ -86,6 +143,7 @@ const products: Product[] = [
     slug: "mail-shield",
     name: "Mail Shield",
     category: "Email Security",
+    categoryIcon: Mail,
     tagline: "Enterprise email protection that stops threats before delivery.",
     description:
       "Mail Shield is an enterprise-grade email security platform designed for organizations where a single phishing email can compromise an entire network. Intelligent filtering, domain impersonation detection, and real-time threat analysis — without the noise of traditional rule-based filters.",
@@ -99,6 +157,25 @@ const products: Product[] = [
     status: "Coming Soon",
     hasPage: false,
     visual: <MailShieldPreview />,
+  },
+  {
+    slug: "simulyn",
+    name: "Simulyn",
+    category: "Pricing & Business Tools",
+    categoryIcon: Calculator,
+    tagline: "Know your numbers before you set your price.",
+    description:
+      "Simulyn is a pricing simulation tool built for founders, finance teams, and sales leaders who need to understand margin, break-even, and growth scenarios before committing to a price. Model plans, seats, and discounts — see the outcome instantly, no spreadsheet required.",
+    features: [
+      "Real-time pricing and revenue scenario modeling",
+      "Break-even and margin analysis built in",
+      "Side-by-side scenario comparison for sales and finance",
+      "Shareable, exportable reports for stakeholders",
+      "Works for subscription, seat-based, and usage pricing",
+    ],
+    status: "Coming Soon",
+    hasPage: false,
+    visual: <SimulynPreview />,
   },
   // Future products can be added here:
   // {
@@ -138,7 +215,7 @@ function ProductRow({
       {/* Category + status */}
       <div className="flex items-center gap-2.5 mb-5">
         <div className="flex items-center gap-1.5">
-          <Mail size={12} className="text-[#5b8def]" />
+          <product.categoryIcon size={12} className="text-[#5b8def]" />
           <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.1em] uppercase">
             {product.category}
           </span>
@@ -275,14 +352,14 @@ export default function ProductCatalog() {
             </div>
 
             <h1 className="text-[42px] lg:text-[52px] font-semibold tracking-[-0.03em] leading-[1.08] text-[#f0f0f0] mb-4">
-              Intelligent security,
+              Every problem,
               <br />
-              <span className="text-[#5a5a5a]">product by product.</span>
+              <span className="text-[#5a5a5a]">engineered to an exacting standard.</span>
             </h1>
             <p className="text-[15px] text-[#666] max-w-xl leading-[1.75]">
-              Inframiq is building a suite of purpose-built security and infrastructure
-              products for modern enterprises. Each product addresses a specific attack
-              surface — designed to work independently or as a unified platform.
+              Inframiq is building a portfolio of purpose-built products — enterprise
+              security infrastructure, precision pricing intelligence, and refined
+              everyday software. Distinct in purpose, uncompromising in craft.
             </p>
           </motion.div>
 

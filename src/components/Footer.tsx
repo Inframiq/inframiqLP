@@ -12,6 +12,7 @@ const footerNav = {
   ],
   Products: [
     { label: "Mail Shield", href: "/products" },
+    { label: "Simulyn", href: "/products" },
     { label: "All Products", href: "/products" },
     { label: "Changelog", href: "#" },
     { label: "Status", href: "#" },
@@ -51,7 +52,7 @@ infram<span className="text-[#5b8def]">IQ</span>
               </span>
             </Link>
             <p className="text-[13px] text-[#555] leading-[1.7] mb-5 max-w-[200px]">
-              Intelligent security infrastructure for modern enterprises.
+              Precision-engineered products for security, business, and everyday life.
             </p>
             <div className="flex gap-3">
               {socials.map((s) => (

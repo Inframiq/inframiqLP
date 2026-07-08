@@ -279,10 +279,10 @@ export default function AboutContent() {
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <a
-                href="mailto:inframiqsolutions@gmail.com"
+                href="mailto:support@inframiq.com"
                 className="inline-flex items-center gap-1.5 h-9 px-5 rounded-md border border-white/[0.1] text-[#909090] text-[13px] font-medium hover:border-white/[0.18] hover:text-white transition-all duration-150"
               >
-                inframiqsolutions@gmail.com
+                support@inframiq.com
               </a>
             </div>
           </motion.div>

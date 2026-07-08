@@ -25,7 +25,7 @@ const footerNav = {
   Contact: [
     { label: "Enterprise Sales", href: "#" },
     { label: "Support", href: "#" },
-    { label: "inframiqsolutions@gmail.com", href: "mailto:inframiqsolutions@gmail.com" },
+    { label: "support@inframiq.com", href: "mailto:support@inframiq.com" },
   ],
 };
 

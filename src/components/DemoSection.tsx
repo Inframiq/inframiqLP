@@ -68,10 +68,10 @@ export default function DemoSection() {
             <div className="mt-12 pt-8 border-t border-white/[0.05]">
               <p className="text-[12px] text-[#404040] mb-2">Prefer email?</p>
               <a
-                href="mailto:inframiqsolutions@gmail.com"
+                href="mailto:support@inframiq.com"
                 className="text-[13px] text-[#7a7a7a] hover:text-white transition-colors"
               >
-                inframiqsolutions@gmail.com
+                support@inframiq.com
               </a>
             </div>
           </motion.div>

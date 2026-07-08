@@ -187,7 +187,7 @@ function ProductRow({
             </Link>
           )}
           <a
-            href={`mailto:inframiqsolutions@gmail.com?subject=Demo Request — ${product.name}`}
+            href={`mailto:support@inframiq.com?subject=Demo Request — ${product.name}`}
             className="inline-flex items-center gap-2 h-9 px-5 rounded-md bg-white text-[#0c0c0c] text-[13px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
           >
             Request a Demo

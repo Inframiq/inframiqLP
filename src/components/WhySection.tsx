@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Activity, Lock, Layers, Eye, FileCheck } from "lucide-react";
+import { ShieldCheck, Activity, Lock, Layers, Eye, Sparkles } from "lucide-react";
 
 const pillars = [
   {
@@ -35,10 +35,10 @@ const pillars = [
       "Intelligent systems paired with careful, considered design — products that get smarter and simpler the more you use them.",
   },
   {
-    icon: FileCheck,
-    title: "Compliance where it matters",
+    icon: Sparkles,
+    title: "AI built in, not bolted on",
     description:
-      "Audit trails, data residency controls, and compliance reporting for the products that need it. SOC 2, HIPAA, GDPR, and more.",
+      "Intelligence is part of the architecture, not a chatbot dropped on top. Every product uses AI where it genuinely makes the experience faster and smarter.",
   },
 ];
 

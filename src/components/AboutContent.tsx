@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Eye, Target } from "lucide-react";
 
 const values = [
   {
@@ -94,6 +95,53 @@ export default function AboutContent() {
               Different products. One exacting standard.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Vision & Mission */}
+      <section className="py-20 border-t border-white/[0.05]">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-6">
+            {[
+              {
+                eyebrow: "Vision",
+                icon: Eye,
+                text: "To become a globally trusted technology and business operations partner, empowering organizations through innovative digital products, intelligent customer support, and reliable operational excellence that drives long-term business growth.",
+              },
+              {
+                eyebrow: "Mission",
+                icon: Target,
+                text: "Our mission is to build innovative digital products while helping businesses deliver exceptional customer experiences through reliable voice and chat support solutions. We partner with organizations to simplify operations, enhance customer satisfaction, and enable sustainable growth through technology, skilled professionals, and operational excellence.",
+              },
+            ].map((card, i) => {
+              const Icon = card.icon;
+              return (
+                <motion.div
+                  key={card.eyebrow}
+                  custom={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-30px" }}
+                  variants={fadeUp}
+                  className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] p-8 lg:p-10 overflow-hidden hover:border-[#5b8def]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(91,141,239,0.35)]"
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: "radial-gradient(160px 100px at 15% 0%, rgba(91,141,239,0.1), transparent 70%)",
+                    }}
+                  />
+                  <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-[#5b8def]/20 to-[#5b8def]/5 border border-[#5b8def]/25 flex items-center justify-center mb-6">
+                    <Icon size={18} className="text-[#5b8def]" strokeWidth={1.75} />
+                  </div>
+                  <p className="relative text-[11px] text-[#5b8def] font-medium tracking-[0.14em] uppercase mb-4">
+                    {card.eyebrow}
+                  </p>
+                  <p className="relative text-[14.5px] text-[#8a8a8a] leading-[1.85]">{card.text}</p>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 

@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import WhySection from "@/components/WhySection";
-import DashboardSection from "@/components/DashboardSection";
+import OperationsSection from "@/components/OperationsSection";
 import TrustSection from "@/components/TrustSection";
+import DemoSection from "@/components/DemoSection";
 import Footer from "@/components/Footer";
 
 export default function HomePage() {
@@ -11,8 +13,11 @@ export default function HomePage() {
       <Navbar />
       <HeroSection />
       <WhySection />
-      <DashboardSection />
+      <OperationsSection />
       <TrustSection />
+      <Suspense fallback={null}>
+        <DemoSection />
+      </Suspense>
       <Footer />
     </main>
   );

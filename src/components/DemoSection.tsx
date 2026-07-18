@@ -1,12 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function DemoSection() {
+  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [form, setForm] = useState({
     name: "",
     company: "",
@@ -14,12 +17,32 @@ export default function DemoSection() {
     message: "",
   });
 
+  // Arriving from a product's "Request a Demo" button — pre-fill the message
+  // so the requester doesn't have to retype which product they're asking about.
+  useEffect(() => {
+    const product = searchParams.get("product");
+    if (product) {
+      setForm((f) => (f.message ? f : { ...f, message: `Interested in a demo of ${product}.` }));
+    }
+  }, [searchParams]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    setError(false);
+    try {
+      const res = await fetch("/api/consultation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setSubmitted(true);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -39,23 +62,24 @@ export default function DemoSection() {
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
               <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
-              <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Request a Demo</span>
+              <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Get Started</span>
             </div>
             <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0] mb-5">
-              See Inframiq
+              Let&apos;s talk about
               <br />
-              <span className="text-[#606060]">in your environment.</span>
+              <span className="text-[#606060]">your support line.</span>
             </h2>
             <p className="text-[15px] text-[#7a7a7a] leading-[1.75] mb-10 max-w-sm">
-              Our team will walk you through the platform with a live deployment
-              tailored to your infrastructure, threat model, and compliance requirements.
+              Whether you need a 24/7 voice and chat team staffed for your
+              customers, or want to see one of our products in action — tell us
+              what you're working with and we'll take it from there.
             </p>
 
             <div className="space-y-4">
               {[
-                "45-minute technical walkthrough",
-                "Architecture review with a senior engineer",
-                "Custom threat model analysis",
+                "Coverage & staffing plan for your support line",
+                "Walkthrough with a senior team member",
+                "Fit assessment for voice, chat, or product needs",
                 "No obligation, no sales pressure",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
@@ -98,8 +122,8 @@ export default function DemoSection() {
                     Request received
                   </h3>
                   <p className="text-[13px] text-[#666] leading-relaxed">
-                    We&apos;ll reach out within one business day to schedule your
-                    demo session.
+                    We&apos;ll reach out within one business day to talk through
+                    your support needs.
                   </p>
                 </motion.div>
               ) : (
@@ -153,7 +177,7 @@ export default function DemoSection() {
                     </label>
                     <textarea
                       rows={4}
-                      placeholder="Briefly describe your security needs or current challenges..."
+                      placeholder="Briefly describe your support needs or current challenges..."
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className={`${inputClass} h-auto resize-none py-2.5`}
@@ -190,11 +214,21 @@ export default function DemoSection() {
                       </span>
                     ) : (
                       <>
-                        Request a Demo
+                        Request a Consultation
                         <ArrowRight size={13} />
                       </>
                     )}
                   </button>
+
+                  {error && (
+                    <p className="text-[11.5px] text-red-400 text-center">
+                      Something went wrong sending your request — please try again, or email{" "}
+                      <a href="mailto:support@inframiq.com" className="underline">
+                        support@inframiq.com
+                      </a>{" "}
+                      directly.
+                    </p>
+                  )}
 
                   <p className="text-[11px] text-[#404040] text-center">
                     No credit card required. We respect your privacy.

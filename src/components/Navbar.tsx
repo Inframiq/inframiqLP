@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, Package, Shield, Users, Mail } from "lucide-react";
+import { Home, Package, Briefcase, Users, Mail } from "lucide-react";
 
 const navLinks = [
-  { label: "Home",         href: "/",           icon: Home    },
-  { label: "Products",     href: "/products",   icon: Package },
-  { label: "Capabilities", href: "/#solutions", icon: Shield  },
-  { label: "About",        href: "/about",      icon: Users   },
-  { label: "Contact",      href: "/#contact",   icon: Mail    },
+  { label: "Home",         href: "/",           icon: Home     },
+  { label: "Products",     href: "/products",   icon: Package  },
+  { label: "Services",     href: "/services",   icon: Briefcase},
+  { label: "About",        href: "/about",      icon: Users    },
+  { label: "Contact",      href: "/#demo",      icon: Mail     },
 ];
 
 export default function Navbar() {
@@ -47,8 +47,10 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 border-b ${
-          scrolled ? "bg-[#0c0c0c] border-white/[0.05]" : "bg-transparent border-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+          scrolled
+            ? "bg-[#0c0c0c]/70 backdrop-blur-md border-white/[0.06]"
+            : "bg-transparent border-transparent"
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -56,7 +58,10 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <span className="text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
+              <span
+                id="site-brand-mark"
+                className="font-brand text-[19px] font-semibold tracking-tight leading-none text-[#f0f0f0] select-none"
+              >
 infram<span className="text-[#5b8def]">IQ</span>
               </span>
             </Link>

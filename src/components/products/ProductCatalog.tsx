@@ -263,12 +263,12 @@ function ProductRow({
               <ArrowRight size={12} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
             </Link>
           )}
-          <a
-            href={`mailto:support@inframiq.com?subject=Demo Request — ${product.name}`}
+          <Link
+            href={`/?product=${encodeURIComponent(product.name)}#demo`}
             className="inline-flex items-center gap-2 h-9 px-5 rounded-md bg-white text-[#0c0c0c] text-[13px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
           >
             Request a Demo
-          </a>
+          </Link>
         </div>
       </div>
     </motion.div>

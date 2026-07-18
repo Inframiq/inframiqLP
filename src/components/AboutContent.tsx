@@ -26,6 +26,13 @@ const values = [
   },
 ];
 
+const team = [
+  { name: "Bhargav.U", role: "Founder" },
+  { name: "Bharath.K", role: "Co-Founder" },
+  { name: "Jaswanth Kongara", role: "Global Client Management Lead" },
+  { name: "Kundrapu Tanishq", role: "Technical Head" },
+];
+
 const timeline = [
   { year: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
   { year: "First Product", event: "Mail Shield launched — addressing phishing and domain impersonation at scale." },
@@ -87,88 +94,6 @@ export default function AboutContent() {
               Different products. One exacting standard.
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Mission */}
-      <section className="py-20 border-t border-white/[0.05]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-5">
-                <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
-                <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Our mission</span>
-              </div>
-              <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#e8e8e8] mb-5 leading-tight">
-                Bring uncompromising engineering
-                to everyone.
-              </h2>
-              <p className="text-[14px] text-[#626262] leading-[1.8] mb-5">
-                For too long, real engineering rigor has been the exclusive domain
-                of organizations with nine-figure budgets and in-house research
-                teams. We believe that should change.
-              </p>
-              <p className="text-[14px] text-[#626262] leading-[1.8]">
-                Inframiq packages the same depth of engineering that governments and
-                large financial institutions rely on — into products anyone can
-                use, from enterprise security platforms to the everyday tools
-                businesses and individuals reach for.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-5">
-                <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
-                <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">What we build</span>
-              </div>
-              <div className="space-y-4">
-                {[
-                  {
-                    label: "Security & Infrastructure",
-                    desc: "Phishing prevention, domain impersonation detection, and resilient infrastructure for organizations that can't afford downtime.",
-                  },
-                  {
-                    label: "Business & Pricing Tools",
-                    desc: "Simulation and decision tools — like Simulyn — that help teams model pricing and outcomes before committing.",
-                  },
-                  {
-                    label: "Everyday Productivity",
-                    desc: "Refined, thoughtfully engineered software for students and individuals — held to the same exacting standard as our enterprise products.",
-                  },
-                  {
-                    label: "Compliance Tooling",
-                    desc: "Audit trails, data residency controls, and reporting for the products that need it.",
-                  },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.label}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeUp}
-                    className="flex gap-4 py-3.5 border-b border-white/[0.05] last:border-0"
-                  >
-                    <div className="w-1 h-1 rounded-full bg-[#5b8def] mt-1.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-[13.5px] font-medium text-[#c0c0c0] mb-1">{item.label}</p>
-                      <p className="text-[13px] text-[#575757] leading-relaxed">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 
@@ -259,7 +184,7 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* Team placeholder */}
+      {/* Team */}
       <section className="py-20 border-t border-white/[0.05]">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <motion.div
@@ -267,29 +192,85 @@ export default function AboutContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="rounded-xl border border-white/[0.06] bg-[#0f0f0f] p-10 lg:p-14"
+            className="mb-12"
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
               <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Team</span>
             </div>
-            <h2 className="text-[26px] font-semibold tracking-[-0.02em] text-[#e0e0e0] mb-3">
-              Team profiles coming soon.
+            <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#e8e8e8] mb-3">
+              The people behind Inframiq
             </h2>
-            <p className="text-[14px] text-[#555] max-w-lg leading-relaxed mb-8">
-              We are a small team of engineers and designers building both enterprise
-              security systems and everyday software products. Detailed team profiles
-              will be published as the company grows.
+            <p className="text-[14px] text-[#626262] leading-[1.8] max-w-xl">
+              The leadership guiding Inframiq's product and engineering direction.
             </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="mailto:support@inframiq.com"
-                className="inline-flex items-center gap-1.5 h-9 px-5 rounded-md border border-white/[0.1] text-[#909090] text-[13px] font-medium hover:border-white/[0.18] hover:text-white transition-all duration-150"
-              >
-                support@inframiq.com
-              </a>
-            </div>
           </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {team.map((member, i) => (
+              <motion.div
+                key={member.name}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-30px" }}
+                variants={fadeUp}
+                className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] p-7 overflow-hidden hover:border-[#5b8def]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(91,141,239,0.35)]"
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(120px 80px at 20% 0%, rgba(91,141,239,0.1), transparent 70%)",
+                  }}
+                />
+                <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#5b8def]/20 to-[#5b8def]/5 border border-[#5b8def]/25 flex items-center justify-center mb-5">
+                  <span className="text-[15px] font-semibold text-[#8fb2f4]">
+                    {member.name.charAt(0)}
+                  </span>
+                </div>
+                <h3 className="relative text-[15.5px] font-medium text-[#e8e8e8] mb-1.5 tracking-[-0.01em]">
+                  {member.name}
+                </h3>
+                <p className="relative text-[12.5px] text-[#5b8def]/80 font-medium tracking-[0.02em] uppercase">
+                  {member.role}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="mt-5 rounded-2xl border border-white/[0.06] bg-[#0f0f0f] px-7 py-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
+          >
+            <div className="flex -space-x-3 flex-shrink-0">
+              {["#5b8def", "#8a5bef", "#5bef9e", "#efb85b"].map((color, i) => (
+                <div
+                  key={i}
+                  className="w-9 h-9 rounded-full border-2 border-[#0f0f0f]"
+                  style={{ backgroundColor: `${color}26` }}
+                />
+              ))}
+              <div className="w-9 h-9 rounded-full border-2 border-[#0f0f0f] bg-white/[0.06] flex items-center justify-center">
+                <span className="text-[10.5px] font-semibold text-[#a0a0a0]">10+</span>
+              </div>
+            </div>
+            <p className="text-[13.5px] text-[#727272] leading-relaxed">
+              Backed by a growing team of <span className="text-[#c0c0c0] font-medium">10+ engineers, designers, and specialists</span> working
+              across our product portfolio.
+            </p>
+          </motion.div>
+
+          <div className="flex flex-wrap items-center gap-3 mt-8">
+            <a
+              href="mailto:support@inframiq.com"
+              className="inline-flex items-center gap-1.5 h-9 px-5 rounded-md border border-white/[0.1] text-[#909090] text-[13px] font-medium hover:border-white/[0.18] hover:text-white transition-all duration-150"
+            >
+              support@inframiq.com
+            </a>
+          </div>
         </div>
       </section>
     </>

@@ -41,9 +41,8 @@ Every page follows the same shell: `<Navbar /> + <ContentComponent /> + <Footer 
 `src/app/page.tsx` stacks these in order:
 1. `HeroSection` — headline, infrastructure topology SVG visual, status overlay cards
 2. `WhySection` — 6-pillar feature grid (id="solutions")
-3. `DashboardSection` — animated security ops dashboard mockup with sparkline chart and live event log
-4. `TrustSection` — stats, certifications, industries (id="about")
-5. `DemoSection` — contact/demo request form (id="demo") — **submission is simulated with a 1.2s fake delay; there is no backend**
+3. `TrustSection` — stats, certifications, industries (id="about")
+4. `DemoSection` — contact/demo request form (id="demo") — **submission is simulated with a 1.2s fake delay; there is no backend**
 
 ### Adding a product page
 

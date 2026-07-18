@@ -143,7 +143,6 @@ function InfrastructureVisual() {
           {[
             { label: "Mail Shield", status: "Active" },
             { label: "Simulyn", status: "Active" },
-            { label: "Platform Core", status: "Active" },
           ].map((item) => (
             <div key={item.label} className="flex items-center justify-between gap-4">
               <span className="text-[11px] text-[#6a6a6a]">{item.label}</span>
@@ -237,11 +236,13 @@ export default function HeroSection() {
               transition={{ duration: 0.55, delay: 0.08 }}
               className="text-[42px] sm:text-[52px] lg:text-[56px] font-semibold leading-[1.08] tracking-[-0.03em] text-[#f0f0f0] mb-6"
             >
-              Intelligent products
-              <br />
-              for security, business,
-              <br />
-              <span className="text-[#7a7a7a]">and everyday life.</span>
+              <span className="block bg-gradient-to-b from-[#ffffff] via-[#a8a8a8] to-[#4a4a4a] bg-clip-text text-transparent">
+                Intelligent products and services built
+                <br />
+                for business,
+                <br />
+                and everyday life.
+              </span>
             </motion.h1>
 
             {/* Subheading */}
@@ -251,9 +252,10 @@ export default function HeroSection() {
               transition={{ duration: 0.55, delay: 0.16 }}
               className="text-[16px] text-[#7a7a7a] leading-[1.7] max-w-[440px] mb-10"
             >
-              Inframiq engineers and delivers products directly to the people
-              who rely on them — from enterprise-grade security infrastructure
-              to precision-built tools for businesses and individuals alike.
+              Inframiq handles your customer service operations 24/7 
+              while building enterprise software products designed for your business. 
+              We manage your communications, deliver intelligent solutions, 
+              and provide dedicated support — seamlessly integrated into your operations.
             </motion.p>
 
             {/* CTAs */}

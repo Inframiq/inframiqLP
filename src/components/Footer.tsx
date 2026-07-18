@@ -47,7 +47,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="inline-flex mb-5">
-              <span className="text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
+              <span className="font-brand text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
 infram<span className="text-[#5b8def]">IQ</span>
               </span>
             </Link>

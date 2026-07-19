@@ -40,7 +40,6 @@ function MailShieldPreview() {
         <div className="w-2 h-2 rounded-full bg-white/[0.07]" />
         <span className="ml-2 text-[10px] font-mono text-[#3a3a3a]">Mail Shield — Inbound Queue</span>
         <div className="ml-auto flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
           <span className="text-[9px] text-[#3a3a3a] uppercase tracking-wide">Live</span>
         </div>
       </div>
@@ -98,7 +97,6 @@ function SimulynPreview() {
         <div className="w-2 h-2 rounded-full bg-white/[0.07]" />
         <span className="ml-2 text-[10px] font-mono text-[#3a3a3a]">Simulyn — Pricing Model</span>
         <div className="ml-auto flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
           <span className="text-[9px] text-[#3a3a3a] uppercase tracking-wide">Live</span>
         </div>
       </div>
@@ -347,7 +345,6 @@ export default function ProductCatalog() {
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-5">
-              <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Product Suite</span>
             </div>
 

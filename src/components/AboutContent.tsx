@@ -32,6 +32,7 @@ const team = [
   { name: "Bharath.K", role: "Co-Founder" },
   { name: "Jaswanth Kongara", role: "Global Client Management Lead" },
   { name: "Kundrapu Tanishq", role: "Technical Head" },
+  { name: "Manideep Boorla", role: "CFO" },
 ];
 
 const timeline = [
@@ -78,7 +79,6 @@ export default function AboutContent() {
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-5">
-              <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">About Inframiq</span>
             </div>
 
@@ -156,7 +156,6 @@ export default function AboutContent() {
             className="mb-12"
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-              <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">How we work</span>
             </div>
             <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#e8e8e8]">
@@ -194,7 +193,6 @@ export default function AboutContent() {
               transition={{ duration: 0.5 }}
             >
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-                <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
                 <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Company</span>
               </div>
               <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#e8e8e8] mb-5">
@@ -243,7 +241,6 @@ export default function AboutContent() {
             className="mb-12"
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-              <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Team</span>
             </div>
             <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#e8e8e8] mb-3">

@@ -65,7 +65,6 @@ export default function WhySection() {
             transition={{ duration: 0.55 }}
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-              <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Why Inframiq</span>
             </div>
             <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0]">
@@ -92,7 +91,7 @@ export default function WhySection() {
         </div>
 
         {/* Pillars — 6 items fills 2×3 grid cleanly */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.05] rounded-xl overflow-hidden border border-white/[0.05]">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {pillars.map((pillar, i) => {
             const Icon = pillar.icon;
             return (
@@ -103,18 +102,24 @@ export default function WhySection() {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-40px" }}
                 variants={fadeUp}
-                className="bg-[#0c0c0c] p-7 group hover:bg-[#101010] transition-colors duration-200"
+                className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] p-7 overflow-hidden hover:border-[#5b8def]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(91,141,239,0.35)]"
               >
-                <div className="w-8 h-8 rounded-md bg-white/[0.04] border border-white/[0.07] flex items-center justify-center mb-5 group-hover:border-[#5b8def]/25 group-hover:bg-[#5b8def]/[0.06] transition-colors duration-200">
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(160px 100px at 15% 0%, rgba(91,141,239,0.1), transparent 70%)",
+                  }}
+                />
+                <div className="relative w-8 h-8 rounded-md bg-white/[0.04] border border-white/[0.07] flex items-center justify-center mb-5 group-hover:border-[#5b8def]/25 group-hover:bg-[#5b8def]/[0.06] transition-colors duration-200">
                   <Icon
                     size={15}
                     className="text-[#7a7a7a] group-hover:text-[#5b8def] transition-colors duration-200"
                   />
                 </div>
-                <h3 className="text-[14.5px] font-medium text-[#d8d8d8] mb-2.5 leading-snug">
+                <h3 className="relative text-[14.5px] font-medium text-[#d8d8d8] mb-2.5 leading-snug">
                   {pillar.title}
                 </h3>
-                <p className="text-[13.5px] text-[#606060] leading-[1.7]">
+                <p className="relative text-[13.5px] text-[#606060] leading-[1.7]">
                   {pillar.description}
                 </p>
               </motion.div>

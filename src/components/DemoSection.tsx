@@ -61,7 +61,6 @@ export default function DemoSection() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-              <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Get Started</span>
             </div>
             <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0] mb-5">

@@ -50,7 +50,6 @@ export default function TrustSection() {
           className="mb-16 max-w-xl"
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-            <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
             <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Trust, By Design</span>
           </div>
           <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0] mb-5">
@@ -66,7 +65,7 @@ export default function TrustSection() {
         </motion.div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.05] rounded-xl overflow-hidden border border-white/[0.05] mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.value}
@@ -75,13 +74,19 @@ export default function TrustSection() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              className="bg-[#0c0c0c] px-7 py-8"
+              className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] px-7 py-8 overflow-hidden hover:border-[#5b8def]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(91,141,239,0.35)]"
             >
-              <p className="text-[34px] font-semibold tracking-tight leading-none mb-2 bg-gradient-to-b from-[#ffffff] to-[#7a7a7a] bg-clip-text text-transparent">
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{
+                  background: "radial-gradient(160px 100px at 15% 0%, rgba(91,141,239,0.1), transparent 70%)",
+                }}
+              />
+              <p className="relative text-[34px] font-semibold tracking-tight leading-none mb-2 bg-gradient-to-b from-[#ffffff] to-[#7a7a7a] bg-clip-text text-transparent">
                 {stat.value}
               </p>
-              <p className="text-[13px] text-[#909090] mb-1">{stat.label}</p>
-              <p className="text-[12px] text-[#454545]">{stat.sub}</p>
+              <p className="relative text-[13px] text-[#909090] mb-1">{stat.label}</p>
+              <p className="relative text-[12px] text-[#454545]">{stat.sub}</p>
             </motion.div>
           ))}
         </div>
@@ -147,23 +152,6 @@ export default function TrustSection() {
                   <span className="text-[13.5px] text-[#888]">{type}</span>
                 </motion.div>
               ))}
-            </div>
-
-            {/* Placeholder for client logos */}
-            <div className="mt-5 pt-5 border-t border-white/[0.05]">
-              <p className="text-[11px] text-[#404040] mb-3">Our clients</p>
-              <div className="flex flex-wrap gap-2">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-7 w-20 rounded border border-white/[0.05] bg-white/[0.02] flex items-center justify-center"
-                  >
-                    <span className="text-[9px] text-[#333] font-medium uppercase tracking-wider">
-                      Client
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
           </motion.div>
         </div>

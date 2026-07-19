@@ -134,7 +134,6 @@ function InfrastructureVisual() {
         className="absolute top-4 right-0 bg-[#111111] border border-white/[0.07] rounded-lg px-4 py-3 min-w-[160px]"
       >
         <div className="flex items-center gap-2 mb-2.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
           <span className="text-[11px] text-[#6a6a6a] font-medium tracking-wide uppercase">
             Product Status
           </span>
@@ -222,7 +221,6 @@ export default function HeroSection() {
               className="mb-8"
             >
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07]">
-                <span className="w-1 h-1 rounded-full bg-[#5b8def]" />
                 <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">
                   Engineered End to End
                 </span>

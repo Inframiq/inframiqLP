@@ -43,7 +43,6 @@ export default function OperationsSection() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-pulse" />
               <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">
                 Always On
               </span>

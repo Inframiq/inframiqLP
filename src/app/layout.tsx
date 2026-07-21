@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Geist_Mono, Space_Grotesk } from "next/font/google";
 import SplashScreen from "@/components/SplashScreen";
+import { team } from "@/lib/team";
 import "./globals.css";
 
 const geistSans = Instrument_Sans({
@@ -83,10 +84,12 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
+
+// Every team member is surfaced here as a Person tied to the Organization
+// (via founder/employee) so that a search for their name has a structured,
+// crawlable signal connecting them to Inframiq — not just plain page text.
+const founders = team.filter((member) => member.role.toLowerCase().includes("founder"));
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -96,10 +99,13 @@ const organizationJsonLd = {
   description: SITE_DESCRIPTION,
   email: "support@inframiq.com",
   sameAs: [],
-  founder: [
-    { "@type": "Person", name: "Bhargav.U" },
-    { "@type": "Person", name: "Bharath.K" },
-  ],
+  founder: founders.map((member) => ({ "@type": "Person", name: member.name })),
+  employee: team.map((member) => ({
+    "@type": "Person",
+    name: member.name,
+    jobTitle: member.role,
+    worksFor: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  })),
   makesOffer: [
     {
       "@type": "Offer",
@@ -128,6 +134,28 @@ const organizationJsonLd = {
         name: "Technical Support Outsourcing",
         serviceType: "Outsourced technical support",
         description: "Trained agents handling tier 1 and tier 2 technical troubleshooting for customers.",
+        provider: { "@type": "Organization", name: SITE_NAME },
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "SoftwareApplication",
+        name: "Mail Shield",
+        applicationCategory: "SecurityApplication",
+        description: "Enterprise email protection that stops phishing and domain-impersonation threats before delivery.",
+        url: `${SITE_URL}/products`,
+        provider: { "@type": "Organization", name: SITE_NAME },
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "SoftwareApplication",
+        name: "Simulyn",
+        applicationCategory: "BusinessApplication",
+        description: "Business pricing simulation software — know your numbers before you set your price.",
+        url: `${SITE_URL}/products`,
         provider: { "@type": "Organization", name: SITE_NAME },
       },
     },

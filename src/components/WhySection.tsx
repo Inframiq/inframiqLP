@@ -42,12 +42,24 @@ const pillars = [
   },
 ];
 
+// Cards ease in from the direction they sit in the 3-column grid — left
+// column drifts in from the left, right column from the right, middle
+// column stays a plain vertical fade. Single-axis motion with an expo-out
+// curve — no combined x+y — keeps it a clean glide instead of a jittery
+// diagonal.
+const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
+
 const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: (i: number) => ({
+    opacity: 0,
+    x: i % 3 === 0 ? -18 : i % 3 === 2 ? 18 : 0,
+    y: i % 3 === 1 ? 14 : 0,
+  }),
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.07 },
+    x: 0,
+    transition: { duration: 0.45, delay: i * 0.05, ease: EASE_SMOOTH },
   }),
 };
 
@@ -59,8 +71,8 @@ export default function WhySection() {
         {/* Header */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -24, y: 10 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55 }}
           >
@@ -75,8 +87,8 @@ export default function WhySection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 24, y: 10 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
             className="flex flex-col justify-end"

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -10,21 +10,17 @@ export default function DemoSection() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    company: "",
-    email: "",
-    message: "",
-  });
-
   // Arriving from a product's "Request a Demo" button — pre-fill the message
   // so the requester doesn't have to retype which product they're asking about.
-  useEffect(() => {
+  const [form, setForm] = useState(() => {
     const product = searchParams.get("product");
-    if (product) {
-      setForm((f) => (f.message ? f : { ...f, message: `Interested in a demo of ${product}.` }));
-    }
-  }, [searchParams]);
+    return {
+      name: "",
+      company: "",
+      email: "",
+      message: product ? `Interested in a demo of ${product}.` : "",
+    };
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,8 +51,8 @@ export default function DemoSection() {
 
           {/* Left: Copy */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -24, y: 12 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
@@ -71,7 +67,7 @@ export default function DemoSection() {
             <p className="text-[15px] text-[#7a7a7a] leading-[1.75] mb-10 max-w-sm">
               Whether you need a 24/7 voice and chat team staffed for your
               customers, or want to see one of our products in action — tell us
-              what you're working with and we'll take it from there.
+              what you&apos;re working with and we&apos;ll take it from there.
             </p>
 
             <div className="space-y-4">
@@ -101,10 +97,10 @@ export default function DemoSection() {
 
           {/* Right: Form */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="rounded-xl border border-white/[0.07] bg-[#0f0f0f] p-7 noise">
               {submitted ? (

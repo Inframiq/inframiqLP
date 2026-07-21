@@ -36,6 +36,26 @@ const fadeUp = {
   }),
 };
 
+// Stat cards ease in from the edge they sit closest to in the 4-column
+// row — outer columns drift in from their side, inner columns lift only.
+// Single-axis motion (no combined x+y) with an expo-out curve for a clean,
+// fast glide instead of a jittery diagonal.
+const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
+
+const fadeUpStat = {
+  hidden: (i: number) => ({
+    opacity: 0,
+    x: i % 4 === 0 ? -18 : i % 4 === 3 ? 18 : 0,
+    y: i % 4 === 1 || i % 4 === 2 ? 12 : 0,
+  }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    x: 0,
+    transition: { duration: 0.4, delay: i * 0.05, ease: EASE_SMOOTH },
+  }),
+};
+
 export default function TrustSection() {
   return (
     <section id="about" className="py-28 border-t border-white/[0.05]">
@@ -73,7 +93,7 @@ export default function TrustSection() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeUp}
+              variants={fadeUpStat}
               className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] px-7 py-8 overflow-hidden hover:border-[#5b8def]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(91,141,239,0.35)]"
             >
               <div
@@ -96,10 +116,10 @@ export default function TrustSection() {
 
           {/* Certifications */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.45, ease: EASE_SMOOTH }}
             className="rounded-xl border border-white/[0.06] bg-[#0f0f0f] p-6"
           >
             <p className="text-[12px] font-medium text-[#505050] uppercase tracking-[0.12em] mb-5">
@@ -128,10 +148,10 @@ export default function TrustSection() {
 
           {/* Industries served */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.08, ease: EASE_SMOOTH }}
             className="rounded-xl border border-white/[0.06] bg-[#0f0f0f] p-6"
           >
             <p className="text-[12px] font-medium text-[#505050] uppercase tracking-[0.12em] mb-5">

@@ -111,3 +111,22 @@ select {
 .marquee-track:hover {
   animation-play-state: paused;
 }
+
+/* Team card marquee. Distance is measured in JS from the actual rendered
+   layout (see AboutContent.tsx) rather than assumed as 50%, since a
+   flex `gap` layout doesn't split evenly at the halfway point and that
+   mismatch causes a visible snap on loop. Runs as a real CSS animation
+   (compositor thread) — not a per-frame JS transform — so it stays smooth
+   regardless of what else is happening on the main thread. It starts
+   paused so the row sits on the first card (Bhargav) until JS marks it
+   as in-view and un-pauses it. */
+@keyframes marquee-scroll-team {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-1 * var(--marquee-distance, 0px))); }
+}
+.marquee-track-team {
+  animation: marquee-scroll-team linear infinite;
+  animation-duration: var(--marquee-duration, 30s);
+  animation-play-state: paused;
+}
+

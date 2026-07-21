@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Eye, Target } from "lucide-react";
+import { Eye, Target, User } from "lucide-react";
+import { useLayoutEffect, useRef } from "react";
+import { team } from "@/lib/team";
 
 const values = [
   {
@@ -27,14 +29,6 @@ const values = [
   },
 ];
 
-const team = [
-  { name: "Bhargav.U", role: "Founder" },
-  { name: "Bharath.K", role: "Co-Founder" },
-  { name: "Jaswanth Kongara", role: "Global Client Management Lead" },
-  { name: "Kundrapu Tanishq", role: "Technical Head" },
-  { name: "Manideep Boorla", role: "CFO" },
-];
-
 const timeline = [
   { year: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
   { year: "First Product", event: "Mail Shield launched — addressing phishing and domain impersonation at scale." },
@@ -50,7 +44,71 @@ const fadeUp = {
   }),
 };
 
+const MARQUEE_SPEED_PX_PER_SEC = 45;
+
 export default function AboutContent() {
+  const marqueeWrapperRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const secondGroupRef = useRef<HTMLDivElement | null>(null);
+
+  // The loop runs as a plain CSS animation (compositor thread) rather than a
+  // per-frame JS/rAF transform, so it can't be starved by main-thread work
+  // elsewhere on the page (React re-renders, other Framer Motion animations)
+  // — that main-thread contention was the source of the stutter. JS here
+  // only measures the exact pixel distance for a seamless loop point and
+  // toggles play/pause; it never touches the transform itself.
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    const wrapper = marqueeWrapperRef.current;
+    if (!track || !wrapper) return;
+
+    function measure() {
+      if (secondGroupRef.current && track) {
+        const distance = secondGroupRef.current.offsetLeft;
+        track.style.setProperty("--marquee-distance", `${distance}px`);
+        track.style.setProperty(
+          "--marquee-duration",
+          `${(distance / MARQUEE_SPEED_PX_PER_SEC).toFixed(2)}s`
+        );
+      }
+    }
+    measure();
+    window.addEventListener("resize", measure);
+
+    let hovered = false;
+    let visible = false;
+    function updatePlayState() {
+      if (track) track.style.animationPlayState = hovered || !visible ? "paused" : "running";
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        updatePlayState();
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(wrapper);
+
+    function onEnter() {
+      hovered = true;
+      updatePlayState();
+    }
+    function onLeave() {
+      hovered = false;
+      updatePlayState();
+    }
+    track.addEventListener("mouseenter", onEnter);
+    track.addEventListener("mouseleave", onLeave);
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      observer.disconnect();
+      track.removeEventListener("mouseenter", onEnter);
+      track.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
   return (
     <>
       {/* Hero */}
@@ -247,41 +305,47 @@ export default function AboutContent() {
               The people behind Inframiq
             </h2>
             <p className="text-[14px] text-[#626262] leading-[1.8] max-w-xl">
-              The leadership guiding Inframiq's product and engineering direction.
+              The leadership guiding Inframiq&apos;s product and engineering direction.
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {team.map((member, i) => (
-              <motion.div
-                key={member.name}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-30px" }}
-                variants={fadeUp}
-                className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] p-7 overflow-hidden hover:border-[#5b8def]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(91,141,239,0.35)]"
-              >
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="marquee-fade -mx-6 lg:-mx-8 overflow-hidden"
+            ref={marqueeWrapperRef}
+          >
+            <div
+              ref={trackRef}
+              className="marquee-track-team flex gap-5 w-max px-6 lg:px-8 relative will-change-transform"
+            >
+              {[...team, ...team].map((member, i) => (
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    background: "radial-gradient(120px 80px at 20% 0%, rgba(91,141,239,0.1), transparent 70%)",
-                  }}
-                />
-                <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#5b8def]/20 to-[#5b8def]/5 border border-[#5b8def]/25 flex items-center justify-center mb-5">
-                  <span className="text-[15px] font-semibold text-[#8fb2f4]">
-                    {member.name.charAt(0)}
-                  </span>
+                  key={`${member.name}-${i}`}
+                  ref={i === team.length ? secondGroupRef : undefined}
+                  className="group relative flex-shrink-0 w-[220px] rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111111] to-[#0c0c0c] p-6 overflow-hidden hover:border-[#5b8def]/25 transition-colors duration-300"
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: "radial-gradient(140px 90px at 20% 0%, rgba(91,141,239,0.1), transparent 70%)",
+                    }}
+                  />
+                  <div className="relative w-full aspect-[3/4] rounded-xl bg-gradient-to-br from-[#5b8def]/[0.08] to-white/[0.02] border border-white/[0.07] flex items-center justify-center mb-5">
+                    <User size={30} strokeWidth={1.5} className="text-[#3a3a3a]" />
+                  </div>
+                  <h3 className="relative text-[14.5px] font-medium text-[#e8e8e8] mb-1 tracking-[-0.01em]">
+                    {member.name}
+                  </h3>
+                  <p className="relative text-[11.5px] text-[#8fb2f4] font-medium tracking-[0.02em] uppercase">
+                    {member.role}
+                  </p>
                 </div>
-                <h3 className="relative text-[15.5px] font-medium text-[#e8e8e8] mb-1.5 tracking-[-0.01em]">
-                  {member.name}
-                </h3>
-                <p className="relative text-[12.5px] text-[#5b8def]/80 font-medium tracking-[0.02em] uppercase">
-                  {member.role}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 14 }}

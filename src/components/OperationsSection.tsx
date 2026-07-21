@@ -37,8 +37,8 @@ export default function OperationsSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: copy */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -24, y: 10 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
@@ -64,7 +64,13 @@ export default function OperationsSection() {
           </motion.div>
 
           {/* Right: pillars */}
-          <div className="space-y-0 divide-y divide-white/[0.05] rounded-xl border border-white/[0.06] bg-[#0f0f0f] overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-0 divide-y divide-white/[0.05] rounded-xl border border-white/[0.06] bg-[#0f0f0f] overflow-hidden"
+          >
             {pillars.map((pillar, i) => {
               const Icon = pillar.icon;
               return (
@@ -87,7 +93,7 @@ export default function OperationsSection() {
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

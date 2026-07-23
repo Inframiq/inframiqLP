@@ -176,6 +176,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <SplashScreen />
         {children}
+        <Analytics />
       </body>
     </html>
   );

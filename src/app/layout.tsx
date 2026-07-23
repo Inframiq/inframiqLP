@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
 import { Instrument_Sans, Geist_Mono, Space_Grotesk } from "next/font/google";
 import SplashScreen from "@/components/SplashScreen";
 import { team } from "@/lib/team";

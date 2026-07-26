@@ -2,82 +2,57 @@
 
 import Link from "next/link";
 
+// Only real, working destinations — no "#" placeholders. A footer full of
+// dead links is exactly the kind of thing that reads as unfinished on a
+// site meant to project a mature, premium product.
 const footerNav = {
   Company: [
     { label: "About", href: "/about" },
-    { label: "Careers", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Services", href: "/services" },
   ],
   Products: [
     { label: "Mail Shield", href: "/products" },
     { label: "Simulyn", href: "/products" },
     { label: "All Products", href: "/products" },
-    { label: "Changelog", href: "#" },
-    { label: "Status", href: "#" },
-  ],
-  Resources: [
-    { label: "Documentation", href: "#" },
-    { label: "Security", href: "#" },
-    { label: "Compliance", href: "#" },
-    { label: "API Reference", href: "#" },
   ],
   Contact: [
-    { label: "Enterprise Sales", href: "#" },
-    { label: "Support", href: "#" },
+    { label: "Request a Demo", href: "/#demo" },
     { label: "support@inframiq.com", href: "mailto:support@inframiq.com" },
   ],
 };
 
-const socials = [
-  { label: "X", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "GitHub", href: "#" },
-];
-
 export default function Footer() {
   return (
-    <footer id="contact" className="border-t border-white/[0.05]">
+    <footer id="contact" className="section-anchor">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
 
         {/* Top: Brand + nav */}
-        <div className="py-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
+        <div className="py-14 grid grid-cols-2 md:grid-cols-4 gap-10">
 
           {/* Brand */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex mb-5">
-              <span className="font-brand text-[19px] font-semibold tracking-tight text-[#f0f0f0] select-none">
-infram<span className="text-[#5b8def]">IQ</span>
+              <span className="font-brand text-[20px] font-semibold tracking-[-0.01em] text-[var(--text-1)] select-none">
+infram<span className="font-mono text-[0.8em] text-[var(--accent)]">IQ</span>
               </span>
             </Link>
-            <p className="text-[13px] text-[#555] leading-[1.7] mb-5 max-w-[200px]">
+            <p className="text-[13px] text-[var(--text-3)] leading-[1.7] max-w-[220px]">
               Precision-engineered products for security, business, and everyday life.
             </p>
-            <div className="flex gap-3">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  className="h-7 px-2.5 rounded border border-white/[0.07] bg-white/[0.02] flex items-center justify-center text-[11px] text-[#505050] hover:text-[#9a9a9a] hover:border-white/[0.12] transition-all duration-150"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Nav columns */}
           {Object.entries(footerNav).map(([category, links]) => (
             <div key={category}>
-              <p className="text-[11px] font-semibold text-[#404040] uppercase tracking-[0.14em] mb-4">
-                {category}
+              <p className="font-mono text-[11px] tracking-[0.02em] text-[var(--text-3)] mb-4">
+                {category.toLowerCase()}
               </p>
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[13px] text-[#565656] hover:text-[#a0a0a0] transition-colors duration-150"
+                      className="text-[13px] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors duration-150"
                     >
                       {link.label}
                     </Link>
@@ -89,21 +64,10 @@ infram<span className="text-[#5b8def]">IQ</span>
         </div>
 
         {/* Bottom bar */}
-        <div className="py-5 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[12px] text-[#3a3a3a]">
+        <div className="py-5 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[12px] text-[var(--text-3)]">
             © {new Date().getFullYear()} Inframiq Technologies, Inc. All rights reserved.
           </p>
-          <div className="flex flex-wrap items-center gap-4">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy", "Security"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-[12px] text-[#3a3a3a] hover:text-[#6a6a6a] transition-colors duration-150"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

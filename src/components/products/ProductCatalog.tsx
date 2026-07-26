@@ -121,7 +121,7 @@ function SimulynPreview() {
           >
             <span className="text-[11px] text-[#8a8a8a] font-medium truncate pr-2">{row.plan}</span>
             <span className="text-[10.5px] font-mono text-[#6a6a6a] truncate pr-2">{row.seats}</span>
-            <span className="text-[10.5px] font-mono text-[#5b8def]">{row.price}</span>
+            <span className="text-[10.5px] font-mono text-[#2b6172]">{row.price}</span>
           </motion.div>
         ))}
       </div>
@@ -193,13 +193,16 @@ function ProductRow({
   product: Product;
   index: number;
 }) {
-  // Alternate visual side: even = left, odd = right
+  // Alternate visual side row by row; the background shifts a few percent
+  // rather than flipping light/dark, so rows read as one continuous list
+  // instead of a stack of alternating panels.
   const visualLeft = index % 2 === 0;
+  const raised = index % 2 === 1;
 
-  const statusColor: Record<string, string> = {
-    Available: "bg-emerald-500/[0.08] text-emerald-400 border-emerald-500/[0.18]",
-    Beta: "bg-blue-500/[0.08] text-blue-400 border-blue-500/[0.18]",
-    "Coming Soon": "bg-white/[0.05] text-[#606060] border-white/[0.08]",
+  const statusDot: Record<string, string> = {
+    Available: "var(--success)",
+    Beta: "var(--warning)",
+    "Coming Soon": "var(--text-3)",
   };
 
   const content = (
@@ -210,32 +213,34 @@ function ProductRow({
       transition={{ duration: 0.55 }}
       className="flex flex-col justify-center"
     >
-      {/* Category + status */}
+      {/* Category + status — a status dot rather than a colored pill,
+          consistent with the console signature in the hero. */}
       <div className="flex items-center gap-2.5 mb-5">
         <div className="flex items-center gap-1.5">
-          <product.categoryIcon size={12} className="text-[#5b8def]" />
-          <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.1em] uppercase">
-            {product.category}
+          <product.categoryIcon size={12} className="text-[var(--accent)]" />
+          <span className="font-mono text-[11px] text-[var(--accent-strong)] tracking-[0.02em]">
+            {product.category.toLowerCase()}
           </span>
         </div>
-        <span className="text-[#303030]">·</span>
-        <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${statusColor[product.status]}`}>
-          {product.status}
+        <span className="text-[var(--border-strong)]">·</span>
+        <span className="flex items-center gap-1.5 font-mono text-[11px] text-[var(--text-3)]">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: statusDot[product.status] }} />
+          {product.status.toLowerCase()}
         </span>
       </div>
 
       {/* Name */}
-      <h2 className="text-[30px] lg:text-[34px] font-semibold text-[#f0f0f0] tracking-[-0.025em] leading-tight mb-3">
+      <h2 className="font-brand text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-3">
         {product.name}
       </h2>
 
       {/* Tagline */}
-      <p className="text-[15px] text-[#9a9a9a] font-medium mb-4 leading-snug">
+      <p className="text-[15px] text-[var(--text-2)] font-medium mb-4 leading-snug">
         {product.tagline}
       </p>
 
       {/* Description */}
-      <p className="text-[13.5px] text-[#626262] leading-[1.75] mb-7 max-w-md">
+      <p className="text-[13.5px] text-[var(--text-2)] leading-[1.75] mb-7 max-w-md">
         {product.description}
       </p>
 
@@ -243,8 +248,8 @@ function ProductRow({
       <ul className="space-y-2 mb-8">
         {product.features.map((f) => (
           <li key={f} className="flex items-start gap-2.5">
-            <CheckCircle2 size={13} className="text-[#5b8def] flex-shrink-0 mt-[2px]" />
-            <span className="text-[13px] text-[#6a6a6a]">{f}</span>
+            <CheckCircle2 size={14} className="text-[var(--accent)] flex-shrink-0 mt-[2px]" />
+            <span className="text-[13px] text-[var(--text-2)]">{f}</span>
           </li>
         ))}
       </ul>
@@ -255,15 +260,15 @@ function ProductRow({
           {product.hasPage && (
             <Link
               href={`/products/${product.slug}`}
-              className="inline-flex items-center gap-2 h-9 px-5 rounded-md border border-white/[0.12] text-[13px] font-medium text-[#c0c0c0] hover:border-white/[0.22] hover:text-white hover:bg-white/[0.03] transition-all duration-150 group"
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-md border border-[var(--border-strong)] text-[13.5px] font-medium text-[var(--text-2)] hover:border-[var(--accent)]/40 hover:text-[var(--text-1)] active:scale-[0.98] transition-all duration-150 group"
             >
               Visit Product
-              <ArrowRight size={12} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
+              <ArrowRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
             </Link>
           )}
           <Link
             href={`/?product=${encodeURIComponent(product.name)}#demo`}
-            className="inline-flex items-center gap-2 h-9 px-5 rounded-md bg-white text-[#0c0c0c] text-[13px] font-medium hover:bg-[#e8e8e8] transition-all duration-150 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
+            className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
           >
             Request a Demo
           </Link>
@@ -280,36 +285,40 @@ function ProductRow({
       transition={{ duration: 0.6, delay: 0.1 }}
       className="relative"
     >
-      {/* Visual container */}
+      {/* Visual container — kept as dark "device chrome" regardless of the
+          row's background, the way a real app screenshot looks framed on
+          a light marketing page. */}
       <div
         className="rounded-xl overflow-hidden border border-white/[0.06] bg-[#0f0f0f]"
         style={{
           aspectRatio: "4/3",
-          boxShadow: "0 16px 48px rgba(0,0,0,0.4)",
+          boxShadow: "0 20px 48px -12px rgba(15,15,17,0.22)",
         }}
       >
         <div className="w-full h-full p-4">{product.visual}</div>
       </div>
 
       {/* Subtle glow behind card */}
-      <div className="absolute inset-0 -z-10 rounded-xl bg-[#5b8def]/[0.03] blur-2xl scale-110 pointer-events-none" />
+      <div className="absolute inset-0 -z-10 rounded-xl bg-[var(--accent)]/[0.05] blur-2xl scale-110 pointer-events-none" />
     </motion.div>
   );
 
   return (
-    <div className="py-16 border-t border-white/[0.05] first:border-t-0">
-      <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
-        {visualLeft ? (
-          <>
-            {visual}
-            {content}
-          </>
-        ) : (
-          <>
-            {content}
-            {visual}
-          </>
-        )}
+    <div className={raised ? "section-raised" : ""}>
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16">
+        <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
+          {visualLeft ? (
+            <>
+              {visual}
+              {content}
+            </>
+          ) : (
+            <>
+              {content}
+              {visual}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -321,12 +330,12 @@ export default function ProductCatalog() {
   return (
     <>
       {/* Page header */}
-      <section className="relative pt-[110px] pb-14 overflow-hidden">
+      <section className="relative bg-[var(--bg)] pt-[110px] pb-14 overflow-hidden">
         <div className="absolute inset-0 dot-grid pointer-events-none opacity-60" />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 70% 50% at 50% 0%, transparent 30%, #0c0c0c 100%)",
+            background: "radial-gradient(ellipse 70% 50% at 50% 0%, transparent 30%, var(--bg) 100%)",
           }}
         />
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
@@ -336,24 +345,22 @@ export default function ProductCatalog() {
             transition={{ duration: 0.5 }}
           >
             {/* Breadcrumb */}
-            <div className="flex items-center gap-2 mb-8 text-[12px] text-[#454545]">
-              <Link href="/" className="hover:text-[#8a8a8a] transition-colors">
+            <div className="flex items-center gap-2 mb-8 text-[12px] text-[var(--text-3)]">
+              <Link href="/" className="hover:text-[var(--text-2)] transition-colors">
                 Inframiq
               </Link>
               <span>/</span>
-              <span className="text-[#8a8a8a]">Products</span>
+              <span className="text-[var(--text-2)]">Products</span>
             </div>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-5">
-              <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Product Suite</span>
-            </div>
+            <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-5">product suite</p>
 
-            <h1 className="text-[42px] lg:text-[52px] font-semibold tracking-[-0.03em] leading-[1.08] text-[#f0f0f0] mb-4">
+            <h1 className="font-brand text-[42px] lg:text-[52px] font-semibold tracking-[-0.02em] leading-[1.08] text-[var(--text-1)] mb-4">
               Every problem,
               <br />
-              <span className="text-[#5a5a5a]">engineered to an exacting standard.</span>
+              <span className="text-[var(--text-3)]">engineered to an exacting standard.</span>
             </h1>
-            <p className="text-[15px] text-[#666] max-w-xl leading-[1.75]">
+            <p className="text-[15px] text-[var(--text-2)] max-w-xl leading-[1.75]">
               Inframiq is building a portfolio of purpose-built products — enterprise
               security infrastructure, precision pricing intelligence, and refined
               everyday software. Distinct in purpose, uncompromising in craft.
@@ -367,24 +374,19 @@ export default function ProductCatalog() {
             transition={{ delay: 0.3 }}
             className="mt-10 flex items-center gap-3"
           >
-            <span className="text-[12px] text-[#3a3a3a] font-mono">
+            <span className="text-[12px] text-[var(--text-3)] font-mono">
               {products.length} product{products.length !== 1 ? "s" : ""} available
             </span>
-            <span className="h-px flex-1 max-w-[60px] bg-white/[0.06]" />
-            <span className="text-[12px] text-[#3a3a3a] font-mono">more in development</span>
+            <span className="h-px flex-1 max-w-[60px] bg-[var(--border)]" />
+            <span className="text-[12px] text-[var(--text-3)] font-mono">more in development</span>
           </motion.div>
         </div>
       </section>
 
-      {/* Product catalog */}
-      <section className="pb-24">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          {products.map((product, index) => (
-            <ProductRow key={product.slug} product={product} index={index} />
-          ))}
-        </div>
-      </section>
-
+      {/* Product catalog — each row manages its own full-bleed background */}
+      {products.map((product, index) => (
+        <ProductRow key={product.slug} product={product} index={index} />
+      ))}
     </>
   );
 }

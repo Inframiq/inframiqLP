@@ -53,7 +53,7 @@ const teamJsonLd = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#0c0c0c]">
+    <main className="min-h-screen bg-[var(--bg)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(teamJsonLd) }}

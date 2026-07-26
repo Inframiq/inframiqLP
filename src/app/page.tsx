@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import AudienceSelector from "@/components/AudienceSelector";
 import WhySection from "@/components/WhySection";
 import OperationsSection from "@/components/OperationsSection";
 import TrustSection from "@/components/TrustSection";
@@ -9,9 +10,10 @@ import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#0c0c0c]">
+    <main className="min-h-screen bg-[var(--bg)]">
       <Navbar />
       <HeroSection />
+      <AudienceSelector />
       <WhySection />
       <OperationsSection />
       <TrustSection />

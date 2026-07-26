@@ -1,29 +1,41 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
-import { Instrument_Sans, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Fraunces } from "next/font/google";
 import SplashScreen from "@/components/SplashScreen";
 import { team } from "@/lib/team";
 import "./globals.css";
 
-const geistSans = Instrument_Sans({
+// Body/UI face — a documentary, engineered workhorse (IBM's own systems
+// typeface), doing the quiet work of paragraphs, labels, and nav.
+const geistSans = IBM_Plex_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+// Utility/data face — timestamps, status readouts, and the wordmark's "IQ".
+// Set in monospace deliberately: Inframiq's two businesses (human support,
+// security software) share one real trait, uninterrupted monitoring, and
+// mono type is how status and log data actually gets rendered in that
+// world. Not decorative — it's the vernacular of the subject.
+const geistMono = IBM_Plex_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
-// Used only for the "inframIQ" wordmark — a tighter, more geometric display
-// face than the body font, so the logotype reads as a considered brand mark
-// rather than body text set larger.
-const brandFont = Space_Grotesk({
+// Display face for headlines and the wordmark — a warm, human serif
+// against an otherwise technical system. Inframiq is a security/software
+// company where the other half of the business is literally real people
+// answering calls; Fraunces carries that warmth without giving up
+// authority, in deliberate contrast to the mono utility face.
+const brandFont = Fraunces({
   variable: "--font-brand",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -167,16 +179,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${brandFont.variable} bg-[#0c0c0c]`}
+      className={`${geistSans.variable} ${geistMono.variable} ${brandFont.variable} bg-[var(--bg)]`}
     >
-      <body className="bg-[#0c0c0c] pb-16 md:pb-0">
+      <body className="bg-[var(--bg)] pb-16 md:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <SplashScreen />
         {children}
-        <Analytics />
       </body>
     </html>
   );

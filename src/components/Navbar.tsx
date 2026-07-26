@@ -48,7 +48,7 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
           scrolled
-            ? "bg-[#0c0c0c]/70 backdrop-blur-md border-white/[0.06]"
+            ? "bg-[var(--bg)]/75 backdrop-blur-md border-[var(--border)]"
             : "bg-transparent border-transparent"
         }`}
       >
@@ -57,37 +57,45 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <span
-                id="site-brand-mark"
-                className="font-brand text-[19px] font-semibold tracking-tight leading-none text-[#f0f0f0] select-none"
-              >
-infram<span className="text-[#5b8def]">IQ</span>
+              <span className="font-brand text-[20px] font-semibold tracking-[-0.01em] leading-none text-[var(--text-1)] select-none">
+infram<span className="font-mono text-[0.8em] text-[var(--accent)]">IQ</span>
               </span>
             </Link>
 
-            {/* Desktop nav */}
+            {/* Desktop nav — active state reads as a small underline dot
+                rather than a filled pill, a quieter way to mark position */}
             <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleHashLink(e, link.href)}
-                  className={`px-3.5 py-1.5 rounded-md text-[13.5px] transition-colors duration-150 ${
-                    isActive(link.href)
-                      ? "text-white bg-white/[0.06]"
-                      : "text-[#8a8a8a] hover:text-[#d0d0d0] hover:bg-white/[0.04]"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => handleHashLink(e, link.href)}
+                    className={`relative px-3.5 py-1.5 text-[13.5px] transition-colors duration-150 ${
+                      active
+                        ? "text-[var(--text-1)]"
+                        : "text-[var(--text-2)] hover:text-[var(--text-1)]"
+                    }`}
+                  >
+                    {link.label}
+                    {active && (
+                      <motion.span
+                        layoutId="navActiveDot"
+                        className="absolute left-1/2 -bottom-[3px] h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-[var(--accent)]"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>
       </motion.header>
 
       {/* Mobile bottom nav */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[#0c0c0c]/95 backdrop-blur-md border-t border-white/[0.07]">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[var(--bg)]/95 backdrop-blur-md border-t border-[var(--border)]">
         <div className="flex items-center justify-around px-1 pt-2 pb-3">
           {navLinks.map((link) => {
             const Icon = link.icon;
@@ -99,8 +107,8 @@ infram<span className="text-[#5b8def]">IQ</span>
                 onClick={(e) => handleHashLink(e, link.href)}
                 className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all duration-150 ${
                   active
-                    ? "text-white bg-white/[0.07]"
-                    : "text-[#505050] hover:text-[#909090]"
+                    ? "text-[var(--text-1)] bg-[var(--surface)]"
+                    : "text-[var(--text-3)] hover:text-[var(--text-2)]"
                 }`}
               >
                 <Icon size={19} strokeWidth={active ? 2 : 1.5} />

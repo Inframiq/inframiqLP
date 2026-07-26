@@ -42,10 +42,10 @@ export default function DemoSection() {
   };
 
   const inputClass =
-    "w-full h-10 bg-transparent border border-white/[0.09] rounded-md px-3.5 text-[13.5px] text-[#d8d8d8] placeholder-[#404040] focus:border-white/[0.2] focus:bg-white/[0.02] transition-all duration-150";
+    "w-full h-10 bg-transparent border border-[var(--border-strong)] rounded-md px-3.5 text-[13.5px] text-[var(--text-1)] placeholder-[var(--text-3)] focus:border-[var(--accent)]/50 focus:bg-[var(--surface-2)] transition-all duration-150";
 
   return (
-    <section id="demo" className="py-28 border-t border-white/[0.05]">
+    <section id="demo" className="section-raised py-28">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
@@ -56,15 +56,13 @@ export default function DemoSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#5b8def]/25 bg-[#5b8def]/[0.07] mb-4">
-              <span className="text-[11px] text-[#5b8def] font-medium tracking-[0.12em] uppercase">Get Started</span>
-            </div>
-            <h2 className="text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.025em] text-[#f0f0f0] mb-5">
+            <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-4">get started</p>
+            <h2 className="font-brand text-[36px] lg:text-[42px] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-5">
               Let&apos;s talk about
               <br />
-              <span className="text-[#606060]">your support line.</span>
+              <span className="text-[var(--text-3)]">your support line.</span>
             </h2>
-            <p className="text-[15px] text-[#7a7a7a] leading-[1.75] mb-10 max-w-sm">
+            <p className="text-[15px] text-[var(--text-2)] leading-[1.75] mb-10 max-w-sm">
               Whether you need a 24/7 voice and chat team staffed for your
               customers, or want to see one of our products in action — tell us
               what you&apos;re working with and we&apos;ll take it from there.
@@ -78,17 +76,17 @@ export default function DemoSection() {
                 "No obligation, no sales pressure",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <CheckCircle2 size={14} className="text-[#5b8def] flex-shrink-0" />
-                  <span className="text-[13.5px] text-[#7a7a7a]">{item}</span>
+                  <CheckCircle2 size={14} className="text-[var(--accent)] flex-shrink-0" />
+                  <span className="text-[13.5px] text-[var(--text-2)]">{item}</span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-white/[0.05]">
-              <p className="text-[12px] text-[#404040] mb-2">Prefer email?</p>
+            <div className="mt-12 pt-8 border-t border-[var(--border)]">
+              <p className="text-[12px] text-[var(--text-3)] mb-2">Prefer email?</p>
               <a
                 href="mailto:support@inframiq.com"
-                className="text-[13px] text-[#7a7a7a] hover:text-white transition-colors"
+                className="text-[13px] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors"
               >
                 support@inframiq.com
               </a>
@@ -102,7 +100,7 @@ export default function DemoSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="rounded-xl border border-white/[0.07] bg-[#0f0f0f] p-7 noise">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-7 noise">
               {submitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.97 }}
@@ -110,13 +108,13 @@ export default function DemoSection() {
                   transition={{ duration: 0.3 }}
                   className="py-8 text-center"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#5b8def]/10 border border-[#5b8def]/20 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 size={18} className="text-[#5b8def]" />
+                  <div className="w-10 h-10 rounded-full bg-[var(--accent-dim)] border border-[var(--accent)]/20 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 size={18} className="text-[var(--accent)]" />
                   </div>
-                  <h3 className="text-[16px] font-medium text-[#e8e8e8] mb-2">
+                  <h3 className="text-[16px] font-medium text-[var(--text-1)] mb-2">
                     Request received
                   </h3>
-                  <p className="text-[13px] text-[#666] leading-relaxed">
+                  <p className="text-[13px] text-[var(--text-2)] leading-relaxed">
                     We&apos;ll reach out within one business day to talk through
                     your support needs.
                   </p>
@@ -124,7 +122,7 @@ export default function DemoSection() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-[12px] font-medium text-[#5a5a5a] mb-1.5">
+                    <label className="block text-[12px] font-medium text-[var(--text-2)] mb-1.5">
                       Full name
                     </label>
                     <input
@@ -138,7 +136,7 @@ export default function DemoSection() {
                   </div>
 
                   <div>
-                    <label className="block text-[12px] font-medium text-[#5a5a5a] mb-1.5">
+                    <label className="block text-[12px] font-medium text-[var(--text-2)] mb-1.5">
                       Company
                     </label>
                     <input
@@ -152,7 +150,7 @@ export default function DemoSection() {
                   </div>
 
                   <div>
-                    <label className="block text-[12px] font-medium text-[#5a5a5a] mb-1.5">
+                    <label className="block text-[12px] font-medium text-[var(--text-2)] mb-1.5">
                       Work email
                     </label>
                     <input
@@ -166,9 +164,9 @@ export default function DemoSection() {
                   </div>
 
                   <div>
-                    <label className="block text-[12px] font-medium text-[#5a5a5a] mb-1.5">
+                    <label className="block text-[12px] font-medium text-[var(--text-2)] mb-1.5">
                       Message{" "}
-                      <span className="text-[#3a3a3a] font-normal">(optional)</span>
+                      <span className="text-[var(--text-3)] font-normal">(optional)</span>
                     </label>
                     <textarea
                       rows={4}
@@ -182,12 +180,12 @@ export default function DemoSection() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full h-10 rounded-md bg-white text-[#0c0c0c] text-[13.5px] font-medium hover:bg-[#e8e8e8] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 flex items-center justify-center gap-2 mt-2 shadow-[0_0_22px_rgba(255,255,255,0.07)]"
+                    className="w-full h-10 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 transition-all duration-150 flex items-center justify-center gap-2 mt-2"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">
                         <svg
-                          className="animate-spin w-3.5 h-3.5 text-[#555]"
+                          className="animate-spin w-3.5 h-3.5"
                           viewBox="0 0 24 24"
                           fill="none"
                         >
@@ -210,13 +208,13 @@ export default function DemoSection() {
                     ) : (
                       <>
                         Request a Consultation
-                        <ArrowRight size={13} />
+                        <ArrowRight size={14} />
                       </>
                     )}
                   </button>
 
                   {error && (
-                    <p className="text-[11.5px] text-red-400 text-center">
+                    <p className="text-[11.5px] text-center" style={{ color: "var(--error)" }}>
                       Something went wrong sending your request — please try again, or email{" "}
                       <a href="mailto:support@inframiq.com" className="underline">
                         support@inframiq.com
@@ -225,7 +223,7 @@ export default function DemoSection() {
                     </p>
                   )}
 
-                  <p className="text-[11px] text-[#404040] text-center">
+                  <p className="text-[11px] text-[var(--text-3)] text-center">
                     No credit card required. We respect your privacy.
                   </p>
                 </form>

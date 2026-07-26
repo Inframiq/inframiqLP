@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-[#0c0c0c]">
+    <main className="min-h-screen bg-[var(--bg)]">
       <Navbar />
       <ServicesContent />
       <Footer />

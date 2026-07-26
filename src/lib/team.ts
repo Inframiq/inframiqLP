@@ -9,7 +9,7 @@ export interface TeamMember {
 
 export const team: TeamMember[] = [
   { name: "Bhargav", role: "Co-Founder" },
-  { name: "Bharath.K", role: "Co-Founder" },
+  { name: "Bharath.K", role: "Co-Founder & CEO" },
   { name: "Jaswanth Kongara", role: "Global Client Management Lead" },
   { name: "Kundrapu Tanishq", role: "Technical Head" },
   { name: "Manideep Boorla", role: "CFO" },

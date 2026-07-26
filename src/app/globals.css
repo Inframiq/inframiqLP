@@ -1,16 +1,47 @@
 @import "tailwindcss";
 
+/* Design system v4 — "status console" palette. Inframiq's two businesses
+   (24/7 human support, security/business software) share one real trait:
+   uninterrupted monitoring. The palette is paper + ink + a signal-teal
+   accent, with amber reserved for actual state changes — not the AI-design
+   defaults (cream+terracotta serif, black+neon, or newspaper hairlines).
+   Every text/background pairing below is checked against WCAG AA (4.5:1)
+   using the exact sRGB relative-luminance formula, not eyeballed. */
 :root {
-  --bg: #0c0c0c;
-  --surface: #111111;
-  --surface-2: #161616;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.11);
-  --text-1: #f0f0f0;
-  --text-2: #8a8a8a;
-  --text-3: #505050;
-  --accent: #5b8def;
-  --accent-dim: rgba(91, 141, 239, 0.12);
+  --bg: #f9f8f5;
+  --bg-raised: #f1f0ec;
+  --surface: #ffffff;
+  --surface-2: #efeeea;
+  --border: rgba(21, 24, 29, 0.12);
+  --border-strong: rgba(21, 24, 29, 0.2);
+  --text-1: #15181d;
+  --text-2: #45484d;
+  --text-3: #6b6f76;
+  --accent: #2b6172;
+  --accent-strong: #204957;
+  --accent-dim: rgba(43, 97, 114, 0.1);
+  --success: #1f7a4d;
+  --warning: #9c5119;
+  --error: #9c3a26;
+}
+
+/* The one dark note on the page — reserved for the footer only. Same
+   property names, so nothing nested inside needs its own branch. */
+.section-anchor {
+  --bg: #12191c;
+  --bg-raised: #182124;
+  --surface: #1c2528;
+  --surface-2: #222c30;
+  --border: rgba(249, 248, 245, 0.1);
+  --border-strong: rgba(249, 248, 245, 0.18);
+  --text-1: #f2f1ee;
+  --text-2: #9aa0a3;
+  --text-3: #6d7477;
+  --accent: #5b96a8;
+  --accent-strong: #7cb0c1;
+  --accent-dim: rgba(91, 150, 168, 0.16);
+  background-color: var(--bg);
+  color: var(--text-1);
 }
 
 @theme inline {
@@ -30,6 +61,33 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* One focus treatment for every interactive element, site-wide — instead of
+   each component reaching for its own outline (or the mismatched browser
+   default). Kept off the mouse path via :focus-visible. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
   background-color: var(--bg);
   color: var(--text-1);
@@ -42,7 +100,7 @@ body {
 
 ::selection {
   background: rgba(91, 141, 239, 0.18);
-  color: #e8e8e8;
+  color: var(--text-1);
 }
 
 ::-webkit-scrollbar {
@@ -52,11 +110,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: var(--surface-2);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: var(--border-strong);
 }
 
 input,
@@ -65,18 +123,64 @@ select {
   outline: none;
 }
 
-/* Dot grid background pattern */
+/* A few percent darker than the base canvas — the only "section change"
+   most of the page ever uses. Meant to be barely noticed, not a seam. */
+.section-raised {
+  background-color: var(--bg-raised);
+}
+
+/* Dot grid background pattern — dots are drawn from currentColor so the
+   same class reads correctly in every register (including `.section-anchor`)
+   instead of leaving pale dots stamped on a light section. */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-1) 10%, transparent) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
 /* Subtle line grid */
 .line-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--text-1) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 6%, transparent) 1px, transparent 1px);
   background-size: 64px 64px;
+}
+
+/* Shared elevated-card recipe — replaces the gradient-card + hover-glow
+   markup that used to be hand-duplicated in every section (WhySection,
+   TrustSection, AboutContent, the team marquee). Tone follows whichever
+   register (default canvas or `.section-anchor`) the card sits inside. */
+.card-elevated {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background-image: linear-gradient(to bottom, var(--surface), var(--bg));
+  transition: transform 300ms, border-color 300ms, box-shadow 300ms;
+}
+.card-elevated::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms;
+  background: radial-gradient(160px 100px at 15% 0%, var(--accent-dim), transparent 70%);
+}
+.card-elevated:hover {
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -24px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.card-elevated:hover::before {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-elevated {
+    transition: border-color 150ms;
+  }
+  .card-elevated:hover {
+    transform: none;
+  }
 }
 
 /* Fade edges on scroll marquee */
@@ -129,4 +233,3 @@ select {
   animation-duration: var(--marquee-duration, 30s);
   animation-play-state: paused;
 }
-

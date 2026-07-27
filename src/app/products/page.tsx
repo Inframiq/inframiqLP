@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCatalog from "@/components/products/ProductCatalog";
 
@@ -32,7 +31,6 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <main className="min-h-screen bg-[var(--bg)]">
-      <Navbar />
       <ProductCatalog />
       <Footer />
     </main>

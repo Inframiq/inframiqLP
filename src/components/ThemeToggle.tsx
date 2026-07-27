@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 
 const STORAGE_KEY = "inframiq-theme";
@@ -39,7 +40,31 @@ export default function ThemeToggle() {
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       className="relative flex items-center justify-center w-7 h-7 rounded-md text-[var(--text-3)] hover:text-[var(--text-1)] hover:bg-[var(--surface-2)] transition-colors duration-150"
     >
-      {theme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
+      <AnimatePresence mode="wait" initial={false}>
+        {theme === "dark" ? (
+          <motion.span
+            key="sun"
+            initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+            transition={{ type: "spring", stiffness: 400, damping: 28 }}
+            className="flex"
+          >
+            <Sun size={14} strokeWidth={1.75} />
+          </motion.span>
+        ) : (
+          <motion.span
+            key="moon"
+            initial={{ opacity: 0, rotate: 90, scale: 0.6 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: -90, scale: 0.6 }}
+            transition={{ type: "spring", stiffness: 400, damping: 28 }}
+            className="flex"
+          >
+            <Moon size={14} strokeWidth={1.75} />
+          </motion.span>
+        )}
+      </AnimatePresence>
     </button>
   );
 }

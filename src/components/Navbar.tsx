@@ -15,27 +15,6 @@ const navLinks = [
   { label: "Contact",  href: "/#demo",    icon: Mail     },
 ];
 
-// A live HH:MM clock, standing in for the "system clock" corner of a real
-// menu bar — quiet proof the desk is live, not a static screenshot.
-function MenuBarClock() {
-  const [time, setTime] = useState<string | null>(null);
-  useEffect(() => {
-    const update = () => setTime(new Date().toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }));
-    update();
-    const id = setInterval(update, 15000);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <span className="hidden sm:flex items-center gap-1.5 font-mono text-[11px] text-[var(--text-3)] tabular-nums">
-      <span className="relative flex h-1.5 w-1.5">
-        <span className="absolute inset-0 rounded-full status-pulse" style={{ backgroundColor: "var(--success)" }} />
-        <span className="relative h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--success)" }} />
-      </span>
-      {time ?? "--:--"}
-    </span>
-  );
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -91,7 +70,7 @@ export default function Navbar() {
               </span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-0.5">
+            <nav className="hidden md:flex items-center gap-5">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -99,27 +78,19 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={(e) => handleHashLink(e, link.href)}
-                    className={`relative px-3.5 py-1.5 rounded-md font-mono text-[12px] tracking-[0.02em] transition-colors duration-150 ${
+                    className={`text-[14px] transition-colors duration-200 ${
                       active
-                        ? "text-[var(--text-1)]"
-                        : "text-[var(--text-3)] hover:text-[var(--text-1)] hover:bg-[var(--surface-2)]"
+                        ? "font-medium text-[var(--text-1)]"
+                        : "text-[var(--text-2)] hover:text-[var(--text-1)]"
                     }`}
                   >
-                    {link.label.toLowerCase()}
-                    {active && (
-                      <motion.span
-                        layoutId="navActiveDot"
-                        className="absolute inset-0 -z-10 rounded-md bg-[var(--surface-2)] border border-[var(--border)]"
-                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                      />
-                    )}
+                    {link.label}
                   </Link>
                 );
               })}
             </nav>
 
             <div className="flex items-center gap-3">
-              <MenuBarClock />
               <ThemeToggle />
             </div>
           </div>
@@ -137,12 +108,12 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleHashLink(e, link.href)}
-                className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-md transition-all duration-150 ${
+                className={`flex flex-col items-center gap-1 px-3 py-1.5 transition-colors duration-200 ${
                   active ? "text-[var(--text-1)]" : "text-[var(--text-3)] hover:text-[var(--text-2)]"
                 }`}
               >
-                <Icon size={18} strokeWidth={active ? 2 : 1.5} />
-                <span className="font-mono text-[9px] tracking-wide">{link.label.toLowerCase()}</span>
+                <Icon size={18} strokeWidth={active ? 2 : 1.5} className="transition-[stroke-width] duration-300" />
+                <span className={`text-[10px] ${active ? "font-medium" : ""}`}>{link.label}</span>
               </Link>
             );
           })}

@@ -46,10 +46,9 @@ export default function TheNumbers() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="rounded-xl border border-[var(--border)] bg-[var(--surface)] py-8 px-4"
-              style={{ boxShadow: "0 30px 60px -32px rgba(15,23,42,0.18)" }}
+              className="card-elevated py-8 px-4"
             >
-              {inst.node}
+              <div className="relative z-10">{inst.node}</div>
             </motion.div>
           ))}
         </div>
@@ -64,19 +63,22 @@ export default function TheNumbers() {
           We&apos;d rather show you exactly where we are than round up.
         </motion.p>
 
-        <div className="grid sm:grid-cols-3 gap-10 text-left border-t border-[var(--border)] pt-10">
+        <div className="grid sm:grid-cols-3 gap-6 mt-14">
           {timeline.map((item, i) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="card-elevated p-6 text-left"
             >
-              <p className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase mb-2">
-                {item.label}
-              </p>
-              <p className="text-[13.5px] text-[var(--text-2)] leading-[1.7]">{item.detail}</p>
+              <div className="relative z-10">
+                <p className="font-brand text-[12px] font-bold tracking-[0.05em] text-[var(--accent-strong)] uppercase mb-2.5">
+                  {item.label}
+                </p>
+                <p className="text-[13.5px] text-[var(--text-2)] leading-[1.7]">{item.detail}</p>
+              </div>
             </motion.div>
           ))}
         </div>

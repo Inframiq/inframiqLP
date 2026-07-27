@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const pillars = [
-  { tag: "security", title: "Security-first", description: "Every product is built with the same rigor: proactive, tested, and hardened against failure — whether it's a phishing email or an everyday app." },
+  { tag: "security", title: "Security-first", description: "Every product is tested and hardened against failure — whether it's a phishing email or an everyday app." },
   { tag: "uptime", title: "Redundant", description: "Self-healing systems designed to stay online and perform — from enterprise security infrastructure to tools people use every day." },
   { tag: "privacy", title: "Private by default", description: "No implicit trust, no unnecessary data collection. Every product respects the people using it, not just the businesses buying it." },
   { tag: "scale", title: "Built to scale", description: "From individual users and students to global enterprises — our products grow without architectural compromise." },
@@ -32,83 +32,68 @@ export default function TheStandard() {
           </motion.h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[280px_1fr] gap-10 lg:gap-16 items-center">
-          {/* Vertical stepper — a plain connector rail behind a column of dots,
-              never colinear with any label, so there's no line-through-text
-              collision the way a radial layout has at its top/bottom points. */}
+        <div className="max-w-3xl">
+          {/* Active pillar detail — the pill row beneath does the switching,
+              so there's no separate selector competing for space next to it. */}
           <motion.div
-            initial={{ opacity: 0, x: -14 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5 }}
-            className="relative"
+            className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-10 lg:p-14 overflow-hidden"
           >
-            <div className="absolute left-[7px] top-3 bottom-3 w-px bg-[var(--border)]" aria-hidden />
-            <div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
+                  0{active + 1} / 06 — {pillars[active].tag}
+                </span>
+                <h3 className="font-brand font-semibold text-[26px] lg:text-[30px] text-[var(--text-1)] mt-3 mb-4">
+                  {pillars[active].title}
+                </h3>
+                <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-lg">
+                  {pillars[active].description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="inline-flex flex-wrap gap-1 rounded-full bg-[var(--surface-2)] p-1 mt-8">
               {pillars.map((p, i) => {
                 const isActive = active === i;
+                const label = p.tag.charAt(0).toUpperCase() + p.tag.slice(1);
                 return (
                   <button
                     key={p.tag}
                     type="button"
-                    aria-pressed={isActive}
                     onClick={() => setActive(i)}
-                    className="relative flex items-center gap-4 w-full text-left py-3 group"
+                    className="relative inline-flex items-center justify-center text-[12.5px] leading-none px-3.5 py-2 rounded-full"
                   >
+                    {isActive && (
+                      <motion.span
+                        layoutId="standard-pill-highlight"
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                          background: "linear-gradient(135deg, var(--accent), var(--accent-strong))",
+                          boxShadow: "0 8px 18px -8px color-mix(in srgb, var(--accent) 55%, transparent)",
+                        }}
+                        transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                      />
+                    )}
                     <span
-                      className="relative z-10 flex-shrink-0 h-3.5 w-3.5 rounded-full border-2 transition-all duration-200"
-                      style={{
-                        backgroundColor: isActive ? "var(--accent)" : "var(--surface)",
-                        borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
-                        boxShadow: isActive ? "0 0 0 4px var(--accent-dim)" : "none",
-                      }}
-                    />
-                    <span
-                      className={`font-mono text-[12px] uppercase tracking-[0.04em] transition-colors duration-200 ${
-                        isActive ? "text-[var(--text-1)]" : "text-[var(--text-3)] group-hover:text-[var(--text-2)]"
+                      className={`relative z-10 transition-colors duration-200 ${
+                        isActive ? "font-medium text-white" : "text-[var(--text-3)] hover:text-[var(--text-1)]"
                       }`}
                     >
-                      0{i + 1} — {p.tag}
+                      {label}
                     </span>
                   </button>
                 );
               })}
-            </div>
-          </motion.div>
-
-          {/* Active pillar detail */}
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 lg:p-10"
-          >
-            <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
-              0{active + 1} / 06 — {pillars[active].tag}
-            </span>
-            <h3 className="font-brand font-semibold text-[24px] lg:text-[28px] text-[var(--text-1)] mt-3 mb-4">
-              {pillars[active].title}
-            </h3>
-            <p className="text-[14.5px] text-[var(--text-2)] leading-[1.8] max-w-md">
-              {pillars[active].description}
-            </p>
-
-            <div className="flex flex-wrap gap-1.5 mt-8">
-              {pillars.map((p, i) => (
-                <button
-                  key={p.tag}
-                  type="button"
-                  onClick={() => setActive(i)}
-                  className={`font-mono text-[10.5px] px-2.5 py-1 rounded border transition-colors duration-150 ${
-                    active === i
-                      ? "border-[var(--accent)]/50 text-[var(--text-1)] bg-[var(--accent-dim)]"
-                      : "border-[var(--border)] text-[var(--text-3)] hover:text-[var(--text-2)]"
-                  }`}
-                >
-                  {p.tag}
-                </button>
-              ))}
             </div>
           </motion.div>
         </div>

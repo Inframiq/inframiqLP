@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Eye, Target } from "lucide-react";
 import { values } from "@/lib/values";
@@ -35,27 +35,52 @@ function ManifestoWindow() {
 
   return (
     <div className="window-chrome max-w-2xl mx-auto">
-      <div className="window-chrome-bar !p-0">
-        {docs.map((d, i) => (
-          <button
-            key={d.key}
-            type="button"
-            onClick={() => setActive(i)}
-            className={`flex items-center gap-1.5 px-4 py-2.5 text-[10px] font-mono border-r border-[var(--border)] transition-colors duration-150 ${
-              active === i ? "bg-[var(--surface-2)] text-[var(--text-1)]" : "text-[var(--text-3)] hover:text-[var(--text-2)]"
-            }`}
-          >
-            {d.title}
-          </button>
-        ))}
+      <div className="window-chrome-bar !p-1.5 gap-1">
+        {docs.map((d, i) => {
+          const isActive = active === i;
+          return (
+            <button
+              key={d.key}
+              type="button"
+              onClick={() => setActive(i)}
+              className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[10px] font-mono"
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="manifesto-tab-highlight"
+                  className="absolute inset-0 rounded-lg"
+                  style={{
+                    background: "linear-gradient(135deg, var(--accent), var(--accent-strong))",
+                    boxShadow: "0 6px 16px -6px color-mix(in srgb, var(--accent) 55%, transparent)",
+                  }}
+                  transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                />
+              )}
+              <span className={`relative z-10 transition-colors duration-200 ${isActive ? "text-white" : "text-[var(--text-3)] hover:text-[var(--text-2)]"}`}>
+                {d.title}
+              </span>
+            </button>
+          );
+        })}
       </div>
-      <motion.div key={doc.key} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="p-8 lg:p-10">
-        <div className="flex items-center gap-2 mb-5">
-          <Icon size={15} className="text-[var(--accent)]" strokeWidth={1.75} />
-          <span className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] uppercase">{doc.key}</span>
-        </div>
-        <p className="text-[14.5px] text-[var(--text-2)] leading-[1.8]">{doc.body}</p>
-      </motion.div>
+      <div className="relative overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={doc.key}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="p-8 lg:p-10"
+          >
+            <div className="flex items-center gap-2 mb-5">
+              <Icon size={15} className="text-[var(--accent)]" strokeWidth={1.75} />
+              <span className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] uppercase">{doc.key}</span>
+            </div>
+            <p className="text-[14.5px] text-[var(--text-2)] leading-[1.8]">{doc.body}</p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
@@ -72,56 +97,67 @@ function PrinciplesDiagram() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.5 }}
-        className="relative"
+        className="relative rounded-2xl bg-[var(--surface-2)] p-1.5"
       >
-        <div className="absolute left-[7px] top-3 bottom-3 w-px bg-[var(--border)]" aria-hidden />
-        <div>
-          {values.map((v, i) => {
-            const isActive = active === i;
-            return (
-              <button
-                key={v.tag}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setActive(i)}
-                className="relative flex items-center gap-4 w-full text-left py-3 group"
-              >
-                <span
-                  className="relative z-10 flex-shrink-0 h-3.5 w-3.5 rounded-full border-2 transition-all duration-200"
+        {values.map((v, i) => {
+          const isActive = active === i;
+          return (
+            <button
+              key={v.tag}
+              type="button"
+              aria-pressed={isActive}
+              onClick={() => setActive(i)}
+              className="relative flex items-center gap-3 w-full text-left px-3.5 py-2.5 rounded-xl group"
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="principles-step-highlight"
+                  className="absolute inset-0 rounded-xl"
                   style={{
-                    backgroundColor: isActive ? "var(--accent)" : "var(--surface)",
-                    borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
-                    boxShadow: isActive ? "0 0 0 4px var(--accent-dim)" : "none",
+                    background: "linear-gradient(135deg, var(--accent), var(--accent-strong))",
+                    boxShadow: "0 10px 24px -10px color-mix(in srgb, var(--accent) 55%, transparent)",
                   }}
+                  transition={{ type: "spring", stiffness: 420, damping: 38 }}
                 />
-                <span
-                  className={`font-mono text-[11px] uppercase tracking-[0.04em] transition-colors duration-200 ${
-                    isActive ? "text-[var(--text-1)]" : "text-[var(--text-3)] group-hover:text-[var(--text-2)]"
-                  }`}
-                >
-                  0{i + 1} — {v.tag}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+              )}
+              <span
+                className="relative z-10 flex-shrink-0 h-2 w-2 rounded-full"
+                style={{
+                  backgroundColor: isActive ? "#ffffff" : "var(--border-strong)",
+                  transition: "background-color 250ms",
+                }}
+              />
+              <span
+                className={`relative z-10 text-[13.5px] transition-colors duration-200 ${
+                  isActive ? "font-medium text-white" : "text-[var(--text-2)] group-hover:text-[var(--text-1)]"
+                }`}
+              >
+                {v.title}
+              </span>
+            </button>
+          );
+        })}
       </motion.div>
 
-      <motion.div
-        key={active}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 lg:p-10"
-      >
-        <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
-          0{active + 1} / 0{values.length} — {values[active].tag}
-        </span>
-        <h3 className="font-brand font-semibold text-[22px] lg:text-[26px] text-[var(--text-1)] mt-3 mb-4">
-          {values[active].title}
-        </h3>
-        <p className="text-[14px] text-[var(--text-2)] leading-[1.8] max-w-md">{values[active].description}</p>
-      </motion.div>
+      <div className="relative rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 lg:p-10 overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
+              0{active + 1} / 0{values.length} — {values[active].tag}
+            </span>
+            <h3 className="font-brand font-semibold text-[22px] lg:text-[26px] text-[var(--text-1)] mt-3 mb-4">
+              {values[active].title}
+            </h3>
+            <p className="text-[14px] text-[var(--text-2)] leading-[1.8] max-w-md">{values[active].description}</p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

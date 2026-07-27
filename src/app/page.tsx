@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TheSplit from "@/components/TheSplit";
 import TheStandard from "@/components/TheStandard";
@@ -13,7 +12,6 @@ import Footer from "@/components/Footer";
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-[var(--bg)]">
-      <Navbar />
       <HeroSection />
       <TheSplit />
       <TheStandard />

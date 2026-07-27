@@ -178,9 +178,9 @@ export default function HeroSection() {
               </Link>
               <a
                 href="#systems"
-                className="inline-flex items-center gap-1.5 font-mono text-[13px] tracking-[0.02em] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors duration-150 underline decoration-[var(--border-strong)] underline-offset-4 hover:decoration-[var(--accent)]"
+                className="inline-flex items-center gap-1.5 text-[14px] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors duration-150 underline decoration-[var(--border-strong)] underline-offset-4 hover:decoration-[var(--accent)]"
               >
-                see the operations desk
+                See the operations desk
               </a>
             </motion.div>
           </div>

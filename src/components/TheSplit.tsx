@@ -189,7 +189,7 @@ export default function TheSplit() {
             </ul>
             <Link
               href="/services"
-              className="inline-flex items-center gap-1.5 font-mono text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150"
+              className="inline-flex items-center gap-1.5 text-[14px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150"
             >
               View services <ArrowRight size={13} />
             </Link>

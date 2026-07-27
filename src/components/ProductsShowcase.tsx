@@ -40,7 +40,7 @@ export default function ProductsShowcase() {
               <p className="text-[12.5px] text-[var(--text-3)]">Know your numbers before you set your price.</p>
               <Link
                 href="/?product=Simulyn#demo"
-                className="inline-flex items-center gap-1.5 font-mono text-[12px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
+                className="inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
               >
                 Demo <ArrowRight size={12} />
               </Link>
@@ -59,7 +59,7 @@ export default function ProductsShowcase() {
               <p className="text-[12.5px] text-[var(--text-3)]">Stops phishing and spoofing before delivery.</p>
               <Link
                 href="/?product=Mail%20Shield#demo"
-                className="inline-flex items-center gap-1.5 font-mono text-[12px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
+                className="inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
               >
                 Demo <ArrowRight size={12} />
               </Link>

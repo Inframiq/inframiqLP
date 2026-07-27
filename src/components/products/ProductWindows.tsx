@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Check, X, TriangleAlert } from "lucide-react";
 import {
   SEATS_MIN,
@@ -183,18 +184,28 @@ export function MailShieldWindow({ className = "" }: { className?: string } = {}
 
       <div className="flex-1 min-h-0 grid sm:grid-cols-[190px_1fr]">
         <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] h-full overflow-y-auto">
-          {mailJourneys.map((j) => (
-            <button
-              key={j.id}
-              type="button"
-              onClick={() => setSelectedId(j.id)}
-              className="w-full text-left px-3 py-2.5 transition-colors duration-150"
-              style={{ backgroundColor: selectedId === j.id ? "var(--lw-surface-2)" : "transparent" }}
-            >
-              <p className="font-mono text-[10px] text-[var(--lw-text-3)] truncate mb-0.5">{j.from}</p>
-              <p className="text-[11px] text-[var(--lw-text-2)] truncate">{j.subject}</p>
-            </button>
-          ))}
+          {mailJourneys.map((j) => {
+            const isActive = selectedId === j.id;
+            return (
+              <button
+                key={j.id}
+                type="button"
+                onClick={() => setSelectedId(j.id)}
+                className="relative w-full text-left px-3 py-2.5"
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="mailshield-row-highlight"
+                    className="absolute inset-0"
+                    style={{ backgroundColor: "var(--lw-surface-2)" }}
+                    transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                  />
+                )}
+                <p className="relative z-10 font-mono text-[10px] text-[var(--lw-text-3)] truncate mb-0.5">{j.from}</p>
+                <p className="relative z-10 text-[11px] text-[var(--lw-text-2)] truncate">{j.subject}</p>
+              </button>
+            );
+          })}
         </div>
 
         <div className="h-full flex flex-col p-5">

@@ -1,39 +1,16 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
-import { IBM_Plex_Sans, IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import Navbar from "@/components/Navbar";
 import { team } from "@/lib/team";
 import "./globals.css";
 
-// Body/UI face — a documentary, engineered workhorse (IBM's own systems
-// typeface), doing the quiet work of paragraphs, labels, and nav.
-const geistSans = IBM_Plex_Sans({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-// Utility/data face — timestamps, status readouts, coordinates, and the
-// wordmark's "IQ". Set in monospace deliberately: Inframiq's two businesses
-// (human support, security software) share one real trait, uninterrupted
-// monitoring, and mono type is how status and log data actually gets
-// rendered in that world. Not decorative — it's the vernacular of the subject.
-const geistMono = IBM_Plex_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
-// Display face — a geometric, drafting-table sans instead of an editorial
-// serif, so headlines read as engineered labels on a schematic rather than
-// magazine copy. Used sparingly, for thesis-level lines only.
-const brandFont = Space_Grotesk({
-  variable: "--font-brand",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  display: "swap",
-});
+// Typography runs on the platform system-font stack rather than a bundled
+// webfont — -apple-system/BlinkMacSystemFont resolve to San Francisco on
+// Apple devices (SF isn't licensed for arbitrary @font-face embedding, so
+// this is the actual mechanism Apple's own web properties use), falling
+// back to Segoe UI/Roboto elsewhere. One stack for body, display, and UI;
+// the mono stack below is the equivalent system pairing (SF Mono locally,
+// sane monospace fallbacks elsewhere) for data/status/timestamp text.
 
 const SITE_URL = "https://inframiq.com";
 const SITE_NAME = "Inframiq";
@@ -188,11 +165,7 @@ const themeInitScript = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${brandFont.variable} bg-[var(--bg)]`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className="bg-[var(--bg)]" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
@@ -201,6 +174,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        {/* Rendered here (not per-page) so it never remounts or gets swept
+            into the page-transition animation in template.tsx — it stays
+            fixed while the page content underneath slides. */}
+        <Navbar />
         {children}
         <Analytics />
       </body>

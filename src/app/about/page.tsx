@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AboutContent from "@/components/AboutContent";
 import { team } from "@/lib/team";
@@ -58,7 +57,6 @@ export default function AboutPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(teamJsonLd) }}
       />
-      <Navbar />
       <AboutContent />
       <Footer />
     </main>

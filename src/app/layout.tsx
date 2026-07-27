@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
-import { IBM_Plex_Sans, IBM_Plex_Mono, Fraunces } from "next/font/google";
-import SplashScreen from "@/components/SplashScreen";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import { team } from "@/lib/team";
 import "./globals.css";
 
@@ -14,11 +13,11 @@ const geistSans = IBM_Plex_Sans({
   display: "swap",
 });
 
-// Utility/data face — timestamps, status readouts, and the wordmark's "IQ".
-// Set in monospace deliberately: Inframiq's two businesses (human support,
-// security software) share one real trait, uninterrupted monitoring, and
-// mono type is how status and log data actually gets rendered in that
-// world. Not decorative — it's the vernacular of the subject.
+// Utility/data face — timestamps, status readouts, coordinates, and the
+// wordmark's "IQ". Set in monospace deliberately: Inframiq's two businesses
+// (human support, security software) share one real trait, uninterrupted
+// monitoring, and mono type is how status and log data actually gets
+// rendered in that world. Not decorative — it's the vernacular of the subject.
 const geistMono = IBM_Plex_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -26,16 +25,13 @@ const geistMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-// Display face for headlines and the wordmark — a warm, human serif
-// against an otherwise technical system. Inframiq is a security/software
-// company where the other half of the business is literally real people
-// answering calls; Fraunces carries that warmth without giving up
-// authority, in deliberate contrast to the mono utility face.
-const brandFont = Fraunces({
+// Display face — a geometric, drafting-table sans instead of an editorial
+// serif, so headlines read as engineered labels on a schematic rather than
+// magazine copy. Used sparingly, for thesis-level lines only.
+const brandFont = Space_Grotesk({
   variable: "--font-brand",
   subsets: ["latin"],
-  weight: ["500", "600"],
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -186,8 +182,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <SplashScreen />
         {children}
+        <Analytics />
       </body>
     </html>
   );

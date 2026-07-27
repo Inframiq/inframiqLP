@@ -1,10 +1,12 @@
 import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import AudienceSelector from "@/components/AudienceSelector";
-import WhySection from "@/components/WhySection";
-import OperationsSection from "@/components/OperationsSection";
-import TrustSection from "@/components/TrustSection";
+import TheSplit from "@/components/TheSplit";
+import TheStandard from "@/components/TheStandard";
+import TheNumbers from "@/components/TheNumbers";
+import ProductsShowcase from "@/components/ProductsShowcase";
+import TheCrew from "@/components/TheCrew";
+import ClosingStatement from "@/components/ClosingStatement";
 import DemoSection from "@/components/DemoSection";
 import Footer from "@/components/Footer";
 
@@ -13,10 +15,12 @@ export default function HomePage() {
     <main className="min-h-screen bg-[var(--bg)]">
       <Navbar />
       <HeroSection />
-      <AudienceSelector />
-      <WhySection />
-      <OperationsSection />
-      <TrustSection />
+      <TheSplit />
+      <TheStandard />
+      <TheNumbers />
+      <ProductsShowcase />
+      <TheCrew />
+      <ClosingStatement />
       <Suspense fallback={null}>
         <DemoSection />
       </Suspense>

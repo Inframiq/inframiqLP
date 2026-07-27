@@ -87,7 +87,7 @@ export default function Navbar() {
                 iQ
               </span>
               <span className="font-mono text-[13px] tracking-[0.02em] leading-none text-[var(--text-1)] select-none">
-                inframiq
+                inframIQ
               </span>
             </Link>
 

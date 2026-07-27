@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone, MessageCircle, Wrench, Headset } from "lucide-react";
+import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 // ─── Diagram-driven ops visualization ────────────────────────────────────────
 // Deliberately not another browser window: three real channels (voice, chat,
@@ -18,6 +19,20 @@ const channels = [
 
 const DESK = { x: 320, y: 130 };
 const SOURCE_X = 60;
+
+// Cubic bezier point-at-t — used to sample the flowing dot's exact position
+// along the same curve the connector path draws, instead of tweening cx/cy
+// in a straight line between the two endpoints (which visibly cuts across
+// the curve whenever a channel's y differs from the desk's).
+function cubicBezierPoint(t: number, p0: { x: number; y: number }, p1: { x: number; y: number }, p2: { x: number; y: number }, p3: { x: number; y: number }) {
+  const mt = 1 - t;
+  return {
+    x: mt ** 3 * p0.x + 3 * mt ** 2 * t * p1.x + 3 * mt * t ** 2 * p2.x + t ** 3 * p3.x,
+    y: mt ** 3 * p0.y + 3 * mt ** 2 * t * p1.y + 3 * mt * t ** 2 * p2.y + t ** 3 * p3.y,
+  };
+}
+
+const CHANNEL_SAMPLES = 24;
 
 function useLiveCounter(seed: number, stepEverySec = 3) {
   const [count, setCount] = useState(seed);
@@ -46,20 +61,28 @@ function SignalDiagram() {
           />
         ))}
 
-        {/* Live traffic — small dots looping continuously along each channel path */}
-        {channels.map((c, i) => (
-          <motion.circle
-            key={`flow-${c.key}`}
-            r="3"
-            fill="var(--accent)"
-            animate={{
-              cx: [SOURCE_X + 26, DESK.x - 30],
-              cy: [c.y, DESK.y],
-              opacity: [0, 1, 1, 0],
-            }}
-            transition={{ duration: 2.6, repeat: Infinity, ease: "linear", delay: 0.6 + i * 0.7 }}
-          />
-        ))}
+        {/* Live traffic — small dots looping continuously along each channel
+            path, sampled from the exact same bezier curve the path draws. */}
+        {channels.map((c, i) => {
+          const p0 = { x: SOURCE_X + 26, y: c.y };
+          const p1 = { x: SOURCE_X + 120, y: c.y };
+          const p2 = { x: DESK.x - 120, y: DESK.y };
+          const p3 = { x: DESK.x - 30, y: DESK.y };
+          const samples = Array.from({ length: CHANNEL_SAMPLES + 1 }, (_, k) => cubicBezierPoint(k / CHANNEL_SAMPLES, p0, p1, p2, p3));
+          return (
+            <motion.circle
+              key={`flow-${c.key}`}
+              r="3"
+              fill="var(--accent)"
+              animate={{
+                cx: samples.map((s) => s.x),
+                cy: samples.map((s) => s.y),
+                opacity: [0, 1, 1, 0],
+              }}
+              transition={{ duration: 2.6, repeat: Infinity, ease: "linear", delay: 0.6 + i * 0.7 }}
+            />
+          );
+        })}
 
         {/* Desk → resolved */}
         <path
@@ -121,18 +144,18 @@ export default function TheSplit() {
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-80" style={{ "--glow-x": "90%", "--glow-y": "0%" } as React.CSSProperties} />
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealContainer}
           className="mb-12 max-w-xl"
         >
-          <p className="font-mono text-[11px] tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
             System 01 — Operations
-          </p>
-          <h2 className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          </motion.p>
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Real people, running a real shift.
-          </h2>
+          </motion.h2>
         </motion.div>
 
         <motion.div

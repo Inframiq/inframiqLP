@@ -52,7 +52,7 @@ function ManifestoWindow() {
       <motion.div key={doc.key} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="p-8 lg:p-10">
         <div className="flex items-center gap-2 mb-5">
           <Icon size={15} className="text-[var(--accent)]" strokeWidth={1.75} />
-          <span className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] uppercase">{doc.key}</span>
+          <span className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] uppercase">{doc.key}</span>
         </div>
         <p className="text-[14.5px] text-[var(--text-2)] leading-[1.8]">{doc.body}</p>
       </motion.div>
@@ -60,81 +60,51 @@ function ManifestoWindow() {
   );
 }
 
-// Four-point radial diagram for the operating principles — the same
-// structural device the homepage uses for the six engineering pillars,
-// scaled down to the four values that actually apply here.
-const RADIUS = 118;
-const CENTER = 160;
-function pointOn(index: number, total: number) {
-  const angle = (-90 + index * (360 / total)) * (Math.PI / 180);
-  return { x: CENTER + RADIUS * Math.cos(angle), y: CENTER + RADIUS * Math.sin(angle) };
-}
-
 function PrinciplesDiagram() {
   const [active, setActive] = useState(0);
   return (
-    <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-14 items-center">
+    <div className="grid lg:grid-cols-[260px_1fr] gap-10 lg:gap-14 items-center">
+      {/* Vertical stepper — a plain connector rail behind a column of dots,
+          never colinear with any label, unlike a radial layout's top/bottom
+          points. */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, x: -14 }}
+        whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.55 }}
-        className="relative mx-auto w-full max-w-[320px] aspect-square"
+        transition={{ duration: 0.5 }}
+        className="relative"
       >
-        <svg viewBox="0 0 320 320" className="absolute inset-0 w-full h-full" fill="none">
-          <circle cx={CENTER} cy={CENTER} r={RADIUS} stroke="var(--border)" strokeWidth="1" strokeDasharray="2 5" />
+        <div className="absolute left-[7px] top-3 bottom-3 w-px bg-[var(--border)]" aria-hidden />
+        <div>
           {values.map((v, i) => {
-            const pt = pointOn(i, values.length);
+            const isActive = active === i;
             return (
-              <line
+              <button
                 key={v.tag}
-                x1={CENTER}
-                y1={CENTER}
-                x2={pt.x}
-                y2={pt.y}
-                stroke={active === i ? "var(--accent)" : "var(--border-strong)"}
-                strokeWidth="1"
-                className="transition-colors duration-300"
-              />
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActive(i)}
+                className="relative flex items-center gap-4 w-full text-left py-3 group"
+              >
+                <span
+                  className="relative z-10 flex-shrink-0 h-3.5 w-3.5 rounded-full border-2 transition-all duration-200"
+                  style={{
+                    backgroundColor: isActive ? "var(--accent)" : "var(--surface)",
+                    borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
+                    boxShadow: isActive ? "0 0 0 4px var(--accent-dim)" : "none",
+                  }}
+                />
+                <span
+                  className={`font-mono text-[11px] uppercase tracking-[0.04em] transition-colors duration-200 ${
+                    isActive ? "text-[var(--text-1)]" : "text-[var(--text-3)] group-hover:text-[var(--text-2)]"
+                  }`}
+                >
+                  0{i + 1} — {v.tag}
+                </span>
+              </button>
             );
           })}
-          <circle cx={CENTER} cy={CENTER} r="30" fill="var(--surface)" stroke="var(--border-strong)" strokeWidth="1" />
-        </svg>
-        <div
-          className="absolute flex items-center justify-center text-center font-mono text-[9.5px] uppercase tracking-[0.04em] text-[var(--text-3)]"
-          style={{ left: CENTER - 30, top: CENTER - 30, width: 60, height: 60 }}
-        >
-          principles
         </div>
-        {values.map((v, i) => {
-          const pt = pointOn(i, values.length);
-          const isActive = active === i;
-          return (
-            <button
-              key={v.tag}
-              type="button"
-              aria-pressed={isActive}
-              onClick={() => setActive(i)}
-              className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 group"
-              style={{ left: `${(pt.x / 320) * 100}%`, top: `${(pt.y / 320) * 100}%` }}
-            >
-              <span
-                className="h-2.5 w-2.5 rounded-full border transition-all duration-200"
-                style={{
-                  backgroundColor: isActive ? "var(--accent)" : "var(--surface-2)",
-                  borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
-                }}
-              />
-              <span
-                className={`font-mono text-[10px] uppercase tracking-[0.03em] whitespace-nowrap transition-colors duration-200 ${
-                  isActive ? "text-[var(--text-1)]" : "text-[var(--text-3)] group-hover:text-[var(--text-2)]"
-                }`}
-              >
-                {v.tag}
-              </span>
-            </button>
-          );
-        })}
       </motion.div>
 
       <motion.div
@@ -181,16 +151,32 @@ function ArchitectureDiagram() {
             style={{ "--trace-length": 200 } as React.CSSProperties}
           />
         ))}
-        {archNodes.map((n, i) => (
-          <motion.circle
-            key={`flow-${n.key}`}
-            r="2.5"
-            fill="var(--accent-strong)"
-            animate={{ cx: [ARCH_CENTER.x, n.x], cy: [ARCH_CENTER.y, n.y], opacity: [0, 1, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "linear", delay: 0.6 + i * 0.35 }}
-          />
-        ))}
-        <circle cx={ARCH_CENTER.x} cy={ARCH_CENTER.y} r="26" fill="var(--surface)" stroke="var(--border-strong)" strokeWidth="1" />
+        {archNodes.map((n, i) => {
+          const length = Math.hypot(n.x - ARCH_CENTER.x, n.y - ARCH_CENTER.y);
+          const dot = 10;
+          return (
+            <motion.path
+              key={`flow-${n.key}`}
+              d={`M ${ARCH_CENTER.x} ${ARCH_CENTER.y} L ${n.x} ${n.y}`}
+              stroke="var(--accent-strong)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray={`${dot} ${length - dot}`}
+              initial={{ strokeDashoffset: 0 }}
+              animate={{ strokeDashoffset: -length }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "linear", delay: i * 0.35 }}
+            />
+          );
+        })}
+        <motion.circle
+          cx={ARCH_CENTER.x}
+          cy={ARCH_CENTER.y}
+          fill="var(--surface)"
+          stroke="var(--border-strong)"
+          strokeWidth="1"
+          animate={{ r: [26, 28, 26] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
       </svg>
 
       <div
@@ -237,7 +223,7 @@ export default function AboutContent() {
                 <span className="text-[var(--text-2)]">About</span>
               </div>
 
-              <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
+              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
 
               <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
                 Built for people
@@ -284,7 +270,7 @@ export default function AboutContent() {
             transition={{ duration: 0.5 }}
             className="max-w-xl mb-14"
           >
-            <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-4">how we work</p>
+            <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4">how we work</p>
             <h2 className="font-brand text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)]">
               Our operating principles
             </h2>
@@ -299,7 +285,7 @@ export default function AboutContent() {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-4">company</p>
+              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4">company</p>
               <h2 className="font-brand text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-5">
                 Where we are today
               </h2>

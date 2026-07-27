@@ -135,7 +135,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2.5 mb-7"
             >
-              <span className="font-mono text-[11px] tracking-[0.08em] text-[var(--text-3)] uppercase">
+              <span className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase">
                 A live desk — click to explore
               </span>
             </motion.div>

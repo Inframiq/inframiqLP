@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { team } from "@/lib/team";
+import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 // Deterministic 6-digit badge code from a name, so each entry looks like a
 // real issued ID rather than a randomly-reshuffled number on every render.
@@ -85,16 +86,16 @@ export default function TheCrew() {
     <section className="py-24 lg:py-32">
       <div className="max-w-5xl mx-auto px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealContainer}
           className="mb-12 max-w-xl"
         >
-          <p className="font-mono text-[11px] tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Team</p>
-          <h2 className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Team</motion.p>
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             The people behind Inframiq.
-          </h2>
+          </motion.h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-center">

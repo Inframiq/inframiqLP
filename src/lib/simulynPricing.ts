@@ -1,46 +1,28 @@
-// Drives the live Simulyn pricing simulator on the homepage. Revenue is
-// piecewise-linear through the three real reference points already quoted
-// in Simulyn's own product copy (25 seats/$1,250, 100/$4,800, 500/$21,000),
-// so the curve the visitor drags through is the same one the product
-// actually claims. Margin and break-even are illustrative — what a founder
-// would see for a hypothetical cost structure, which is the entire premise
-// of a pricing *simulator* — not a claim about Inframiq's own finances.
+// Drives the live Simulyn pricing simulator on the homepage. Revenue follows
+// a logistic (S-curve) growth model rather than a flat rate per seat: slow
+// among small teams, steepest through the mid-market where most deals land,
+// then saturating toward a ceiling at enterprise scale — the standard shape
+// for adoption-driven revenue, and one that visibly bends against a straight
+// reference line instead of reading as flat. Margin and break-even are
+// illustrative — what a founder would see for a hypothetical cost structure,
+// which is the entire premise of a pricing *simulator* — not a claim about
+// Inframiq's own finances.
 
 export const SEATS_MIN = 10;
 export const SEATS_MAX = 750;
 export const SEATS_DEFAULT = 100;
 
-const REFERENCE_POINTS: [number, number][] = [
-  [0, 0],
-  [25, 1250],
-  [100, 4800],
-  [500, 21000],
-];
+const REVENUE_CEILING = 26000;
+const CURVE_MIDPOINT = 200;
+const CURVE_STEEPNESS = 0.015;
 
 const FIXED_MONTHLY_COST = 400;
 const VARIABLE_COST_PER_SEAT = 14;
 const ONE_TIME_SETUP_COST = 20000;
 
 function interpolateRevenue(seats: number): number {
-  if (seats <= REFERENCE_POINTS[0][0]) return 0;
-
-  const lastIndex = REFERENCE_POINTS.length - 1;
-  if (seats >= REFERENCE_POINTS[lastIndex][0]) {
-    const [x0, y0] = REFERENCE_POINTS[lastIndex - 1];
-    const [x1, y1] = REFERENCE_POINTS[lastIndex];
-    const rate = (y1 - y0) / (x1 - x0);
-    return y1 + (seats - x1) * rate;
-  }
-
-  for (let i = 0; i < lastIndex; i++) {
-    const [x0, y0] = REFERENCE_POINTS[i];
-    const [x1, y1] = REFERENCE_POINTS[i + 1];
-    if (seats >= x0 && seats <= x1) {
-      const t = (seats - x0) / (x1 - x0);
-      return y0 + t * (y1 - y0);
-    }
-  }
-  return 0;
+  if (seats <= 0) return 0;
+  return REVENUE_CEILING / (1 + Math.exp(-CURVE_STEEPNESS * (seats - CURVE_MIDPOINT)));
 }
 
 export interface PricingScenario {

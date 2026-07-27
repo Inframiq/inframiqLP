@@ -15,8 +15,8 @@ export default function BrowserWindow({
   className?: string;
 }) {
   return (
-    <div className={`browser-chrome ${className}`}>
-      <div className="browser-chrome-bar">
+    <div className={`browser-chrome flex flex-col ${className}`}>
+      <div className="browser-chrome-bar flex-shrink-0">
         <span className="browser-chrome-dot" style={{ backgroundColor: "#ff5f57" }} />
         <span className="browser-chrome-dot" style={{ backgroundColor: "#febc2e" }} />
         <span className="browser-chrome-dot" style={{ backgroundColor: "#28c840" }} />
@@ -25,7 +25,7 @@ export default function BrowserWindow({
           <span className="truncate">{url}</span>
         </div>
       </div>
-      <div className="bg-[var(--lw-bg)] text-[var(--lw-text-1)]">{children}</div>
+      <div className="bg-[var(--lw-bg)] text-[var(--lw-text-1)] flex-1 min-h-0 flex flex-col">{children}</div>
     </div>
   );
 }

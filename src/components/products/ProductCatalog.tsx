@@ -62,6 +62,91 @@ const products: Product[] = [
   // Future products can be added here.
 ];
 
+// ─── Header visual — a portfolio diagram, not a screenshot. Every product's
+// actual, fully interactive window already appears once in its own row below;
+// reusing that same window (or a stack of them) up here just shows it twice.
+// This shows the *shape of the catalog* instead — how each product relates
+// to Inframiq as a core — which is information the rows themselves don't
+// carry. ──────────────────────────────────────────────────────────────────
+
+const DIAGRAM_CORE = { x: 200, y: 150 };
+const DIAGRAM_NODES = [
+  { x: 65, y: 150 },
+  { x: 335, y: 150 },
+];
+
+function ProductsConstellation() {
+  return (
+    <div className="relative w-full max-w-[420px] mx-auto aspect-[4/3]">
+      <svg viewBox="0 0 400 300" className="absolute inset-0 w-full h-full" fill="none">
+        {products.map((p, i) => (
+          <path
+            key={p.slug}
+            d={`M ${DIAGRAM_CORE.x} ${DIAGRAM_CORE.y} L ${DIAGRAM_NODES[i].x} ${DIAGRAM_NODES[i].y}`}
+            stroke="var(--border-strong)"
+            strokeWidth="1.5"
+            className="trace-path"
+            style={{ "--trace-length": 170, animationDelay: `${i * 0.15}s` } as React.CSSProperties}
+          />
+        ))}
+        {products.map((p, i) => {
+          const length = Math.hypot(DIAGRAM_NODES[i].x - DIAGRAM_CORE.x, DIAGRAM_NODES[i].y - DIAGRAM_CORE.y);
+          const dot = 10;
+          return (
+            <motion.path
+              key={`flow-${p.slug}`}
+              d={`M ${DIAGRAM_CORE.x} ${DIAGRAM_CORE.y} L ${DIAGRAM_NODES[i].x} ${DIAGRAM_NODES[i].y}`}
+              stroke="var(--accent)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray={`${dot} ${length - dot}`}
+              initial={{ strokeDashoffset: 0 }}
+              animate={{ strokeDashoffset: -length }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+            />
+          );
+        })}
+        <motion.circle
+          cx={DIAGRAM_CORE.x}
+          cy={DIAGRAM_CORE.y}
+          fill="var(--surface)"
+          stroke="var(--border-strong)"
+          strokeWidth="1.5"
+          animate={{ r: [32, 34, 32] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </svg>
+
+      <div
+        className="absolute flex flex-col items-center justify-center text-center"
+        style={{ left: `${(DIAGRAM_CORE.x / 400) * 100}%`, top: `${(DIAGRAM_CORE.y / 300) * 100}%`, transform: "translate(-50%, -50%)" }}
+      >
+        <span className="font-mono text-[9px] uppercase tracking-[0.04em] text-[var(--text-3)]">inframiq</span>
+      </div>
+
+      {products.map((p, i) => {
+        const Icon = p.categoryIcon;
+        return (
+          <motion.div
+            key={p.slug}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+            className="absolute w-[160px] -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${(DIAGRAM_NODES[i].x / 400) * 100}%`, top: `${(DIAGRAM_NODES[i].y / 300) * 100}%` }}
+          >
+            <div className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-3.5 py-3 text-center">
+              <Icon size={16} className="text-[var(--accent)] mx-auto mb-1.5" />
+              <p className="font-mono text-[11px] text-[var(--text-1)]">{p.name}</p>
+              <p className="text-[9.5px] text-[var(--text-3)] mt-0.5">{p.category}</p>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Product row ─────────────────────────────────────────────────────────────
 
 function ProductRow({ product, index }: { product: Product; index: number }) {
@@ -189,7 +274,7 @@ export default function ProductCatalog() {
                 <span className="text-[var(--text-2)]">Products</span>
               </div>
 
-              <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-5">product suite</p>
+              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">product suite</p>
 
               <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-4">
                 Every problem,
@@ -208,7 +293,7 @@ export default function ProductCatalog() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
             >
-              <SimulynWindow />
+              <ProductsConstellation />
             </motion.div>
           </div>
         </div>

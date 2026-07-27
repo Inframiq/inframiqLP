@@ -56,7 +56,7 @@ function SimulynChart({ seats }: { seats: number }) {
   );
 }
 
-export function SimulynWindow() {
+export function SimulynWindow({ className = "" }: { className?: string } = {}) {
   const [seats, setSeats] = useState(SEATS_DEFAULT);
   const [dragging, setDragging] = useState(false);
   const dragStart = useRef<{ x: number; seats: number } | null>(null);
@@ -91,13 +91,13 @@ export function SimulynWindow() {
   };
 
   return (
-    <BrowserWindow url="app.inframiq.com/simulyn">
+    <BrowserWindow url="app.inframiq.com/simulyn" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
         <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Simulyn — Pricing Model</span>
         <span className="font-mono text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide">Draft</span>
       </div>
 
-      <div className="p-6 lg:p-7">
+      <div className="flex-1 flex flex-col p-6 lg:p-7">
         <div className="flex flex-wrap items-end gap-x-3 gap-y-1 mb-5">
           <span
             role="slider"
@@ -122,7 +122,7 @@ export function SimulynWindow() {
 
         <SimulynChart seats={seats} />
 
-        <div className="grid grid-cols-3 gap-4 mt-5 pt-5 border-t border-[var(--lw-border)]">
+        <div className="grid grid-cols-3 gap-4 mt-auto pt-5 border-t border-[var(--lw-border)]">
           <div>
             <p className="font-mono text-[17px] font-medium tabular-nums" style={{ color: "var(--lw-accent)" }}>
               {formatCurrency(scenario.revenue)}
@@ -170,19 +170,19 @@ const verdictDim: Record<string, string> = {
   Suspicious: "var(--lw-warning-dim)",
 };
 
-export function MailShieldWindow() {
+export function MailShieldWindow({ className = "" }: { className?: string } = {}) {
   const [selectedId, setSelectedId] = useState(mailJourneys[0].id);
   const journey = mailJourneys.find((j) => j.id === selectedId)!;
 
   return (
-    <BrowserWindow url="app.inframiq.com/mail-shield">
+    <BrowserWindow url="app.inframiq.com/mail-shield" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
         <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield — Inbound Queue</span>
         <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
 
-      <div className="grid sm:grid-cols-[190px_1fr]">
-        <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] max-h-[280px] overflow-y-auto">
+      <div className="flex-1 min-h-0 grid sm:grid-cols-[190px_1fr]">
+        <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] h-full overflow-y-auto">
           {mailJourneys.map((j) => (
             <button
               key={j.id}
@@ -197,7 +197,7 @@ export function MailShieldWindow() {
           ))}
         </div>
 
-        <div className="p-5">
+        <div className="h-full flex flex-col p-5">
           <p className="font-mono text-[10px] text-[var(--lw-text-3)] mb-1">{journey.from}</p>
           <p className="text-[13px] text-[var(--lw-text-1)] mb-5">{journey.subject}</p>
 
@@ -227,7 +227,7 @@ export function MailShieldWindow() {
           </div>
 
           <div
-            className="flex items-center gap-2 mt-5 pt-4 border-t border-[var(--lw-border)]"
+            className="flex items-center gap-2 mt-auto pt-4 border-t border-[var(--lw-border)]"
           >
             <span
               className="font-mono text-[10.5px] px-2 py-1 rounded"

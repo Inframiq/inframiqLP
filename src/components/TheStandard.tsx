@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const pillars = [
   { tag: "security", title: "Security-first", description: "Every product is built with the same rigor: proactive, tested, and hardened against failure — whether it's a phishing email or an everyday app." },
@@ -12,17 +13,6 @@ const pillars = [
   { tag: "ai", title: "Intelligence, applied", description: "Intelligence is part of the architecture, not a chatbot dropped on top — used only where it genuinely makes things faster." },
 ] as const;
 
-const RADIUS = 148;
-const CENTER = 200;
-
-function pointOn(index: number) {
-  const angle = (-90 + index * 60) * (Math.PI / 180);
-  return {
-    x: CENTER + RADIUS * Math.cos(angle),
-    y: CENTER + RADIUS * Math.sin(angle),
-  };
-}
-
 export default function TheStandard() {
   const [active, setActive] = useState(0);
 
@@ -30,83 +20,60 @@ export default function TheStandard() {
     <section id="solutions" className="py-24 lg:py-32">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealContainer}
           className="mb-14 max-w-xl"
         >
-          <p className="font-mono text-[11px] tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Why Inframiq</p>
-          <h2 className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--accent-strong)] mb-4">Why InframIQ?</motion.p>
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Every product, built to the same standard.
-          </h2>
+          </motion.h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[420px_1fr] gap-10 lg:gap-16 items-center">
-          {/* Radial diagram */}
+        <div className="grid lg:grid-cols-[280px_1fr] gap-10 lg:gap-16 items-center">
+          {/* Vertical stepper — a plain connector rail behind a column of dots,
+              never colinear with any label, so there's no line-through-text
+              collision the way a radial layout has at its top/bottom points. */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, x: -14 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55 }}
-            className="relative mx-auto w-full max-w-[380px] aspect-square"
+            transition={{ duration: 0.5 }}
+            className="relative"
           >
-            <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full" fill="none">
-              <circle cx={CENTER} cy={CENTER} r={RADIUS} stroke="var(--border)" strokeWidth="1" strokeDasharray="2 5" />
+            <div className="absolute left-[7px] top-3 bottom-3 w-px bg-[var(--border)]" aria-hidden />
+            <div>
               {pillars.map((p, i) => {
-                const pt = pointOn(i);
+                const isActive = active === i;
                 return (
-                  <line
+                  <button
                     key={p.tag}
-                    x1={CENTER}
-                    y1={CENTER}
-                    x2={pt.x}
-                    y2={pt.y}
-                    stroke={active === i ? "var(--accent)" : "var(--border-strong)"}
-                    strokeWidth="1"
-                    className="transition-colors duration-300"
-                  />
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => setActive(i)}
+                    className="relative flex items-center gap-4 w-full text-left py-3 group"
+                  >
+                    <span
+                      className="relative z-10 flex-shrink-0 h-3.5 w-3.5 rounded-full border-2 transition-all duration-200"
+                      style={{
+                        backgroundColor: isActive ? "var(--accent)" : "var(--surface)",
+                        borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
+                        boxShadow: isActive ? "0 0 0 4px var(--accent-dim)" : "none",
+                      }}
+                    />
+                    <span
+                      className={`font-mono text-[12px] uppercase tracking-[0.04em] transition-colors duration-200 ${
+                        isActive ? "text-[var(--text-1)]" : "text-[var(--text-3)] group-hover:text-[var(--text-2)]"
+                      }`}
+                    >
+                      0{i + 1} — {p.tag}
+                    </span>
+                  </button>
                 );
               })}
-              <circle cx={CENTER} cy={CENTER} r="34" fill="var(--surface)" stroke="var(--border-strong)" strokeWidth="1" />
-            </svg>
-
-            <div
-              className="absolute flex items-center justify-center text-center font-mono text-[10px] uppercase tracking-[0.04em] text-[var(--text-3)]"
-              style={{ left: CENTER - 34, top: CENTER - 34, width: 68, height: 68 }}
-            >
-              core
             </div>
-
-            {pillars.map((p, i) => {
-              const pt = pointOn(i);
-              const isActive = active === i;
-              return (
-                <button
-                  key={p.tag}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => setActive(i)}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 group"
-                  style={{ left: `${(pt.x / 400) * 100}%`, top: `${(pt.y / 400) * 100}%` }}
-                >
-                  <span
-                    className="h-2.5 w-2.5 rounded-full border transition-all duration-200"
-                    style={{
-                      backgroundColor: isActive ? "var(--accent)" : "var(--surface-2)",
-                      borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
-                    }}
-                  />
-                  <span
-                    className={`font-mono text-[10.5px] uppercase tracking-[0.03em] whitespace-nowrap transition-colors duration-200 ${
-                      isActive ? "text-[var(--text-1)]" : "text-[var(--text-3)] group-hover:text-[var(--text-2)]"
-                    }`}
-                  >
-                    {p.tag}
-                  </span>
-                </button>
-              );
-            })}
           </motion.div>
 
           {/* Active pillar detail */}

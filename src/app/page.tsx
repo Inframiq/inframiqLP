@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import TheCraft from "@/components/TheCraft";
 import TheSplit from "@/components/TheSplit";
 import TheStandard from "@/components/TheStandard";
 import ProductsShowcase from "@/components/ProductsShowcase";
@@ -16,7 +15,6 @@ export default function HomePage() {
     <main className="min-h-screen bg-[var(--bg)]">
       <Navbar />
       <HeroSection />
-      <TheCraft />
       <TheSplit />
       <TheStandard />
       <ProductsShowcase />

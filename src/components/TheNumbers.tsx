@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CoverageDial, SystemsIndicator, TeamMeter } from "@/components/instruments/Gauges";
+import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const timeline = [
   { label: "Founded", detail: "Inframiq established with a focus on building intelligent, well-engineered products." },
@@ -23,18 +24,18 @@ export default function TheNumbers() {
     <section id="about" className="py-24 lg:py-32 border-t border-[var(--border)]">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealContainer}
           className="mb-14"
         >
-          <p className="font-mono text-[11px] tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">
             An early-stage company
-          </p>
-          <h2 className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          </motion.p>
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Built like it isn&apos;t.
-          </h2>
+          </motion.h2>
         </motion.div>
 
         <div className="grid sm:grid-cols-3 gap-6 mb-14">

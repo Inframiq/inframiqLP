@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2, Inbox } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
+import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const checklist = [
   "Coverage & staffing plan",
@@ -67,24 +68,24 @@ export default function DemoSection() {
     <section id="demo" className="py-28 lg:py-36 border-t border-[var(--border)]">
       <div className="max-w-[880px] mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealContainer}
           className="text-center mb-10"
         >
-          <p className="font-mono text-[11px] tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Get started</p>
-          <h2 className="font-brand text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)] mb-6">
+          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Get started</motion.p>
+          <motion.h2 variants={revealItem} className="font-brand text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)] mb-6">
             Let&apos;s talk about <span className="italic text-[var(--accent-strong)]">your support line.</span>
-          </h2>
-          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+          </motion.h2>
+          <motion.div variants={revealItem} className="flex flex-wrap justify-center gap-x-5 gap-y-2">
             {checklist.map((item) => (
               <span key={item} className="flex items-center gap-1.5 text-[12px] text-[var(--text-2)]">
                 <CheckCircle2 size={12} className="text-[var(--accent)]" />
                 {item}
               </span>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div

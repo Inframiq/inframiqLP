@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWindows";
+import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 export default function ProductsShowcase() {
   return (
@@ -12,28 +13,29 @@ export default function ProductsShowcase() {
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-70" style={{ "--glow-x": "85%", "--glow-y": "100%" } as React.CSSProperties} />
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealContainer}
           className="mb-12 max-w-xl"
         >
-          <p className="font-mono text-[11px] tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
             System 02 — Engineering
-          </p>
-          <h2 className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          </motion.p>
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Two products. Run them yourself.
-          </h2>
+          </motion.h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55 }}
+            className="h-full flex flex-col"
           >
-            <SimulynWindow />
+            <SimulynWindow className="flex-1" />
             <div className="flex items-center justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Know your numbers before you set your price.</p>
               <Link
@@ -50,8 +52,9 @@ export default function ProductsShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55, delay: 0.08 }}
+            className="h-full flex flex-col"
           >
-            <MailShieldWindow />
+            <MailShieldWindow className="flex-1" />
             <div className="flex items-center justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Stops phishing and spoofing before delivery.</p>
               <Link

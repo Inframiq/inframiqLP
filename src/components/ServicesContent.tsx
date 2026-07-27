@@ -254,6 +254,90 @@ const services: Service[] = [
   },
 ];
 
+// ─── Hero visual — a services diagram, not a dashboard screenshot. Voice
+// support already gets its own real, fully interactive dashboard in the list
+// below; reusing that same window up here would just show it twice. This
+// shows how the four service lines relate to Inframiq as a core instead. ───
+
+const SERVICES_CORE = { x: 200, y: 160 };
+const SERVICES_NODES = [
+  { x: 70, y: 60 },
+  { x: 330, y: 60 },
+  { x: 70, y: 260 },
+  { x: 330, y: 260 },
+];
+
+function ServicesConstellation() {
+  return (
+    <div className="relative w-full max-w-[420px] mx-auto aspect-[5/4]">
+      <svg viewBox="0 0 400 320" className="absolute inset-0 w-full h-full" fill="none">
+        {services.map((s, i) => (
+          <path
+            key={s.tag}
+            d={`M ${SERVICES_CORE.x} ${SERVICES_CORE.y} L ${SERVICES_NODES[i].x} ${SERVICES_NODES[i].y}`}
+            stroke="var(--border-strong)"
+            strokeWidth="1.5"
+            className="trace-path"
+            style={{ "--trace-length": 200 } as React.CSSProperties}
+          />
+        ))}
+        {services.map((s, i) => {
+          const length = Math.hypot(SERVICES_NODES[i].x - SERVICES_CORE.x, SERVICES_NODES[i].y - SERVICES_CORE.y);
+          const dot = 10;
+          return (
+            <motion.path
+              key={`flow-${s.tag}`}
+              d={`M ${SERVICES_CORE.x} ${SERVICES_CORE.y} L ${SERVICES_NODES[i].x} ${SERVICES_NODES[i].y}`}
+              stroke="var(--accent-strong)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray={`${dot} ${length - dot}`}
+              initial={{ strokeDashoffset: 0 }}
+              animate={{ strokeDashoffset: -length }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "linear", delay: i * 0.35 }}
+            />
+          );
+        })}
+        <motion.circle
+          cx={SERVICES_CORE.x}
+          cy={SERVICES_CORE.y}
+          fill="var(--surface)"
+          stroke="var(--border-strong)"
+          strokeWidth="1.5"
+          animate={{ r: [28, 30, 28] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </svg>
+
+      <div
+        className="absolute flex flex-col items-center justify-center text-center"
+        style={{ left: `${(SERVICES_CORE.x / 400) * 100}%`, top: `${(SERVICES_CORE.y / 320) * 100}%`, transform: "translate(-50%, -50%)" }}
+      >
+        <span className="font-mono text-[9px] uppercase tracking-[0.04em] text-[var(--text-3)]">inframiq</span>
+      </div>
+
+      {services.map((s, i) => {
+        const Icon = s.icon;
+        return (
+          <motion.div
+            key={s.tag}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+            className="absolute w-[140px] -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${(SERVICES_NODES[i].x / 400) * 100}%`, top: `${(SERVICES_NODES[i].y / 320) * 100}%` }}
+          >
+            <div className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-2.5 text-center">
+              <Icon size={14} className="text-[var(--accent)] mx-auto mb-1.5" />
+              <p className="font-mono text-[10px] text-[var(--text-1)]">{s.title}</p>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function ServicesContent() {
   return (
     <>
@@ -271,7 +355,7 @@ export default function ServicesContent() {
                 <span className="text-[var(--text-2)]">Services</span>
               </div>
 
-              <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
+              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
 
               <h1 className="font-brand text-[36px] lg:text-[44px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
                 Your customers, answered
@@ -287,7 +371,7 @@ export default function ServicesContent() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
-              <VoiceDashboard />
+              <ServicesConstellation />
             </motion.div>
           </div>
         </div>
@@ -347,7 +431,7 @@ export default function ServicesContent() {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-5">how we work</p>
+              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">how we work</p>
               <h2 className="font-brand text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-5 leading-tight">
                 People on the line,
                 <br />

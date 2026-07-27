@@ -16,7 +16,7 @@
   --border: rgba(15, 23, 42, 0.08);
   --border-strong: rgba(15, 23, 42, 0.14);
   --text-1: #12141a;
-  --text-2: #5b616e;
+  --text-2: #454b57;
   --text-3: #9aa1ac;
   --accent: #2f6fed;
   --accent-strong: #1d4ed8;
@@ -40,7 +40,7 @@
   --lw-border: rgba(15, 23, 42, 0.08);
   --lw-border-strong: rgba(15, 23, 42, 0.14);
   --lw-text-1: #12141a;
-  --lw-text-2: #5b616e;
+  --lw-text-2: #454b57;
   --lw-text-3: #9aa1ac;
   --lw-accent: #2f6fed;
   --lw-accent-dim: rgba(47, 111, 237, 0.1);
@@ -291,6 +291,18 @@ select {
   box-shadow:
     0 40px 80px -36px rgba(15, 23, 42, 0.22),
     0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+/* Every window responds physically to the cursor — even a single window
+   sitting alone in a row should feel touchable, not just decorative.
+   Scoped to fine-pointer devices so touch taps don't leave it stuck "lifted". */
+@media (hover: hover) and (pointer: fine) {
+  .window-chrome:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 52px 100px -32px rgba(15, 23, 42, 0.3),
+      0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  }
 }
 .window-chrome-bar {
   display: flex;
@@ -319,6 +331,15 @@ select {
   box-shadow:
     0 50px 100px -32px rgba(15, 23, 42, 0.28),
     0 8px 24px -12px rgba(15, 23, 42, 0.12);
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .browser-chrome:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 60px 120px -28px rgba(15, 23, 42, 0.34),
+      0 14px 32px -14px rgba(15, 23, 42, 0.18);
+  }
 }
 .browser-chrome-bar {
   display: flex;
@@ -487,6 +508,18 @@ select {
   box-shadow:
     0 60px 120px -32px rgba(0, 0, 0, 0.65),
     0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+@media (hover: hover) and (pointer: fine) {
+  :root[data-theme="dark"] .window-chrome:hover {
+    box-shadow:
+      0 52px 100px -30px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  :root[data-theme="dark"] .browser-chrome:hover {
+    box-shadow:
+      0 70px 140px -30px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
 }
 :root[data-theme="dark"] .terminal-chrome {
   border-color: rgba(255, 255, 255, 0.12);

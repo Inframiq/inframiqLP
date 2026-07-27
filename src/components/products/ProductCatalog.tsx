@@ -122,7 +122,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
         )}
         <Link
           href={`/?product=${encodeURIComponent(product.name)}#demo`}
-          className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-[var(--accent)] text-[#050505] text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
+          className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
         >
           Request a Demo
         </Link>

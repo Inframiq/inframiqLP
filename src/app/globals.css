@@ -1,15 +1,72 @@
 @import "tailwindcss";
 
-/* Design system v7 — "instrument" palette, cool register. Inframiq is still
-   treated as a single measured system with two subsystems (24/7 human
-   operations, engineered software), but rendered in the material language of
-   modern software products rather than analog instruments: near-black glass,
-   a single cool signal-blue reserved for live / real values and structural
-   annotation alike, and soft ambient blue lighting standing in for depth
-   instead of texture or warmth. Every text/background pairing below is
-   checked against WCAG AA (4.5:1) using the exact sRGB relative-luminance
-   formula, not eyeballed. */
+/* Design system v8 — "The Live Desk". The page is a light, physical
+   workspace: a near-white desk surface holding real, floating application
+   windows, diagrams and instruments. Depth and hierarchy come from soft
+   layered shadows and hairline borders, not from alternating dark/light
+   page backgrounds. Dark chrome is reserved for the one place it's earned —
+   the terminal in ClosingStatement — via `.terminal-chrome`, which carries
+   its own literal palette rather than reusing --bg. Every text/background
+   pairing is checked against WCAG AA (4.5:1). */
 :root {
+  --bg: #fbfbfc;
+  --bg-raised: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f1f2f5;
+  --border: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.14);
+  --text-1: #12141a;
+  --text-2: #5b616e;
+  --text-3: #9aa1ac;
+  --accent: #2f6fed;
+  --accent-strong: #1d4ed8;
+  --accent-dim: rgba(47, 111, 237, 0.08);
+  --glow: rgba(47, 111, 237, 0.16);
+  --trace: #3a5ba0;
+  --trace-dim: rgba(58, 91, 160, 0.08);
+  --success: #16a34a;
+  --warning: #7c3aed;
+  --error: #dc2626;
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(15, 23, 42, 0.08);
+
+  /* Light-interface tokens — content living *inside* a browser/app window.
+     The window is still visually distinct from the desk it floats on (white
+     surface vs. --bg desk, plus shadow), so these stay separate tokens
+     rather than collapsing into the page palette. */
+  --lw-bg: #f4f5f7;
+  --lw-surface: #ffffff;
+  --lw-surface-2: #eceef2;
+  --lw-border: rgba(15, 23, 42, 0.08);
+  --lw-border-strong: rgba(15, 23, 42, 0.14);
+  --lw-text-1: #12141a;
+  --lw-text-2: #5b616e;
+  --lw-text-3: #9aa1ac;
+  --lw-accent: #2f6fed;
+  --lw-accent-dim: rgba(47, 111, 237, 0.1);
+  --lw-success: #16a34a;
+  --lw-success-dim: rgba(22, 163, 74, 0.1);
+  --lw-danger: #dc2626;
+  --lw-danger-dim: rgba(220, 38, 38, 0.1);
+  --lw-warning: #7c3aed;
+  --lw-warning-dim: rgba(124, 58, 237, 0.1);
+
+  /* Menu bar / mobile-nav glass — split out from --surface because these
+     sit as a translucent overlay above scrolling content, not an opaque
+     card, so they need their own alpha per theme. */
+  --menubar-bg: rgba(255, 255, 255, 0.5);
+  --menubar-bg-scrolled: rgba(255, 255, 255, 0.82);
+  --mobile-nav-bg: rgba(255, 255, 255, 0.92);
+}
+
+/* Design system v8 dark — the same Live Desk system, lit at night. Only the
+   page-level tokens flip; --lw-* (content living inside a browser/app
+   window) stays constant on purpose, since that's real software chrome
+   being depicted, not the page it floats on. Toggled via [data-theme] on
+   <html>, set before paint by an inline script in layout.tsx to avoid a
+   flash, and persisted through ThemeToggle. Values are the site's original
+   dark "instrument" palette, carried over rather than re-derived. */
+:root[data-theme="dark"] {
   --bg: #050505;
   --bg-raised: #0a0a0c;
   --surface: #101114;
@@ -31,50 +88,9 @@
   --glass-bg: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.1);
 
-  /* Light-interface tokens — used only inside browser-window / dashboard
-     content panes. Contrast on this site comes from real light software
-     floating over the dark page, not from alternating page backgrounds, so
-     these are a fully separate palette rather than a re-theme of --bg/--surface. */
-  --lw-bg: #f4f5f7;
-  --lw-surface: #ffffff;
-  --lw-surface-2: #eceef2;
-  --lw-border: rgba(15, 23, 42, 0.08);
-  --lw-border-strong: rgba(15, 23, 42, 0.14);
-  --lw-text-1: #12141a;
-  --lw-text-2: #5b616e;
-  --lw-text-3: #9aa1ac;
-  --lw-accent: #2f6fed;
-  --lw-accent-dim: rgba(47, 111, 237, 0.1);
-  --lw-success: #16a34a;
-  --lw-success-dim: rgba(22, 163, 74, 0.1);
-  --lw-danger: #dc2626;
-  --lw-danger-dim: rgba(220, 38, 38, 0.1);
-  --lw-warning: #7c3aed;
-  --lw-warning-dim: rgba(124, 58, 237, 0.1);
-}
-
-/* The darkest note on the page — reserved for the footer only. Same
-   property names, so nothing nested inside needs its own branch. */
-.section-anchor {
-  --bg: #000000;
-  --bg-raised: #030304;
-  --surface: #08090b;
-  --surface-2: #0c0d10;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --text-1: #d8dae0;
-  --text-2: #7d8290;
-  --text-3: #4a4e58;
-  --accent: #4f8dff;
-  --accent-strong: #7ccbff;
-  --accent-dim: rgba(79, 141, 255, 0.1);
-  --glow: rgba(79, 141, 255, 0.25);
-  --trace: #5c7fb8;
-  --trace-dim: rgba(92, 127, 184, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.07);
-  background-color: var(--bg);
-  color: var(--text-1);
+  --menubar-bg: rgba(5, 5, 5, 0.5);
+  --menubar-bg-scrolled: rgba(10, 10, 12, 0.75);
+  --mobile-nav-bg: rgba(10, 10, 12, 0.92);
 }
 
 @theme inline {
@@ -94,9 +110,6 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* One focus treatment for every interactive element, site-wide — instead of
-   each component reaching for its own outline (or the mismatched browser
-   default). Kept off the mouse path via :focus-visible. */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -132,7 +145,7 @@ body {
 }
 
 ::selection {
-  background: rgba(79, 141, 255, 0.28);
+  background: rgba(47, 111, 237, 0.18);
   color: var(--text-1);
 }
 
@@ -143,11 +156,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--surface-2);
+  background: var(--border-strong);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-strong);
+  background: var(--text-3);
 }
 
 input,
@@ -156,37 +169,31 @@ select {
   outline: none;
 }
 
-/* A few percent darker than the base canvas — the only "section change"
-   most of the page ever uses. Meant to be barely noticed, not a seam. */
 .section-raised {
   background-color: var(--bg-raised);
 }
 
-/* Dot grid background pattern — dots are drawn from currentColor so the
-   same class reads correctly in every register (including `.section-anchor`)
-   instead of leaving pale dots stamped on a light section. */
+/* Dot grid background pattern — a fine, quiet desk texture. */
 .dot-grid {
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-1) 10%, transparent) 1px, transparent 1px);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-1) 8%, transparent) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
 /* Subtle line grid */
 .line-grid {
   background-image:
-    linear-gradient(color-mix(in srgb, var(--text-1) 6%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 6%, transparent) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--text-1) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 5%, transparent) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
-/* Shared elevated-card recipe — replaces the gradient-card + hover-glow
-   markup that used to be hand-duplicated in every section (WhySection,
-   TrustSection, AboutContent, the team marquee). Tone follows whichever
-   register (default canvas or `.section-anchor`) the card sits inside. */
+/* Shared elevated-card recipe. */
 .card-elevated {
   position: relative;
   border-radius: 1rem;
   border: 1px solid var(--border);
-  background-image: linear-gradient(to bottom, var(--surface), var(--bg));
+  background-color: var(--surface);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   transition: transform 300ms, border-color 300ms, box-shadow 300ms;
 }
 .card-elevated::before {
@@ -202,7 +209,7 @@ select {
 .card-elevated:hover {
   border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -24px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 24px 48px -20px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 .card-elevated:hover::before {
   opacity: 1;
@@ -230,7 +237,7 @@ select {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   opacity: 0.6;
   pointer-events: none;
   border-radius: inherit;
@@ -249,14 +256,6 @@ select {
   animation-play-state: paused;
 }
 
-/* Team card marquee. Distance is measured in JS from the actual rendered
-   layout (see AboutContent.tsx) rather than assumed as 50%, since a
-   flex `gap` layout doesn't split evenly at the halfway point and that
-   mismatch causes a visible snap on loop. Runs as a real CSS animation
-   (compositor thread) — not a per-frame JS transform — so it stays smooth
-   regardless of what else is happening on the main thread. It starts
-   paused so the row sits on the first card (Bhargav) until JS marks it
-   as in-view and un-pauses it. */
 @keyframes marquee-scroll-team {
   from { transform: translateX(0); }
   to { transform: translateX(calc(-1 * var(--marquee-distance, 0px))); }
@@ -267,37 +266,31 @@ select {
   animation-play-state: paused;
 }
 
-/* Schematic grid — a fine technical-drawing grid (not the coarser dot-grid
-   used elsewhere), for sections that read as an instrument or diagram
-   surface. Two line weights, both drawn from currentColor so it inherits the
-   register it sits in. */
+/* Schematic grid — fine technical-drawing grid for diagram/instrument
+   surfaces, reading as faint blueprint lines on the light desk. */
 .schematic-grid {
   background-image:
-    linear-gradient(color-mix(in srgb, var(--text-1) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(color-mix(in srgb, var(--text-1) 9%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 9%, transparent) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--text-1) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--text-1) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text-1) 7%, transparent) 1px, transparent 1px);
   background-size:
     16px 16px, 16px 16px,
     96px 96px, 96px 96px;
 }
 
-/* Window chrome — shared "real software" framing used by every product /
-   console visual, built as genuine frosted glass (blurred backdrop, faint
-   fill, a hairline top highlight standing in for a light source above the
-   frame) rather than a flat card, so every windowed panel across the
-   homepage reads as one consistent, physically-lit operating environment. */
+/* Window chrome — a light glass panel used for consoles, changelogs and
+   other "app-like" content that isn't a full browser window. Floats on the
+   desk via shadow + hairline border rather than a dark frosted surface. */
 .window-chrome {
   position: relative;
-  border: 1px solid var(--glass-border);
-  background-color: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
   border-radius: 12px;
   overflow: hidden;
   box-shadow:
-    0 40px 80px -32px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 40px 80px -36px rgba(15, 23, 42, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
 }
 .window-chrome-bar {
   display: flex;
@@ -305,7 +298,7 @@ select {
   gap: 8px;
   padding: 9px 12px;
   border-bottom: 1px solid var(--border);
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: var(--bg-raised);
 }
 .window-chrome-dot {
   width: 8px;
@@ -316,16 +309,16 @@ select {
 
 /* Browser chrome — the site's primary visual artifact: a real browser
    frame (traffic lights + URL bar) holding a light-mode software interface,
-   floating over the dark page. Contrast comes from this window, not from
-   alternating page backgrounds, so the shadow/glow has to sell "floating"
-   on its own. */
+   floating on the desk surface. Border does the definition work that a
+   dark backdrop used to; shadow reads as physical elevation, not contrast. */
 .browser-chrome {
   border-radius: 12px;
   overflow: hidden;
   background-color: var(--lw-bg);
+  border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow:
-    0 60px 120px -32px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
+    0 50px 100px -32px rgba(15, 23, 42, 0.28),
+    0 8px 24px -12px rgba(15, 23, 42, 0.12);
 }
 .browser-chrome-bar {
   display: flex;
@@ -354,23 +347,70 @@ select {
   font-family: var(--font-geist-mono);
 }
 
-/* Ambient blue lighting — a soft, off-frame glow used behind hero and
-   section panels to suggest a single light source rather than a flat
-   background. Positioned per-use via --glow-x / --glow-y. */
+/* Terminal chrome — the one deliberate dark exception (ClosingStatement):
+   a real terminal window sitting on the light desk, carrying its own
+   literal palette rather than reusing --bg. */
+.terminal-chrome {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #0b0c0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 60px 120px -32px rgba(15, 23, 42, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+.terminal-chrome-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #131418;
+}
+
+/* Ambient glow — a soft, low-intensity light bloom for hero/section
+   atmosphere. Considerably more subtle than a dark-theme glow, since it now
+   sits on a near-white surface and only needs to suggest a light source. */
 .ambient-glow {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
     ellipse 60% 45% at var(--glow-x, 50%) var(--glow-y, 0%),
-    var(--glow, rgba(79, 141, 255, 0.3)),
+    var(--glow, rgba(47, 111, 237, 0.16)),
     transparent 65%
   );
 }
 
-/* Glass panel — a lighter-weight frosted surface for inline chips / badges
-   that sit on top of a photo-less illustration rather than functioning as
-   a full application window. */
+/* Cursor light — a pointer-tracked spotlight used on desk-metaphor
+   sections so the surface always reads as lit rather than flat. Position is
+   driven by JS via --cursor-x/--cursor-y (falls back to center). */
+.cursor-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--cursor-x, 50%) var(--cursor-y, 30%),
+    rgba(47, 111, 237, 0.07),
+    transparent 60%
+  );
+  transition: background 120ms linear;
+}
+
+/* Desk surface — the atmospheric floor beneath a window stack: a soft
+   mesh of layered radial light plus the schematic grid, giving depth
+   instead of empty white space. */
+.desk-surface {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 40% at 15% 15%, rgba(47, 111, 237, 0.09), transparent 60%),
+    radial-gradient(ellipse 45% 35% at 85% 75%, rgba(124, 58, 237, 0.06), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(15, 23, 42, 0.04), transparent 70%);
+}
+
+/* Glass panel — lighter-weight frosted surface for inline chips/badges. */
 .glass-panel {
   background-color: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -378,9 +418,7 @@ select {
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* SVG leader-line / trace draw-in — used by the hero schematic and the
-   engineering diagram so connective lines feel measured out rather than
-   simply faded in. */
+/* SVG leader-line / trace draw-in. */
 @keyframes trace-draw {
   from { stroke-dashoffset: var(--trace-length, 400); }
   to { stroke-dashoffset: 0; }
@@ -395,4 +433,86 @@ select {
     animation: none;
     stroke-dashoffset: 0;
   }
+}
+
+/* Pulsing opacity/scale animation for live status indicators. */
+@keyframes status-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0; transform: scale(2.2); }
+}
+.status-pulse {
+  animation: status-pulse 2.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .status-pulse {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* Slow ambient float — used for atmosphere particles/orbs on desk-metaphor
+   sections. Purely decorative motion, kept slow and subtle per the "breathe,
+   don't pulse" motion rule. */
+@keyframes ambient-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(var(--float-x, 10px), var(--float-y, -14px)); }
+}
+.ambient-float {
+  animation: ambient-float var(--float-duration, 9s) ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-float {
+    animation: none;
+  }
+}
+
+/* Dark-mode primitive overrides — the handful of surfaces whose shadow or
+   gradient stops are hand-tuned rather than derived from --text-1/--border
+   (which already flip correctly on their own). Each mirrors the pre-Live-Desk
+   dark "instrument" treatment: frosted dark glass instead of a white card,
+   black-based shadows instead of ink-on-white ones. */
+:root[data-theme="dark"] .window-chrome {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    0 40px 80px -32px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+:root[data-theme="dark"] .window-chrome-bar {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+:root[data-theme="dark"] .browser-chrome {
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 60px 120px -32px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+:root[data-theme="dark"] .terminal-chrome {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 60px 120px -32px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+:root[data-theme="dark"] .card-elevated {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+:root[data-theme="dark"] .card-elevated:hover {
+  box-shadow: 0 24px 48px -20px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+:root[data-theme="dark"] .desk-surface {
+  background:
+    radial-gradient(ellipse 50% 40% at 15% 15%, rgba(79, 141, 255, 0.16), transparent 60%),
+    radial-gradient(ellipse 45% 35% at 85% 75%, rgba(199, 146, 255, 0.1), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(255, 255, 255, 0.03), transparent 70%);
+}
+:root[data-theme="dark"] .cursor-light {
+  background: radial-gradient(
+    600px circle at var(--cursor-x, 50%) var(--cursor-y, 30%),
+    rgba(79, 141, 255, 0.14),
+    transparent 60%
+  );
+}
+:root[data-theme="dark"] .noise::after {
+  opacity: 1;
 }

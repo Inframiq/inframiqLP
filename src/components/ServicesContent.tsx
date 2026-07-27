@@ -414,7 +414,7 @@ export default function ServicesContent() {
             </div>
             <Link
               href="/#demo"
-              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-md bg-[var(--accent)] text-[#050505] text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150 flex-shrink-0"
+              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150 flex-shrink-0"
             >
               Get in touch
               <ArrowRight size={14} />

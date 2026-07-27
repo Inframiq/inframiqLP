@@ -1,70 +1,121 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Phone, MessageCircle, Wrench } from "lucide-react";
+import { ArrowRight, Phone, MessageCircle, Wrench, Headset } from "lucide-react";
 
-// ─── Live ops console — a windowed application showing a shift in progress,
-// not a paragraph describing "24/7 support". Ticket queue and waveform are
-// deterministic (seeded), so the same visitor sees a stable, believable
-// snapshot rather than random noise on every render. ───────────────────────
+// ─── Diagram-driven ops visualization ────────────────────────────────────────
+// Deliberately not another browser window: three real channels (voice, chat,
+// technical) routed live into a dedicated desk, rendered as an actual signal
+// diagram with flowing traffic, rather than a screenshot of a ticket table.
 
-interface Ticket {
-  id: string;
-  channel: "voice" | "chat" | "tech";
-  summary: string;
-  agent: string;
-  status: "active" | "queued" | "resolved";
-}
+const channels = [
+  { key: "voice", label: "Voice", icon: Phone, y: 44 },
+  { key: "chat", label: "Chat", icon: MessageCircle, y: 130 },
+  { key: "tech", label: "Technical", icon: Wrench, y: 216 },
+] as const;
 
-const tickets: Ticket[] = [
-  { id: "OPS-4471", channel: "voice", summary: "Billing enquiry — plan upgrade", agent: "R. Alvarez", status: "active" },
-  { id: "OPS-4472", channel: "chat", summary: "Order status follow-up", agent: "T. Kim", status: "active" },
-  { id: "OPS-4473", channel: "tech", summary: "Login failing after reset", agent: "—", status: "queued" },
-  { id: "OPS-4470", channel: "voice", summary: "Account access restored", agent: "R. Alvarez", status: "resolved" },
-  { id: "OPS-4469", channel: "chat", summary: "Shipping address correction", agent: "T. Kim", status: "resolved" },
-];
+const DESK = { x: 320, y: 130 };
+const SOURCE_X = 60;
 
-const channelIcon = { voice: Phone, chat: MessageCircle, tech: Wrench };
-const statusColor: Record<Ticket["status"], string> = {
-  active: "var(--success)",
-  queued: "var(--warning)",
-  resolved: "var(--text-3)",
-};
-
-// A quiet, looping waveform standing in for a live call — 24 bars driven by
-// a fixed sine table so it reads as audio without any randomness.
-const WAVE_BARS = Array.from({ length: 28 }, (_, i) => 8 + Math.round(Math.abs(Math.sin(i * 0.7)) * 22));
-
-function LiveWaveform() {
-  const [tick, setTick] = useState(0);
+function useLiveCounter(seed: number, stepEverySec = 3) {
+  const [count, setCount] = useState(seed);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => setTick((t) => t + 1), 220);
+    const id = setInterval(() => setCount((c) => c + 1), stepEverySec * 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [stepEverySec]);
+  return count;
+}
+
+function SignalDiagram() {
+  const resolved = useLiveCounter(1842, 4);
 
   return (
-    <div className="flex items-end gap-[3px] h-9">
-      {WAVE_BARS.map((h, i) => {
-        const active = (i + tick) % WAVE_BARS.length;
-        const height = WAVE_BARS[active];
-        return (
-          <span
-            key={i}
-            className="w-[3px] rounded-full bg-[var(--trace)] transition-[height] duration-200"
-            style={{ height: `${height}px`, opacity: 0.35 + (height / 30) * 0.65 }}
+    <div className="relative w-full">
+      <svg viewBox="0 0 460 260" className="w-full h-auto" fill="none">
+        {channels.map((c, i) => (
+          <path
+            key={c.key}
+            d={`M ${SOURCE_X + 26} ${c.y} C ${SOURCE_X + 120} ${c.y}, ${DESK.x - 120} ${DESK.y}, ${DESK.x - 30} ${DESK.y}`}
+            stroke="var(--border-strong)"
+            strokeWidth="1.5"
+            className="trace-path"
+            style={{ "--trace-length": 320, animationDelay: `${i * 0.12}s` } as React.CSSProperties}
           />
+        ))}
+
+        {/* Live traffic — small dots looping continuously along each channel path */}
+        {channels.map((c, i) => (
+          <motion.circle
+            key={`flow-${c.key}`}
+            r="3"
+            fill="var(--accent)"
+            animate={{
+              cx: [SOURCE_X + 26, DESK.x - 30],
+              cy: [c.y, DESK.y],
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{ duration: 2.6, repeat: Infinity, ease: "linear", delay: 0.6 + i * 0.7 }}
+          />
+        ))}
+
+        {/* Desk → resolved */}
+        <path
+          d={`M ${DESK.x + 30} ${DESK.y} L 410 ${DESK.y}`}
+          stroke="var(--border-strong)"
+          strokeWidth="1.5"
+          className="trace-path"
+          style={{ "--trace-length": 90, animationDelay: "0.4s" } as React.CSSProperties}
+        />
+        <motion.circle
+          r="3"
+          fill="var(--success)"
+          animate={{ cx: [DESK.x + 30, 410], opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.1, repeat: Infinity, ease: "linear", delay: 1.4 }}
+          cy={DESK.y}
+        />
+
+        <circle cx={DESK.x} cy={DESK.y} r="34" fill="var(--surface)" stroke="var(--border-strong)" strokeWidth="1.5" />
+      </svg>
+
+      {/* Source nodes */}
+      {channels.map((c) => {
+        const Icon = c.icon;
+        return (
+          <div
+            key={c.key}
+            className="absolute -translate-y-1/2 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-2.5 pr-3.5 py-2 shadow-[0_8px_24px_-16px_rgba(15,23,42,0.3)]"
+            style={{ left: 0, top: `${(c.y / 260) * 100}%` }}
+          >
+            <span className="w-6 h-6 rounded-md flex items-center justify-center bg-[var(--accent-dim)]">
+              <Icon size={12} className="text-[var(--accent)]" />
+            </span>
+            <span className="font-mono text-[11px] text-[var(--text-2)]">{c.label}</span>
+          </div>
         );
       })}
+
+      {/* Desk node label */}
+      <div
+        className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center"
+        style={{ left: `${(DESK.x / 460) * 100}%`, top: `${(DESK.y / 260) * 100}%` }}
+      >
+        <Headset size={14} className="text-[var(--text-2)] mb-1" />
+        <span className="font-mono text-[8.5px] uppercase tracking-[0.03em] text-[var(--text-3)]">desk</span>
+      </div>
+
+      {/* Resolved counter */}
+      <div className="absolute -translate-y-1/2 text-right" style={{ right: 0, top: `${(DESK.y / 260) * 100}%` }}>
+        <p className="font-mono text-[18px] text-[var(--text-1)] tabular-nums leading-none">{resolved.toLocaleString()}</p>
+        <p className="font-mono text-[8.5px] uppercase tracking-wide text-[var(--text-3)] mt-1">resolved today</p>
+      </div>
     </div>
   );
 }
 
 export default function TheSplit() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
     <section id="systems" className="relative border-t border-[var(--border)] py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-80" style={{ "--glow-x": "90%", "--glow-y": "0%" } as React.CSSProperties} />
@@ -85,65 +136,16 @@ export default function TheSplit() {
         </motion.div>
 
         <motion.div
-          ref={containerRef}
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-start"
+          className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center"
         >
-          {/* Console window */}
-          <div className="window-chrome">
-            <div className="window-chrome-bar">
-              <span className="window-chrome-dot" />
-              <span className="window-chrome-dot" />
-              <span className="window-chrome-dot" />
-              <span className="ml-2 text-[10px] font-mono text-[var(--text-3)]">ops-console — shift queue</span>
-              <span className="ml-auto font-mono text-[9px] text-[var(--success)] uppercase tracking-wide">on shift</span>
-            </div>
-
-            <div className="grid grid-cols-[1fr_2fr_1fr_90px] gap-2 px-4 py-2.5 border-b border-[var(--border)]">
-              {["Ticket", "Summary", "Agent", "Status"].map((h) => (
-                <span key={h} className="text-[9px] font-medium text-[var(--text-3)] uppercase tracking-wider">
-                  {h}
-                </span>
-              ))}
-            </div>
-
-            <div className="divide-y divide-[var(--border)]">
-              {tickets.map((t, i) => {
-                const Icon = channelIcon[t.channel];
-                return (
-                  <motion.div
-                    key={t.id}
-                    initial={{ opacity: 0, x: -8 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.15 + i * 0.06 }}
-                    className="grid grid-cols-[1fr_2fr_1fr_90px] gap-2 px-4 py-2.5 items-center"
-                  >
-                    <span className="flex items-center gap-1.5 font-mono text-[10.5px] text-[var(--text-3)]">
-                      <Icon size={11} className="text-[var(--trace)]" />
-                      {t.id}
-                    </span>
-                    <span className="text-[11.5px] text-[var(--text-2)] truncate pr-2">{t.summary}</span>
-                    <span className="font-mono text-[10.5px] text-[var(--text-3)] truncate">{t.agent}</span>
-                    <span className="flex items-center gap-1.5">
-                      <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: statusColor[t.status] }} />
-                      <span className="font-mono text-[9.5px] text-[var(--text-3)] uppercase">{t.status}</span>
-                    </span>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center justify-between px-4 py-3 border-t border-[var(--border)]">
-              <span className="font-mono text-[9px] text-[var(--text-3)]">2 active · 1 queued · 2 resolved</span>
-              <LiveWaveform />
-            </div>
+          <div className="pl-4 sm:pl-0">
+            <SignalDiagram />
           </div>
 
-          {/* Description */}
           <div className="pt-1">
             <p className="text-[14px] text-[var(--text-2)] leading-[1.8] mb-6">
               Inframiq deploys trained agents for voice and live chat, staffed

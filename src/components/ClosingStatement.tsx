@@ -14,20 +14,20 @@ export default function ClosingStatement() {
   ];
 
   return (
-    <section className="py-24 lg:py-32 border-t border-[var(--border)]">
+    <section className="py-24 lg:py-32 border-t border-[var(--border)] bg-[var(--bg-raised)]">
       <div className="max-w-[640px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="window-chrome"
+          className="terminal-chrome"
         >
-          <div className="window-chrome-bar">
-            <span className="window-chrome-dot" />
-            <span className="window-chrome-dot" />
-            <span className="window-chrome-dot" />
-            <span className="ml-2 text-[10px] font-mono text-[var(--text-3)]">where this is going</span>
+          <div className="terminal-chrome-bar">
+            <span className="w-2 h-2 rounded-full bg-white/15" />
+            <span className="w-2 h-2 rounded-full bg-white/15" />
+            <span className="w-2 h-2 rounded-full bg-white/15" />
+            <span className="ml-2 text-[10px] font-mono text-white/40">where this is going</span>
           </div>
           <div className="p-6 lg:p-8 font-mono text-[13px] leading-[1.9]">
             {lines.map((line, i) => (
@@ -37,9 +37,9 @@ export default function ClosingStatement() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.15 + i * 0.25 }}
-                className={i === 0 ? "text-[var(--text-3)]" : "text-[var(--text-2)]"}
+                className={i === 0 ? "text-white/40" : "text-white/70"}
               >
-                <span className="text-[var(--trace)] mr-2">{line.prefix}</span>
+                <span className="text-[var(--accent-strong)] mr-2">{line.prefix}</span>
                 {line.text}
               </motion.p>
             ))}
@@ -50,7 +50,7 @@ export default function ClosingStatement() {
               transition={{ delay: 1 }}
               className="flex items-center gap-2 mt-4"
             >
-              <span className="text-[var(--trace)]">$</span>
+              <span className="text-[var(--accent-strong)]">$</span>
               <span className="relative flex h-1.5 w-1.5">
                 <motion.span
                   className="absolute inset-0 rounded-full"
@@ -60,11 +60,11 @@ export default function ClosingStatement() {
                 />
                 <span className="relative h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--success)" }} />
               </span>
-              <span className="text-[var(--text-3)] text-[11px]">Still online. Still true.</span>
+              <span className="text-white/40 text-[11px]">Still online. Still true.</span>
               <motion.span
                 animate={{ opacity: [1, 1, 0, 0] }}
                 transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
-                className="inline-block w-[6px] h-[13px] bg-[var(--text-3)] ml-1"
+                className="inline-block w-[6px] h-[13px] bg-white/40 ml-1"
                 aria-hidden
               />
             </motion.div>

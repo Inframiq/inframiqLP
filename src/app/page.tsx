@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import TheCraft from "@/components/TheCraft";
 import TheSplit from "@/components/TheSplit";
 import TheStandard from "@/components/TheStandard";
-import TheNumbers from "@/components/TheNumbers";
 import ProductsShowcase from "@/components/ProductsShowcase";
+import TheNumbers from "@/components/TheNumbers";
 import TheCrew from "@/components/TheCrew";
 import ClosingStatement from "@/components/ClosingStatement";
 import DemoSection from "@/components/DemoSection";
@@ -15,10 +16,11 @@ export default function HomePage() {
     <main className="min-h-screen bg-[var(--bg)]">
       <Navbar />
       <HeroSection />
+      <TheCraft />
       <TheSplit />
       <TheStandard />
-      <TheNumbers />
       <ProductsShowcase />
+      <TheNumbers />
       <TheCrew />
       <ClosingStatement />
       <Suspense fallback={null}>

@@ -15,4 +15,6 @@ export const team: TeamMember[] = [
   { name: "Manideep Boorla", role: "CFO" },
   { name: "Srinivas Katragadda", role: "Full Stack Developer" },
   { name: "Kundrapu Jaya Sai Deep", role: "Full Stack Developer" },
+  { name: "Ashok Reddy", role: "Sales Associate" },
+  { name: "Mounika", role: "Service Desk Lead" },
 ];

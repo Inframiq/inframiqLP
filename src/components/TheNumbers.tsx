@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { StatusPanel } from "@/components/instruments/Gauges";
+import { CoverageDial, SystemsIndicator, TeamMeter } from "@/components/instruments/Gauges";
 
 const timeline = [
   { label: "Founded", detail: "Inframiq established with a focus on building intelligent, well-engineered products." },
@@ -9,6 +9,15 @@ const timeline = [
   { label: "Today", detail: "Expanding into a growing portfolio spanning enterprise security to everyday life." },
 ];
 
+const instruments = [
+  { key: "coverage", node: <CoverageDial /> },
+  { key: "systems", node: <SystemsIndicator /> },
+  { key: "team", node: <TeamMeter /> },
+];
+
+// Illustration/instrument-driven section — three physical dials floating
+// independently on the desk rather than boxed into one dashboard window, so
+// each metric reads as its own honest instrument rather than a dashboard tile.
 export default function TheNumbers() {
   return (
     <section id="about" className="py-24 lg:py-32 border-t border-[var(--border)]">
@@ -28,15 +37,21 @@ export default function TheNumbers() {
           </h2>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55 }}
-          className="mb-14"
-        >
-          <StatusPanel />
-        </motion.div>
+        <div className="grid sm:grid-cols-3 gap-6 mb-14">
+          {instruments.map((inst, i) => (
+            <motion.div
+              key={inst.key}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface)] py-8 px-4"
+              style={{ boxShadow: "0 30px 60px -32px rgba(15,23,42,0.18)" }}
+            >
+              {inst.node}
+            </motion.div>
+          ))}
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}

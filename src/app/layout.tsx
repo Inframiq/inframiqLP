@@ -171,12 +171,31 @@ const organizationJsonLd = {
   ],
 };
 
+// Sets data-theme on <html> before first paint — reading the stored
+// preference, falling back to system preference — so toggling never causes
+// a flash of the wrong theme on load or on repeat visits.
+const themeInitScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem("inframiq-theme");
+    var theme = stored === "dark" || stored === "light"
+      ? stored
+      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${brandFont.variable} bg-[var(--bg)]`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="bg-[var(--bg)] pb-16 md:pb-0">
         <script
           type="application/ld+json"

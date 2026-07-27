@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Mail, Calculator, CheckCircle2, type LucideIcon } from "lucide-react";
 import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWindows";
-import { StatusPanel } from "@/components/instruments/Gauges";
 
 // ─── Product data ────────────────────────────────────────────────────────────
 
@@ -67,7 +66,6 @@ const products: Product[] = [
 
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const visualLeft = index % 2 === 0;
-  const raised = index % 2 === 1;
 
   const statusDot: Record<string, string> = {
     Available: "var(--success)",
@@ -146,7 +144,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
   );
 
   return (
-    <div className={raised ? "section-raised" : ""}>
+    <div>
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16">
         <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
           {visualLeft ? (
@@ -210,7 +208,7 @@ export default function ProductCatalog() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
             >
-              <StatusPanel title="product-suite.status" />
+              <SimulynWindow />
             </motion.div>
           </div>
         </div>

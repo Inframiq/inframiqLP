@@ -30,6 +30,27 @@
   --error: #ff5c7a;
   --glass-bg: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Light-interface tokens — used only inside browser-window / dashboard
+     content panes. Contrast on this site comes from real light software
+     floating over the dark page, not from alternating page backgrounds, so
+     these are a fully separate palette rather than a re-theme of --bg/--surface. */
+  --lw-bg: #f4f5f7;
+  --lw-surface: #ffffff;
+  --lw-surface-2: #eceef2;
+  --lw-border: rgba(15, 23, 42, 0.08);
+  --lw-border-strong: rgba(15, 23, 42, 0.14);
+  --lw-text-1: #12141a;
+  --lw-text-2: #5b616e;
+  --lw-text-3: #9aa1ac;
+  --lw-accent: #2f6fed;
+  --lw-accent-dim: rgba(47, 111, 237, 0.1);
+  --lw-success: #16a34a;
+  --lw-success-dim: rgba(22, 163, 74, 0.1);
+  --lw-danger: #dc2626;
+  --lw-danger-dim: rgba(220, 38, 38, 0.1);
+  --lw-warning: #7c3aed;
+  --lw-warning-dim: rgba(124, 58, 237, 0.1);
 }
 
 /* The darkest note on the page — reserved for the footer only. Same
@@ -291,6 +312,46 @@ select {
   height: 8px;
   border-radius: 999px;
   background-color: var(--border-strong);
+}
+
+/* Browser chrome — the site's primary visual artifact: a real browser
+   frame (traffic lights + URL bar) holding a light-mode software interface,
+   floating over the dark page. Contrast comes from this window, not from
+   alternating page backgrounds, so the shadow/glow has to sell "floating"
+   on its own. */
+.browser-chrome {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--lw-bg);
+  box-shadow:
+    0 60px 120px -32px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.browser-chrome-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background-color: #e4e6ea;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+.browser-chrome-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+}
+.browser-chrome-url {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #6b7280;
+  font-size: 11px;
+  font-family: var(--font-geist-mono);
 }
 
 /* Ambient blue lighting — a soft, off-frame glow used behind hero and

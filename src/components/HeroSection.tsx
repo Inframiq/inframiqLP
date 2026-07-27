@@ -1,78 +1,142 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Radio } from "lucide-react";
+import { ArrowRight, ShieldAlert, Paperclip, Reply, Forward, MoreHorizontal } from "lucide-react";
+import BrowserWindow from "@/components/instruments/BrowserWindow";
+import { mailJourneys } from "@/lib/mailShieldJourneys";
 
-// The hero's live instrument: the visitor's own local time, computed
-// in-browser. It is the 24/7 claim proven rather than stated — different for
-// every visitor, impossible to fake. Renders a placeholder until mounted so
-// server and client markup always match.
-function useLocalClock() {
-  const [time, setTime] = useState<string | null>(null);
+// The hero's visual centerpiece: a real browser window running Mail Shield,
+// analyzing an actual phishing email from the product's own sample set —
+// proof of the security claim rather than a description of it. The scan
+// plays once on scroll-into-view, then settles on the verdict.
+function MailShieldHero() {
+  const journey = mailJourneys[0]; // billing@fakebank-alerts.co — the phishing sample
+  const [scanned, setScanned] = useState(false);
+  const scanRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const update = () =>
-      setTime(
-        new Date().toLocaleTimeString(undefined, {
-          hour: "numeric",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-    update();
-    const id = setInterval(update, 1000);
-    return () => clearInterval(id);
+    const el = scanRef.current;
+    if (!el) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          timeout = setTimeout(() => setScanned(true), reduced ? 0 : 1400);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (timeout) clearTimeout(timeout);
+    };
   }, []);
 
-  return time;
-}
-
-// The signature interaction: a coordinate readout that tracks the cursor
-// inside the schematic panel, the way a CAD tool or a technical drawing
-// reports position — proof this is a measured instrument, not a picture of
-// one. Disabled for touch/reduced-motion so it never becomes a tax on those
-// visitors.
-function subscribeToPointerCapability(callback: () => void) {
-  const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  fine.addEventListener("change", callback);
-  reduced.addEventListener("change", callback);
-  return () => {
-    fine.removeEventListener("change", callback);
-    reduced.removeEventListener("change", callback);
-  };
-}
-
-function getPointerCapability() {
   return (
-    window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    <BrowserWindow url="app.inframiq.com/mail-shield" className="w-full">
+      {/* App header */}
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ backgroundColor: "var(--lw-accent)" }}>
+            <ShieldAlert size={12} className="text-white" />
+          </div>
+          <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield</span>
+        </div>
+        <span className="font-mono text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide">Inbound queue</span>
+      </div>
+
+      <div className="grid sm:grid-cols-[180px_1fr]">
+        {/* Inbox list */}
+        <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] hidden sm:block">
+          {mailJourneys.map((j, i) => (
+            <div key={j.id} className={`px-3.5 py-3 ${i === 0 ? "bg-[var(--lw-accent-dim)]" : ""}`}>
+              <p className="text-[11px] text-[var(--lw-text-1)] truncate">{j.from.split("@")[1]}</p>
+              <p className="text-[10.5px] text-[var(--lw-text-3)] truncate mt-0.5">{j.subject}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Opened message + live analysis */}
+        <div className="p-5 sm:p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <p className="text-[13.5px] text-[var(--lw-text-1)] font-medium mb-1">{journey.subject}</p>
+              <p className="font-mono text-[11px] text-[var(--lw-text-3)]">{journey.from}</p>
+            </div>
+            <div className="flex items-center gap-2 text-[var(--lw-text-3)] flex-shrink-0">
+              <Reply size={13} />
+              <Forward size={13} />
+              <MoreHorizontal size={13} />
+            </div>
+          </div>
+
+          <div className="text-[12px] text-[var(--lw-text-2)] leading-relaxed mb-5 pb-5 border-b border-[var(--lw-border)]">
+            <p>Your account requires immediate verification. Click below within 24 hours to avoid suspension.</p>
+            <p className="mt-2 inline-flex items-center gap-1.5">
+              <Paperclip size={11} />
+              <span className="underline decoration-dotted">verify-account.fakebank-alerts.co/confirm</span>
+            </p>
+          </div>
+
+          {/* Scan bar */}
+          <div ref={scanRef}>
+            {!scanned && (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide">Scanning message…</span>
+                </div>
+                <div className="h-1.5 rounded-full bg-[var(--lw-surface-2)] overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{ backgroundColor: "var(--lw-accent)" }}
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 1.3, ease: "easeInOut" }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {scanned && (
+            <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+              <div
+                className="flex items-center gap-2 rounded-lg px-3.5 py-2.5 mb-3"
+                style={{ backgroundColor: "var(--lw-danger-dim)", border: "1px solid rgba(220,38,38,0.2)" }}
+              >
+                <ShieldAlert size={14} style={{ color: "var(--lw-danger)" }} />
+                <span className="text-[12.5px] font-medium" style={{ color: "var(--lw-danger)" }}>
+                  Phishing — blocked before delivery
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {journey.checkpoints.slice(0, 2).map((cp) => (
+                  <span
+                    key={cp.key}
+                    className="font-mono text-[9.5px] px-2 py-1 rounded"
+                    style={{ backgroundColor: "var(--lw-surface-2)", color: "var(--lw-text-2)" }}
+                  >
+                    {cp.label}: fail
+                  </span>
+                ))}
+                <span className="font-mono text-[9.5px] px-2 py-1 rounded" style={{ backgroundColor: "var(--lw-surface-2)", color: "var(--lw-text-2)" }}>
+                  domain: lookalike
+                </span>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </div>
+    </BrowserWindow>
   );
 }
 
-function useCoordinateReadout() {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const [coords, setCoords] = useState<{ x: number; y: number } | null>(null);
-  const enabled = useSyncExternalStore(subscribeToPointerCapability, getPointerCapability, () => false);
-
-  const handleMove = useCallback((e: React.PointerEvent) => {
-    const el = panelRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = Math.round(((e.clientX - rect.left) / rect.width) * 999);
-    const y = Math.round(((e.clientY - rect.top) / rect.height) * 999);
-    setCoords({ x: Math.min(999, Math.max(0, x)), y: Math.min(999, Math.max(0, y)) });
-  }, []);
-
-  return { panelRef, coords: enabled ? coords : null, handleMove: enabled ? handleMove : undefined, onLeave: () => setCoords(null) };
-}
-
 export default function HeroSection() {
-  const time = useLocalClock();
-  const { panelRef, coords, handleMove, onLeave } = useCoordinateReadout();
-
   return (
     <section className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden bg-[var(--bg)]">
       <div className="absolute inset-0 schematic-grid pointer-events-none opacity-70" />
@@ -80,7 +144,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-60" style={{ "--glow-x": "10%", "--glow-y": "90%" } as React.CSSProperties} />
 
       <div className="relative z-10 w-full max-w-[1360px] mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-[1fr_1.05fr] gap-14 lg:gap-10 items-center">
+        <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-14 lg:gap-12 items-center">
           {/* Thesis */}
           <div>
             <motion.div
@@ -90,7 +154,7 @@ export default function HeroSection() {
               className="flex items-center gap-2.5 mb-7"
             >
               <span className="font-mono text-[11px] tracking-[0.08em] text-[var(--text-3)] uppercase">
-                Fig. 01 — Inframiq system overview
+                Fig. 01 — Mail Shield, live
               </span>
             </motion.div>
 
@@ -98,22 +162,23 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08 }}
-              className="font-brand font-semibold text-[40px] sm:text-[54px] lg:text-[64px] leading-[1.06] tracking-[-0.02em] text-[var(--text-1)] mb-8"
+              className="font-brand font-semibold text-[38px] sm:text-[50px] lg:text-[58px] leading-[1.08] tracking-[-0.02em] text-[var(--text-1)] mb-8"
             >
-              One company.
+              We don&apos;t describe security software.
               <br />
-              Two systems, <span className="text-[var(--accent-strong)]">built to the same tolerance.</span>
+              <span className="text-[var(--accent-strong)]">We show it working.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.18 }}
-              className="text-[16.5px] text-[var(--text-2)] leading-[1.7] max-w-[480px] mb-10"
+              className="text-[16.5px] text-[var(--text-2)] leading-[1.7] max-w-[440px] mb-10"
             >
               Inframiq runs 24/7 voice and chat operations for your customers,
               and engineers the security and business software your company
-              depends on. Different disciplines, one measured standard.
+              depends on — like Mail Shield, blocking the phishing email on
+              the right, live, right now.
             </motion.p>
 
             <motion.div
@@ -133,137 +198,20 @@ export default function HeroSection() {
                 href="#systems"
                 className="inline-flex items-center gap-1.5 font-mono text-[13px] tracking-[0.02em] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors duration-150 underline decoration-[var(--border-strong)] underline-offset-4 hover:decoration-[var(--accent)]"
               >
-                inspect the systems
+                see the operations desk
               </a>
             </motion.div>
           </div>
 
-          {/* The schematic panel — the hero's one visual anchor */}
+          {/* The browser window — the hero's visual centerpiece */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.65, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
-            <div
-              ref={panelRef}
-              onPointerMove={handleMove}
-              onPointerLeave={onLeave}
-              className="window-chrome relative"
-            >
-              <div className="window-chrome-bar">
-                <span className="window-chrome-dot" />
-                <span className="window-chrome-dot" />
-                <span className="window-chrome-dot" />
-                <span className="ml-2 text-[10px] font-mono text-[var(--text-3)]">
-                  system-map.svg — read only
-                </span>
-                <span className="ml-auto flex items-center gap-1.5 font-mono text-[9px] text-[var(--text-3)] uppercase tracking-wide">
-                  <Radio size={10} className="text-[var(--success)]" />
-                  live
-                </span>
-              </div>
-
-              <div className="relative h-[400px] sm:h-[440px] p-6 sm:p-8">
-                {/* Coordinate readout */}
-                {coords && (
-                  <div className="absolute top-3 right-4 font-mono text-[10px] text-[var(--trace)] tabular-nums pointer-events-none">
-                    X{String(coords.x).padStart(3, "0")} · Y{String(coords.y).padStart(3, "0")}
-                  </div>
-                )}
-
-                <svg viewBox="0 0 400 380" className="w-full h-full" fill="none">
-                  {/* Leader lines from center to each node */}
-                  {(
-                    [
-                      ["M 200 190 L 90 100", "var(--trace)"],
-                      ["M 200 190 L 310 100", "var(--trace)"],
-                      ["M 200 190 L 90 290", "var(--accent)"],
-                      ["M 200 190 L 310 290", "var(--accent)"],
-                    ] as const
-                  ).map(([d, stroke]) => (
-                    <path
-                      key={d}
-                      d={d}
-                      stroke={stroke}
-                      strokeWidth="1"
-                      className="trace-path"
-                      style={{ "--trace-length": 220 } as React.CSSProperties}
-                    />
-                  ))}
-
-                  {/* Center node */}
-                  <circle cx="200" cy="190" r="5" fill="var(--text-1)" />
-                  <circle cx="200" cy="190" r="11" stroke="var(--border-strong)" strokeWidth="1" />
-
-                  {/* Corner tick marks — drafting convention */}
-                  <path d="M 12 12 L 12 28 M 12 12 L 28 12" stroke="var(--border-strong)" strokeWidth="1" />
-                  <path d="M 388 12 L 388 28 M 388 12 L 372 12" stroke="var(--border-strong)" strokeWidth="1" />
-                  <path d="M 12 368 L 12 352 M 12 368 L 28 368" stroke="var(--border-strong)" strokeWidth="1" />
-                  <path d="M 388 368 L 388 352 M 388 368 L 372 368" stroke="var(--border-strong)" strokeWidth="1" />
-                </svg>
-
-                {/* Node: Operations (top-left) */}
-                <div className="absolute left-[10%] top-[10%] w-[150px]">
-                  <div className="rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-3.5 py-3">
-                    <div className="flex items-center gap-1.5 mb-1.5">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <motion.span
-                          className="absolute inset-0 rounded-full"
-                          style={{ backgroundColor: "var(--success)" }}
-                          animate={{ opacity: [0.6, 0, 0.6], scale: [1, 2.2, 1] }}
-                          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                        <span className="relative h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--success)" }} />
-                      </span>
-                      <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] text-[var(--trace)]">
-                        01 — Operations
-                      </span>
-                    </div>
-                    <p className="font-mono text-[20px] leading-none text-[var(--text-1)] tabular-nums mb-1.5">
-                      {time ?? "--:--:--"}
-                    </p>
-                    <p className="text-[10.5px] text-[var(--text-3)]">Agent on shift, your time</p>
-                  </div>
-                </div>
-
-                {/* Node: Engineering (top-right) */}
-                <div className="absolute right-[10%] top-[10%] w-[150px]">
-                  <div className="rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-3.5 py-3">
-                    <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] text-[var(--trace)] block mb-1.5">
-                      02 — Engineering
-                    </span>
-                    <p className="font-mono text-[20px] leading-none text-[var(--text-1)] tabular-nums mb-1.5">2</p>
-                    <p className="text-[10.5px] text-[var(--text-3)]">Systems in production</p>
-                  </div>
-                </div>
-
-                {/* Node: Coverage (bottom-left) */}
-                <div className="absolute left-[8%] bottom-[6%] w-[150px]">
-                  <div className="rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-3.5 py-3">
-                    <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] text-[var(--accent-strong)] block mb-1.5">
-                      03 — Coverage
-                    </span>
-                    <p className="font-mono text-[20px] leading-none text-[var(--text-1)] mb-1.5">24/7</p>
-                    <p className="text-[10.5px] text-[var(--text-3)]">Voice, chat, technical</p>
-                  </div>
-                </div>
-
-                {/* Node: Team (bottom-right) */}
-                <div className="absolute right-[8%] bottom-[6%] w-[150px]">
-                  <div className="rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-3.5 py-3">
-                    <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] text-[var(--accent-strong)] block mb-1.5">
-                      04 — Team
-                    </span>
-                    <p className="font-mono text-[20px] leading-none text-[var(--text-1)] tabular-nums mb-1.5">10+</p>
-                    <p className="text-[10.5px] text-[var(--text-3)]">Engineers &amp; specialists</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Ambient glow behind the panel */}
-            <div className="absolute inset-0 -z-10 rounded-xl bg-[var(--trace)]/[0.04] blur-3xl scale-105 pointer-events-none" />
+            <MailShieldHero />
+            <div className="absolute inset-0 -z-10 rounded-xl bg-[var(--glow)] opacity-[0.15] blur-3xl scale-105 pointer-events-none" />
           </motion.div>
         </div>
       </div>

@@ -3,61 +3,42 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall } from "lucide-react";
+import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall, CheckCircle2 } from "lucide-react";
+import BrowserWindow from "@/components/instruments/BrowserWindow";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
 
-// ─── Hero visual anchor: a compact channel-status window, the services
-// equivalent of the homepage's system-status panel — proof of the four
-// channels rather than a claim about them. ─────────────────────────────────
+// ─── Shared light-dashboard building blocks ─────────────────────────────────
 
-const channels = [
-  { tag: "voice", label: "Voice" },
-  { tag: "chat", label: "Live chat" },
-  { tag: "tech", label: "Technical" },
-  { tag: "always-on", label: "24/7 desk" },
-];
-
-function ChannelStatusPanel() {
+function KpiRow({ items }: { items: { label: string; value: string }[] }) {
   return (
-    <div className="window-chrome">
-      <div className="window-chrome-bar">
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="ml-2 text-[10px] font-mono text-[var(--text-3)]">channels.status</span>
-      </div>
-      <div className="divide-y divide-[var(--border)]">
-        {channels.map((c, i) => (
-          <motion.div
-            key={c.tag}
-            initial={{ opacity: 0, x: -8 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 + i * 0.08 }}
-            className="flex items-center justify-between px-5 py-4"
-          >
-            <span className="font-mono text-[12px] text-[var(--text-2)]">{c.label}</span>
-            <span className="flex items-center gap-1.5">
-              <span className="relative flex h-1.5 w-1.5">
-                <motion.span
-                  className="absolute inset-0 rounded-full"
-                  style={{ backgroundColor: "var(--success)" }}
-                  animate={{ opacity: [0.6, 0, 0.6], scale: [1, 2.2, 1] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-                />
-                <span className="relative h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--success)" }} />
-              </span>
-              <span className="font-mono text-[9.5px] text-[var(--text-3)] uppercase">online</span>
-            </span>
-          </motion.div>
-        ))}
-      </div>
+    <div className="grid grid-cols-3 divide-x divide-[var(--lw-border)] border-b border-[var(--lw-border)]">
+      {items.map((kpi) => (
+        <div key={kpi.label} className="px-4 py-3">
+          <p className="text-[18px] font-semibold text-[var(--lw-text-1)] tabular-nums">{kpi.value}</p>
+          <p className="text-[10.5px] text-[var(--lw-text-3)] mt-0.5">{kpi.label}</p>
+        </div>
+      ))}
     </div>
   );
 }
 
-// ─── Voice: a live call window ──────────────────────────────────────────────
+function Sparkline({ points, color = "var(--lw-accent)" }: { points: number[]; color?: string }) {
+  const max = Math.max(...points);
+  const w = 100;
+  const h = 32;
+  const step = w / (points.length - 1);
+  const path = points
+    .map((p, i) => `${i === 0 ? "M" : "L"} ${(i * step).toFixed(1)} ${(h - (p / max) * h).toFixed(1)}`)
+    .join(" ");
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-8" preserveAspectRatio="none">
+      <path d={path} fill="none" stroke={color} strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+// ─── Voice: a live call in progress, framed inside a real ops dashboard ────
 
 function useElapsed() {
   const [seconds, setSeconds] = useState(74);
@@ -71,165 +52,127 @@ function useElapsed() {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-const CALL_BARS = Array.from({ length: 22 }, (_, i) => 6 + Math.round(Math.abs(Math.sin(i * 0.9)) * 20));
+const CALL_VOLUME = [12, 18, 15, 22, 30, 26, 34, 29, 38, 33];
 
-function VoiceWindow() {
+function VoiceDashboard() {
   const elapsed = useElapsed();
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => setTick((t) => t + 1), 200);
-    return () => clearInterval(id);
-  }, []);
-
   return (
-    <div className="window-chrome">
-      <div className="window-chrome-bar">
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="ml-2 flex items-center gap-1.5 text-[10px] font-mono text-[var(--text-3)]">
-          <Phone size={11} className="text-[var(--accent)]" />
-          voice — active call
+    <BrowserWindow url="ops.inframiq.com/voice">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
+          <Phone size={13} style={{ color: "var(--lw-accent)" }} />
+          Voice Desk
         </span>
+        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
-      <div className="p-6 flex flex-col items-center text-center">
-        <div
-          className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
-          style={{ background: "linear-gradient(160deg, rgba(79,141,255,0.35), rgba(124,203,255,0.1))", border: "1px solid var(--glass-border)" }}
-        >
-          <PhoneCall size={20} className="text-[var(--text-1)]" />
+      <KpiRow items={[{ label: "Active calls", value: "6" }, { label: "Avg handle", value: "3m 40s" }, { label: "Calls today", value: "212" }]} />
+      <div className="p-4">
+        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Call volume — today</p>
+        <Sparkline points={CALL_VOLUME} />
+      </div>
+      <div className="mx-4 mb-4 rounded-lg p-3 flex items-center gap-3" style={{ backgroundColor: "var(--lw-surface-2)" }}>
+        <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "var(--lw-accent-dim)" }}>
+          <PhoneCall size={14} style={{ color: "var(--lw-accent)" }} />
         </div>
-        <p className="text-[13.5px] text-[var(--text-1)] mb-1">Inbound — Customer Line</p>
-        <p className="font-mono text-[11px] text-[var(--text-3)] mb-6">connected · {elapsed}</p>
-
-        <div className="flex items-end gap-[3px] h-9 mb-2">
-          {CALL_BARS.map((h, i) => {
-            const active = (i + tick) % CALL_BARS.length;
-            const height = CALL_BARS[active];
-            return (
-              <span
-                key={i}
-                className="w-[3px] rounded-full bg-[var(--trace)] transition-[height] duration-200"
-                style={{ height: `${height}px`, opacity: 0.35 + (height / 26) * 0.65 }}
-              />
-            );
-          })}
+        <div className="min-w-0">
+          <p className="text-[12px] text-[var(--lw-text-1)] truncate">Inbound — Customer Line</p>
+          <p className="font-mono text-[10.5px] text-[var(--lw-text-3)]">connected · {elapsed}</p>
         </div>
       </div>
-    </div>
+    </BrowserWindow>
   );
 }
 
-// ─── Chat: a live chat window ───────────────────────────────────────────────
+// ─── Chat: live conversation dashboard ──────────────────────────────────────
 
-function ChatWindow() {
+const CHAT_VOLUME = [8, 14, 11, 17, 15, 20, 18, 24, 21, 27];
+
+function ChatDashboard() {
   const messages = [
     { from: "customer", text: "Hi, my order hasn't shipped yet — order #48213" },
-    { from: "agent", text: "Let me pull that up — one moment." },
-    { from: "agent", text: "Found it. It ships today, tracking goes out by 6pm." },
+    { from: "agent", text: "Found it — ships today, tracking by 6pm." },
   ];
   return (
-    <div className="window-chrome">
-      <div className="window-chrome-bar">
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="ml-2 flex items-center gap-1.5 text-[10px] font-mono text-[var(--text-3)]">
-          <MessageCircle size={11} className="text-[var(--accent)]" />
-          live chat
+    <BrowserWindow url="ops.inframiq.com/chat">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
+          <MessageCircle size={13} style={{ color: "var(--lw-accent)" }} />
+          Chat Desk
         </span>
+        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
-      <div className="p-5 space-y-2.5">
+      <KpiRow items={[{ label: "Open chats", value: "14" }, { label: "First response", value: "22s" }, { label: "CSAT", value: "97%" }]} />
+      <div className="p-4">
+        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Conversations — today</p>
+        <Sparkline points={CHAT_VOLUME} color="var(--lw-success)" />
+      </div>
+      <div className="px-4 pb-4 space-y-2">
         {messages.map((m, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 6 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.15 }}
-            className={`flex ${m.from === "agent" ? "justify-end" : "justify-start"}`}
-          >
+          <div key={i} className={`flex ${m.from === "agent" ? "justify-end" : "justify-start"}`}>
             <span
-              className="max-w-[80%] text-[12px] leading-snug rounded-lg px-3 py-2"
+              className="max-w-[85%] text-[11px] leading-snug rounded-lg px-2.5 py-1.5"
               style={
                 m.from === "agent"
-                  ? { background: "var(--accent-dim)", color: "var(--text-1)", border: "1px solid var(--glass-border)" }
-                  : { background: "var(--surface-2)", color: "var(--text-2)" }
+                  ? { backgroundColor: "var(--lw-accent-dim)", color: "var(--lw-text-1)" }
+                  : { backgroundColor: "var(--lw-surface-2)", color: "var(--lw-text-2)" }
               }
             >
               {m.text}
             </span>
-          </motion.div>
+          </div>
         ))}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="flex items-center gap-1 pt-1"
-        >
-          {[0, 1, 2].map((i) => (
-            <motion.span
-              key={i}
-              className="w-1.5 h-1.5 rounded-full bg-[var(--text-3)]"
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.15 }}
-            />
-          ))}
-        </motion.div>
       </div>
-    </div>
+    </BrowserWindow>
   );
 }
 
-// ─── Technical: a ticket resolution window ──────────────────────────────────
+// ─── Technical: ticketing dashboard ─────────────────────────────────────────
 
-function TicketWindow() {
-  const steps = [
-    { label: "Reported", detail: "Login fails after password reset", done: true },
-    { label: "Diagnosed", detail: "Cached session token conflict", done: true },
-    { label: "Resolved", detail: "Session cleared, access restored", done: true },
-  ];
+const tickets = [
+  { id: "TCH-2291", issue: "Login fails after reset", status: "Resolved" },
+  { id: "TCH-2292", issue: "Payment declined at checkout", status: "In progress" },
+  { id: "TCH-2293", issue: "App crashes on upload", status: "Queued" },
+];
+const statusStyle: Record<string, { bg: string; fg: string }> = {
+  Resolved: { bg: "var(--lw-success-dim)", fg: "var(--lw-success)" },
+  "In progress": { bg: "var(--lw-accent-dim)", fg: "var(--lw-accent)" },
+  Queued: { bg: "var(--lw-surface-2)", fg: "var(--lw-text-3)" },
+};
+
+function TicketingDashboard() {
   return (
-    <div className="window-chrome">
-      <div className="window-chrome-bar">
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="ml-2 flex items-center gap-1.5 text-[10px] font-mono text-[var(--text-3)]">
-          <Wrench size={11} className="text-[var(--accent)]" />
-          ticket — TCH-2291
+    <BrowserWindow url="ops.inframiq.com/tickets">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
+          <Wrench size={13} style={{ color: "var(--lw-accent)" }} />
+          Technical Desk
         </span>
+        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
-      <div className="p-5">
-        {steps.map((step, i) => (
-          <motion.div
-            key={step.label}
-            initial={{ opacity: 0, x: -8 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.15 }}
-            className="flex items-start gap-3 pb-4 last:pb-0"
-          >
-            <div className="flex flex-col items-center">
-              <span className="w-2 h-2 rounded-full bg-[var(--success)]" />
-              {i < steps.length - 1 && <span className="w-px flex-1 bg-[var(--border)] mt-1" style={{ minHeight: 24 }} />}
+      <KpiRow items={[{ label: "Open", value: "31" }, { label: "Resolved today", value: "48" }, { label: "SLA met", value: "99%" }]} />
+      <div className="divide-y divide-[var(--lw-border)]">
+        {tickets.map((t) => (
+          <div key={t.id} className="flex items-center justify-between px-4 py-3">
+            <div className="min-w-0">
+              <p className="font-mono text-[10px] text-[var(--lw-text-3)]">{t.id}</p>
+              <p className="text-[11.5px] text-[var(--lw-text-1)] truncate">{t.issue}</p>
             </div>
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.04em] text-[var(--accent-strong)]">{step.label}</p>
-              <p className="text-[12px] text-[var(--text-2)] mt-0.5">{step.detail}</p>
-            </div>
-          </motion.div>
+            <span
+              className="font-mono text-[9.5px] px-2 py-1 rounded-full flex-shrink-0"
+              style={{ backgroundColor: statusStyle[t.status].bg, color: statusStyle[t.status].fg }}
+            >
+              {t.status}
+            </span>
+          </div>
         ))}
       </div>
-    </div>
+    </BrowserWindow>
   );
 }
 
-// ─── Always-on: three simultaneous timezone clocks ──────────────────────────
+// ─── Always-on: simultaneous timezone coverage ──────────────────────────────
 
-function WorldClockWindow() {
+function CoverageDashboard() {
   const [times, setTimes] = useState<string[] | null>(null);
   const zones = [
     { label: "New York", tz: "America/New_York" },
@@ -239,11 +182,7 @@ function WorldClockWindow() {
 
   useEffect(() => {
     const update = () =>
-      setTimes(
-        zones.map((z) =>
-          new Date().toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", timeZone: z.tz })
-        )
-      );
+      setTimes(zones.map((z) => new Date().toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", timeZone: z.tz })));
     update();
     const id = setInterval(update, 15000);
     return () => clearInterval(id);
@@ -251,30 +190,28 @@ function WorldClockWindow() {
   }, []);
 
   return (
-    <div className="window-chrome">
-      <div className="window-chrome-bar">
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="window-chrome-dot" />
-        <span className="ml-2 flex items-center gap-1.5 text-[10px] font-mono text-[var(--text-3)]">
-          <Headset size={11} className="text-[var(--accent)]" />
-          desk — simultaneous coverage
+    <BrowserWindow url="ops.inframiq.com/coverage">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
+          <Headset size={13} style={{ color: "var(--lw-accent)" }} />
+          Desk Coverage
         </span>
+        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">24/7</span>
       </div>
-      <div className="grid grid-cols-3 divide-x divide-[var(--border)]">
+      <div className="grid grid-cols-3 divide-x divide-[var(--lw-border)]">
         {zones.map((z, i) => (
           <div key={z.tz} className="px-4 py-6 text-center">
-            <p className="font-mono text-[18px] text-[var(--text-1)] tabular-nums mb-1">{times ? times[i] : "--:--"}</p>
-            <p className="text-[10px] text-[var(--text-3)]">{z.label}</p>
+            <p className="text-[18px] font-semibold text-[var(--lw-text-1)] tabular-nums mb-1">{times ? times[i] : "--:--"}</p>
+            <p className="text-[10px] text-[var(--lw-text-3)]">{z.label}</p>
           </div>
         ))}
       </div>
-    </div>
+    </BrowserWindow>
   );
 }
 
 interface Service {
-  icon: LucideIconType;
+  icon: typeof Phone;
   tag: string;
   title: string;
   description: string;
@@ -282,44 +219,38 @@ interface Service {
   window: React.ReactNode;
 }
 
-type LucideIconType = typeof Phone;
-
 const services: Service[] = [
   {
     icon: Phone,
     tag: "voice",
     title: "Voice support",
-    description:
-      "Real people answering real calls. Trained agents handle inbound and outbound voice for your business, 24/7, in your brand's voice.",
+    description: "Real people answering real calls. Trained agents handle inbound and outbound voice for your business, 24/7, in your brand's voice.",
     points: ["Inbound customer enquiries", "Outbound follow-up & retention", "Call escalation & handoff"],
-    window: <VoiceWindow />,
+    window: <VoiceDashboard />,
   },
   {
     icon: MessageCircle,
     tag: "chat",
     title: "Live chat support",
-    description:
-      "Human agents on chat and messaging, not a bot script. Fast, accurate responses across your website and support channels.",
+    description: "Human agents on chat and messaging, not a bot script. Fast, accurate responses across your website and support channels.",
     points: ["Website & in-app live chat", "Order & account enquiries", "Multi-channel messaging support"],
-    window: <ChatWindow />,
+    window: <ChatDashboard />,
   },
   {
     icon: Wrench,
     tag: "tech",
     title: "Technical support",
-    description:
-      "Trained agents who can actually troubleshoot — walking customers through issues instead of routing every ticket upward.",
+    description: "Trained agents who can actually troubleshoot — walking customers through issues instead of routing every ticket upward.",
     points: ["Tier 1 & tier 2 troubleshooting", "Product & account issue resolution", "Structured ticket escalation"],
-    window: <TicketWindow />,
+    window: <TicketingDashboard />,
   },
   {
     icon: Headset,
     tag: "always-on",
     title: "24/7 dedicated teams",
-    description:
-      "A consistent team of agents assigned to your business, not a shared, rotating pool — covering every timezone your customers are in.",
+    description: "A consistent team of agents assigned to your business, not a shared, rotating pool — covering every timezone your customers are in.",
     points: ["Dedicated, trained agent teams", "Round-the-clock coverage", "Direct oversight, not a call-center queue"],
-    window: <WorldClockWindow />,
+    window: <CoverageDashboard />,
   },
 ];
 
@@ -332,7 +263,7 @@ export default function ServicesContent() {
         <div className="absolute inset-0 ambient-glow pointer-events-none" style={{ "--glow-x": "85%", "--glow-y": "0%" } as React.CSSProperties} />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <div className="flex items-center gap-2 mb-8 text-[12px] text-[var(--text-3)]">
                 <Link href="/" className="hover:text-[var(--text-2)] transition-colors">Inframiq</Link>
@@ -342,7 +273,7 @@ export default function ServicesContent() {
 
               <p className="font-mono text-[11px] tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
 
-              <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
+              <h1 className="font-brand text-[36px] lg:text-[44px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
                 Your customers, answered
                 <br />
                 <span className="text-[var(--text-3)]">by real people, around the clock.</span>
@@ -356,13 +287,13 @@ export default function ServicesContent() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
-              <ChannelStatusPanel />
+              <VoiceDashboard />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Services — alternating rows, each with a real interface window */}
+      {/* Services — each with a real light dashboard window */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="space-y-16 lg:space-y-24">
@@ -412,7 +343,7 @@ export default function ServicesContent() {
       </section>
 
       {/* Why human agents */}
-      <section className="section-raised py-20">
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
@@ -435,27 +366,28 @@ export default function ServicesContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="window-chrome"
             >
-              <div className="window-chrome-bar">
-                <span className="window-chrome-dot" />
-                <span className="window-chrome-dot" />
-                <span className="window-chrome-dot" />
-                <span className="ml-2 text-[10px] font-mono text-[var(--text-3)]">account.specs</span>
-              </div>
-              <div className="divide-y divide-[var(--border)]">
-                {[
-                  { label: "Coverage", value: "24 hours a day, every day" },
-                  { label: "Channels", value: "Voice & live chat" },
-                  { label: "Agents", value: "Trained, dedicated to your account" },
-                  { label: "Handles", value: "Enquiries & technical support" },
-                ].map((row) => (
-                  <div key={row.label} className="flex items-center justify-between gap-4 px-6 py-5">
-                    <span className="font-mono text-[11px] text-[var(--accent)] tracking-[0.02em]">{row.label.toLowerCase()}</span>
-                    <span className="text-[13.5px] text-[var(--text-2)] text-right">{row.value}</span>
-                  </div>
-                ))}
-              </div>
+              <BrowserWindow url="ops.inframiq.com/account">
+                <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+                  <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
+                    <CheckCircle2 size={13} style={{ color: "var(--lw-accent)" }} />
+                    Account Specs
+                  </span>
+                </div>
+                <div className="divide-y divide-[var(--lw-border)]">
+                  {[
+                    { label: "Coverage", value: "24 hours a day, every day" },
+                    { label: "Channels", value: "Voice & live chat" },
+                    { label: "Agents", value: "Trained, dedicated to your account" },
+                    { label: "Handles", value: "Enquiries & technical support" },
+                  ].map((row) => (
+                    <div key={row.label} className="flex items-center justify-between gap-4 px-5 py-3.5">
+                      <span className="font-mono text-[10.5px] text-[var(--lw-accent)] tracking-[0.02em] uppercase">{row.label}</span>
+                      <span className="text-[12.5px] text-[var(--lw-text-2)] text-right">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </BrowserWindow>
             </motion.div>
           </div>
         </div>

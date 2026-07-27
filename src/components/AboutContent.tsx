@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Eye, Target } from "lucide-react";
 import { values } from "@/lib/values";
-import { StatusPanel } from "@/components/instruments/Gauges";
 import TheCrew from "@/components/TheCrew";
 
 const timeline = [
@@ -157,6 +156,70 @@ function PrinciplesDiagram() {
   );
 }
 
+// The hero's visual centerpiece: an animated system-architecture diagram —
+// four real subsystems wired into one core, with data visibly flowing along
+// each connector, rather than a status readout standing in for the company.
+const archNodes = [
+  { key: "ops", label: "Operations Desk", sub: "24/7 voice & chat", x: 70, y: 60 },
+  { key: "mail", label: "Mail Shield", sub: "Email security", x: 330, y: 60 },
+  { key: "sim", label: "Simulyn", sub: "Pricing intelligence", x: 70, y: 260 },
+  { key: "eng", label: "Engineering", sub: "10+ specialists", x: 330, y: 260 },
+] as const;
+const ARCH_CENTER = { x: 200, y: 160 };
+
+function ArchitectureDiagram() {
+  return (
+    <div className="relative w-full aspect-[4/3]">
+      <svg viewBox="0 0 400 320" className="absolute inset-0 w-full h-full" fill="none">
+        {archNodes.map((n) => (
+          <path
+            key={n.key}
+            d={`M ${ARCH_CENTER.x} ${ARCH_CENTER.y} L ${n.x} ${n.y}`}
+            stroke="var(--border-strong)"
+            strokeWidth="1"
+            className="trace-path"
+            style={{ "--trace-length": 200 } as React.CSSProperties}
+          />
+        ))}
+        {archNodes.map((n, i) => (
+          <motion.circle
+            key={`flow-${n.key}`}
+            r="2.5"
+            fill="var(--accent-strong)"
+            animate={{ cx: [ARCH_CENTER.x, n.x], cy: [ARCH_CENTER.y, n.y], opacity: [0, 1, 0] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "linear", delay: 0.6 + i * 0.35 }}
+          />
+        ))}
+        <circle cx={ARCH_CENTER.x} cy={ARCH_CENTER.y} r="26" fill="var(--surface)" stroke="var(--border-strong)" strokeWidth="1" />
+      </svg>
+
+      <div
+        className="absolute flex flex-col items-center justify-center text-center"
+        style={{ left: `${(ARCH_CENTER.x / 400) * 100}%`, top: `${(ARCH_CENTER.y / 320) * 100}%`, transform: "translate(-50%, -50%)" }}
+      >
+        <span className="font-mono text-[9px] uppercase tracking-[0.04em] text-[var(--text-3)]">core</span>
+      </div>
+
+      {archNodes.map((n, i) => (
+        <motion.div
+          key={n.key}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+          className="absolute w-[130px] -translate-x-1/2 -translate-y-1/2"
+          style={{ left: `${(n.x / 400) * 100}%`, top: `${(n.y / 320) * 100}%` }}
+        >
+          <div className="rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-3 py-2.5 text-center">
+            <p className="font-mono text-[10px] text-[var(--accent-strong)] mb-1">{n.label}</p>
+            <p className="text-[9.5px] text-[var(--text-3)]">{n.sub}</p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 export default function AboutContent() {
   return (
     <>
@@ -191,7 +254,7 @@ export default function AboutContent() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
-              <StatusPanel title="company.status" />
+              <ArchitectureDiagram />
             </motion.div>
           </div>
         </div>
@@ -212,7 +275,7 @@ export default function AboutContent() {
       </section>
 
       {/* Values — radial diagram */}
-      <section className="section-raised py-20">
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -280,7 +343,7 @@ export default function AboutContent() {
       </section>
 
       {/* Team — the same live directory used on the homepage */}
-      <div className="section-raised">
+      <div>
         <TheCrew />
         <div className="max-w-5xl mx-auto px-6 lg:px-10 pb-16 -mt-4">
           <a

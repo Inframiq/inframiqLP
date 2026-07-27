@@ -7,7 +7,7 @@ import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWi
 
 export default function ProductsShowcase() {
   return (
-    <section id="products" className="relative py-24 lg:py-32 section-raised overflow-hidden">
+    <section id="products" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 ambient-glow pointer-events-none" style={{ "--glow-x": "20%", "--glow-y": "0%" } as React.CSSProperties} />
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-70" style={{ "--glow-x": "85%", "--glow-y": "100%" } as React.CSSProperties} />
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">

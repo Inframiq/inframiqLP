@@ -515,6 +515,86 @@ select {
   background-color: #131418;
 }
 
+/* Instrument console — the second earned dark exception (TheNumbers): a
+   physical control-panel housing for the coverage/systems/team dials,
+   brushed-metal instead of a flat card. Redefines --text-1/2/3, --border,
+   and --surface-2 locally so the existing dial components (which read those
+   tokens) render correctly against a permanently-dark panel without
+   touching Gauges.tsx at all. */
+.instrument-console {
+  --text-1: #f3f4f6;
+  --text-2: #b6bac2;
+  --text-3: #7d8492;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --surface-2: rgba(255, 255, 255, 0.05);
+  position: relative;
+  border-radius: 32px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 140% at 15% -10%, rgba(255, 255, 255, 0.05), transparent 55%),
+    linear-gradient(155deg, #1c1d22 0%, #101114 55%, #0b0c0e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 60px 120px -40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.instrument-console-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.instrument-console-led {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+.instrument-console-rivet {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.05));
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+.instrument-porthole {
+  position: relative;
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.04), transparent 70%);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+/* Each porthole gets its own tint — a console of three identical grey
+   holes read as "industrial"; three warm color-coded glows read as
+   considered rather than generic. */
+.instrument-porthole--blue {
+  background: radial-gradient(circle at 50% 30%, rgba(79, 141, 255, 0.16), transparent 70%);
+}
+.instrument-porthole--violet {
+  background: radial-gradient(circle at 50% 30%, rgba(167, 139, 250, 0.16), transparent 70%);
+}
+.instrument-porthole--pink {
+  background: radial-gradient(circle at 50% 30%, rgba(244, 114, 182, 0.16), transparent 70%);
+}
+/* Diagonal sheen sweeping across the console once it's in view — a light
+   catching brushed metal, not a decorative gradient sitting still. */
+.instrument-console-sheen {
+  position: absolute;
+  inset: -20% -60%;
+  background: linear-gradient(
+    75deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 48%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.06) 52%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
 /* Ambient glow — a soft, low-intensity light bloom for hero/section
    atmosphere. Considerably more subtle than a dark-theme glow, since it now
    sits on a near-white surface and only needs to suggest a light source. */

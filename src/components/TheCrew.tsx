@@ -8,27 +8,44 @@ import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 // Deterministic 6-digit badge code from a name, so each entry looks like a
 // real issued ID rather than a randomly-reshuffled number on every render.
-function badgeCode(name: string) {
+function hashOf(name: string) {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  return String((hash % 900000) + 100000);
+  return hash;
+}
+function badgeCode(name: string) {
+  return String((hashOf(name) % 900000) + 100000);
+}
+// Deterministic bar heights for the decorative barcode strip — looks like a
+// real scan line without any per-render randomness (which would also cause
+// a hydration mismatch).
+function barcodeHeights(name: string, count: number) {
+  const seed = hashOf(name);
+  return Array.from({ length: count }, (_, i) => 25 + ((seed + i * 47) % 75));
 }
 
 // Portrait/credential-driven card — a floating physical object with a
 // tilt-on-hover response, sized to sit as one card in the horizontal
-// scroller rather than a single centered badge.
+// scroller rather than a single centered badge. Styled as a laminated
+// security badge (holographic sheen tied to the same pointer position that
+// drives the tilt, corner-bracket "scanner" frame, chip + barcode) rather
+// than a plain rounded card with initials in a box.
 function CredentialBadge({ name, role }: { name: string; role: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [pointer, setPointer] = useState({ px: 0.5, py: 0.5 });
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: py * -8, y: px * 10 });
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    setTilt({ x: (py - 0.5) * -8, y: (px - 0.5) * 10 });
+    setPointer({ px, py });
   };
+
+  const bars = barcodeHeights(name, 22);
 
   return (
     <div style={{ perspective: 900 }}>
@@ -37,19 +54,39 @@ function CredentialBadge({ name, role }: { name: string; role: string }) {
         onPointerMove={handlePointerMove}
         onPointerLeave={() => setTilt({ x: 0, y: 0 })}
         animate={{ rotateX: tilt.x, rotateY: tilt.y }}
+        whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 150, damping: 15 }}
-        className="relative w-full rounded-xl overflow-hidden"
+        className="relative w-full rounded-[28px] overflow-hidden"
         style={{
           background: "linear-gradient(160deg, var(--accent-dim), var(--surface))",
           border: "1px solid var(--border)",
           boxShadow: "0 30px 60px -28px rgba(47,111,237,0.22)",
         }}
       >
-        <div className="p-5">
-          <div className="flex items-start justify-between mb-6">
-            <span className="font-mono text-[8.5px] text-[var(--text-3)] uppercase tracking-[0.08em]">
-              ID · {badgeCode(name)}
-            </span>
+        {/* Holographic sheen — an iridescent streak that shifts with the
+            same pointer position driving the tilt, so it reads as light
+            catching a laminated card rather than a static gradient. */}
+        <div
+          className="absolute inset-0 pointer-events-none mix-blend-overlay"
+          style={{
+            opacity: 0.8,
+            background:
+              "linear-gradient(115deg, transparent 20%, rgba(124,58,237,0.35) 38%, rgba(56,189,248,0.35) 50%, rgba(244,114,182,0.3) 62%, transparent 80%)",
+            backgroundSize: "250% 250%",
+            backgroundPosition: `${pointer.px * 100}% ${pointer.py * 100}%`,
+          }}
+        />
+
+        <div className="relative p-5">
+          <div className="flex items-start justify-between mb-5">
+            <div
+              className="w-7 h-5 rounded-[6px]"
+              style={{
+                background: "linear-gradient(135deg, #e4e4e7, #a1a1aa 45%, #e4e4e7)",
+                boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.15)",
+              }}
+              aria-hidden
+            />
             <span className="flex items-center gap-1.5">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inset-0 rounded-full status-pulse" style={{ backgroundColor: "var(--success)" }} />
@@ -59,20 +96,36 @@ function CredentialBadge({ name, role }: { name: string; role: string }) {
             </span>
           </div>
 
-          <div
-            className="w-12 h-12 rounded-lg flex items-center justify-center font-brand font-semibold text-[18px] text-white mb-4"
-            style={{ background: "linear-gradient(160deg, var(--accent), var(--accent-strong))" }}
-          >
-            {name[0]}
+          <div className="relative w-14 h-14 mb-4">
+            <div
+              className="absolute inset-0 rounded-full flex items-center justify-center font-brand font-semibold text-[20px] text-white"
+              style={{ background: "linear-gradient(160deg, var(--accent), var(--accent-strong))" }}
+            >
+              {name[0]}
+            </div>
+            {[
+              "-top-1 -left-1 border-t-2 border-l-2 rounded-tl-[5px]",
+              "-top-1 -right-1 border-t-2 border-r-2 rounded-tr-[5px]",
+              "-bottom-1 -left-1 border-b-2 border-l-2 rounded-bl-[5px]",
+              "-bottom-1 -right-1 border-b-2 border-r-2 rounded-br-[5px]",
+            ].map((cls) => (
+              <span key={cls} className={`absolute w-3 h-3 ${cls}`} style={{ borderColor: "var(--accent-strong)" }} />
+            ))}
           </div>
 
           <p className="text-[15px] text-[var(--text-1)] mb-1 truncate">{name}</p>
-          <p className="font-mono text-[10px] text-[var(--accent-strong)] uppercase tracking-[0.02em] truncate">{role}</p>
+          <p className="font-mono text-[10px] text-[var(--accent-strong)] uppercase tracking-[0.02em] truncate mb-4">{role}</p>
+
+          <div className="flex items-end gap-[2px] h-5" aria-hidden>
+            {bars.map((h, i) => (
+              <span key={i} style={{ height: `${h}%` }} className="w-[2px] flex-1 rounded-full bg-[var(--text-3)] opacity-40" />
+            ))}
+          </div>
         </div>
-        <div className="h-px w-full bg-[var(--border)]" />
-        <div className="px-5 py-2.5 flex items-center justify-between">
+        <div className="relative h-px w-full bg-[var(--border)]" />
+        <div className="relative px-5 py-2.5 flex items-center justify-between">
           <span className="font-mono text-[8px] text-[var(--text-3)] uppercase tracking-wide">Inframiq</span>
-          <span className="font-mono text-[8px] text-[var(--text-3)]">full access</span>
+          <span className="font-mono text-[8px] text-[var(--text-3)]">ID · {badgeCode(name)}</span>
         </div>
       </motion.div>
     </div>
@@ -172,14 +225,18 @@ export default function TheCrew() {
             className="flex gap-4 overflow-x-auto no-scrollbar pb-2"
             style={{ scrollSnapType: "x mandatory" }}
           >
-            {team.map((member) => (
-              <div
+            {team.map((member, i) => (
+              <motion.div
                 key={member.name}
                 className="flex-shrink-0"
                 style={{ width: CARD_WIDTH, scrollSnapAlign: "start" }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: (i % 6) * 0.06 }}
               >
                 <CredentialBadge name={member.name} role={member.role} />
-              </div>
+              </motion.div>
             ))}
           </div>
 

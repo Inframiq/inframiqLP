@@ -32,6 +32,7 @@ export default function ProductsShowcase() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
+            whileHover={{ y: -6 }}
             transition={{ duration: 0.55 }}
             className="h-full flex flex-col"
           >
@@ -40,9 +41,9 @@ export default function ProductsShowcase() {
               <p className="text-[12.5px] text-[var(--text-3)]">Know your numbers before you set your price.</p>
               <Link
                 href="/?product=Simulyn#demo"
-                className="inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
+                className="group inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
               >
-                Demo <ArrowRight size={12} />
+                Demo <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </motion.div>
@@ -51,6 +52,7 @@ export default function ProductsShowcase() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
+            whileHover={{ y: -6 }}
             transition={{ duration: 0.55, delay: 0.08 }}
             className="h-full flex flex-col"
           >
@@ -59,21 +61,27 @@ export default function ProductsShowcase() {
               <p className="text-[12.5px] text-[var(--text-3)]">Stops phishing and spoofing before delivery.</p>
               <Link
                 href="/?product=Mail%20Shield#demo"
-                className="inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
+                className="group inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
               >
-                Demo <ArrowRight size={12} />
+                Demo <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </motion.div>
         </div>
 
-        <p className="text-center mt-10 text-[12.5px] text-[var(--text-3)]">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-center mt-10 text-[12.5px] text-[var(--text-3)]"
+        >
           Both in active development —{" "}
           <Link href="/products" className="text-[var(--text-2)] hover:text-[var(--text-1)] underline underline-offset-2">
             view the full product suite
           </Link>
           .
-        </p>
+        </motion.p>
       </div>
     </section>
   );

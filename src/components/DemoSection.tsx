@@ -7,6 +7,15 @@ import { ArrowRight, CheckCircle2, Inbox } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
+const queueContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
+};
+const queueItem = {
+  hidden: { opacity: 0, x: -12 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
 const checklist = [
   "Coverage & staffing plan",
   "Walkthrough with a senior team member",
@@ -105,20 +114,34 @@ export default function DemoSection() {
 
             <div className="grid md:grid-cols-[220px_1fr]">
               {/* Request queue — the dashboard half */}
-              <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] hidden md:block">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={queueContainer}
+                className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] hidden md:block"
+              >
                 {recentRequests.map((r) => (
-                  <div key={r.company} className="px-4 py-3">
+                  <motion.div key={r.company} variants={queueItem} className="px-4 py-3">
                     <p className="text-[11.5px] text-[var(--lw-text-1)] truncate mb-0.5">{r.company}</p>
                     <p className="text-[10px] text-[var(--lw-text-3)] truncate mb-1.5">{r.need}</p>
                     <span
-                      className="inline-block font-mono text-[9px] px-1.5 py-0.5 rounded-full"
+                      className="relative inline-block font-mono text-[9px] px-1.5 py-0.5 rounded-full"
                       style={{ backgroundColor: requestStatusStyle[r.status].bg, color: requestStatusStyle[r.status].fg }}
                     >
-                      {r.status}
+                      {r.status === "New" && (
+                        <motion.span
+                          className="absolute inset-0 rounded-full"
+                          style={{ backgroundColor: requestStatusStyle[r.status].fg }}
+                          animate={{ opacity: [0.5, 0, 0.5], scale: [1, 1.4, 1] }}
+                          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      )}
+                      <span className="relative">{r.status}</span>
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               {/* New request — the real, functional form */}
               <div className="p-6">

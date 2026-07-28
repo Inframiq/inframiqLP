@@ -2,6 +2,27 @@
 
 import { motion } from "framer-motion";
 
+// Reveals `text` one character at a time — each char is its own motion.span
+// with its own viewport-triggered delay, so the line "types" itself out
+// once the terminal scrolls into view, rather than fading in as one block.
+function TypedText({ text, startDelay }: { text: string; startDelay: number }) {
+  return (
+    <>
+      {text.split("").map((ch, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: startDelay + i * 0.014, duration: 0.01 }}
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </>
+  );
+}
+
 // The emotional exhale before the ask, staged as a terminal log rather than
 // a centered pull-quote — consistent with the instrument register the rest
 // of the page is built from. The blinking cursor and status line are the
@@ -12,6 +33,20 @@ export default function ClosingStatement() {
     { prefix: ">", text: "2 systems in production. 1 operations desk, staffed 24/7." },
     { prefix: ">", text: "Every product after Mail Shield and Simulyn gets built exactly this carefully — or it doesn't get built." },
   ];
+
+  // Each line's typing starts only once the previous one has finished (plus
+  // a short pause) — a fixed per-line stagger would start line 2 typing
+  // while line 1 was still mid-character, which reads as garbled rather
+  // than sequential.
+  const CHAR_STEP = 0.014;
+  const LINE_PAUSE = 0.35;
+  let cursor = 0.15;
+  const lineDelays = lines.map((line) => {
+    const delay = cursor;
+    cursor += line.text.length * CHAR_STEP + LINE_PAUSE;
+    return delay;
+  });
+  const statusRowDelay = cursor + 0.2;
 
   return (
     <section className="py-24 lg:py-32 border-t border-[var(--border)] bg-[var(--bg-raised)]">
@@ -36,18 +71,18 @@ export default function ClosingStatement() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.15 + i * 0.25 }}
+                transition={{ delay: lineDelays[i], duration: 0.01 }}
                 className={i === 0 ? "text-white/40" : "text-white/70"}
               >
                 <span className="text-[var(--accent-strong)] mr-2">{line.prefix}</span>
-                {line.text}
+                <TypedText text={line.text} startDelay={lineDelays[i] + 0.03} />
               </motion.p>
             ))}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 1 }}
+              transition={{ delay: statusRowDelay }}
               className="flex items-center gap-2 mt-4"
             >
               <span className="text-[var(--accent-strong)]">$</span>

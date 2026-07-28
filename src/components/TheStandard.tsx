@@ -4,6 +4,17 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
+const industries = ["Financial Services", "Healthcare", "Education", "Government", "Retail", "Logistics"];
+
+const pillContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+};
+const pillItem = {
+  hidden: { opacity: 0, y: 10, scale: 0.9 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
 const pillars = [
   { tag: "security", title: "Security-first", description: "Every product is tested and hardened against failure — whether it's a phishing email or an everyday app." },
   { tag: "uptime", title: "Redundant", description: "Self-healing systems designed to stay online and perform — from enterprise security infrastructure to tools people use every day." },
@@ -62,15 +73,24 @@ export default function TheStandard() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="inline-flex flex-wrap gap-1 rounded-full bg-[var(--surface-2)] p-1 mt-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
+              variants={pillContainer}
+              className="inline-flex flex-wrap gap-1 rounded-full bg-[var(--surface-2)] p-1 mt-8"
+            >
               {pillars.map((p, i) => {
                 const isActive = active === i;
                 const label = p.tag.charAt(0).toUpperCase() + p.tag.slice(1);
                 return (
-                  <button
+                  <motion.button
                     key={p.tag}
+                    variants={pillItem}
                     type="button"
                     onClick={() => setActive(i)}
+                    whileHover={{ scale: isActive ? 1 : 1.06 }}
+                    whileTap={{ scale: 0.96 }}
                     className="relative inline-flex items-center justify-center text-[12.5px] leading-none px-3.5 py-2 rounded-full"
                   >
                     {isActive && (
@@ -91,22 +111,36 @@ export default function TheStandard() {
                     >
                       {label}
                     </span>
-                  </button>
+                  </motion.button>
                 );
               })}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-14 text-[13px] text-[var(--text-3)] text-center"
+          className="mt-14"
         >
-          Trusted across financial services, healthcare, education, and government.
-        </motion.p>
+          <p className="text-center font-mono text-[11px] uppercase tracking-wide text-[var(--text-3)] mb-4">
+            Trusted across
+          </p>
+          <div className="marquee-fade overflow-hidden">
+            <div className="flex w-max marquee-track">
+              {[...industries, ...industries].map((label, i) => (
+                <span
+                  key={i}
+                  className="flex-shrink-0 mx-2 px-4 py-1.5 rounded-full border border-[var(--border)] text-[12.5px] text-[var(--text-2)] whitespace-nowrap"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

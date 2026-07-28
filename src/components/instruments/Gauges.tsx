@@ -1,10 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 // Shared status instruments used across the homepage, /about, and /products
 // — kept in one place so every page's "status panel" reads as the same
 // physical instrument rather than a page-specific recreation of it.
+
+// Counts up to `target` once `started` flips true (driven by a motion
+// element's onViewportEnter, not mount) — so the number arrives in sync
+// with the dial/bars around it instead of just being static text sitting
+// next to something animated.
+function useCountUp(target: number, started: boolean, durationSec = 1) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!started) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      if (reduced) {
+        setValue(target);
+        return;
+      }
+      const t = Math.min(1, (now - start) / (durationSec * 1000));
+      const eased = 1 - Math.pow(1 - t, 3);
+      setValue(Math.round(target * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [started, target, durationSec]);
+  return value;
+}
 
 // A circular dial, fully lit, standing in for "always on" — the sweep is
 // decorative confirmation of a true, un-embellished fact (24/7), not a fake
@@ -42,9 +70,15 @@ export function CoverageDial() {
 // A ten-cell level meter — headcount as an honest tally, not a projected
 // percentage of some invented ceiling.
 export function TeamMeter() {
+  const [started, setStarted] = useState(false);
+  const count = useCountUp(10, started, 1.1);
   return (
     <div className="flex flex-col items-center">
-      <div className="flex items-end gap-[3px] h-[70px] mb-4">
+      <motion.div
+        className="flex items-end gap-[3px] h-[70px] mb-4"
+        onViewportEnter={() => setStarted(true)}
+        viewport={{ once: true }}
+      >
         {Array.from({ length: 10 }, (_, i) => (
           <motion.span
             key={i}
@@ -56,8 +90,8 @@ export function TeamMeter() {
             style={{ opacity: 0.55 + i * 0.045 }}
           />
         ))}
-      </div>
-      <span className="font-mono text-[22px] text-[var(--text-1)] leading-none">10+</span>
+      </motion.div>
+      <span className="font-mono text-[22px] text-[var(--text-1)] leading-none tabular-nums">{count}+</span>
       <span className="font-mono text-[8.5px] text-[var(--text-3)] uppercase tracking-wide mt-1">team members</span>
     </div>
   );
@@ -66,9 +100,15 @@ export function TeamMeter() {
 // A three-slot indicator: two systems lit and in production, one dim slot
 // reserved for what's already in active development.
 export function SystemsIndicator() {
+  const [started, setStarted] = useState(false);
+  const count = useCountUp(2, started, 0.7);
   return (
     <div className="flex flex-col items-center">
-      <div className="flex items-center gap-3 h-[70px]">
+      <motion.div
+        className="flex items-center gap-3 h-[70px]"
+        onViewportEnter={() => setStarted(true)}
+        viewport={{ once: true }}
+      >
         {[true, true, false].map((lit, i) => (
           <motion.div
             key={i}
@@ -84,8 +124,8 @@ export function SystemsIndicator() {
             }}
           />
         ))}
-      </div>
-      <span className="font-mono text-[22px] text-[var(--text-1)] leading-none mt-3">2</span>
+      </motion.div>
+      <span className="font-mono text-[22px] text-[var(--text-1)] leading-none mt-3 tabular-nums">{count}</span>
       <span className="font-mono text-[8.5px] text-[var(--text-3)] uppercase tracking-wide mt-1">systems live</span>
     </div>
   );

@@ -175,23 +175,33 @@ export default function TheSplit() {
               24/7 — handling enquiries and technical support as an extension
               of your own team, not a shared, anonymous queue.
             </p>
-            <ul className="space-y-3 mb-8">
+            <motion.ul
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
+              variants={revealContainer}
+              className="space-y-3 mb-8"
+            >
               {[
                 "Dedicated, trained agent teams",
                 "Voice, chat, and tier 1–2 technical support",
                 "Round-the-clock coverage, every timezone",
               ].map((point) => (
-                <li key={point} className="flex items-start gap-2.5 text-[13px] text-[var(--text-2)]">
+                <motion.li
+                  key={point}
+                  variants={revealItem}
+                  className="flex items-start gap-2.5 text-[13px] text-[var(--text-2)]"
+                >
                   <span className="w-1 h-1 rounded-full bg-[var(--trace)] mt-1.5 flex-shrink-0" />
                   {point}
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
             <Link
               href="/services"
-              className="inline-flex items-center gap-1.5 text-[14px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150"
+              className="group inline-flex items-center gap-1.5 text-[14px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150"
             >
-              View services <ArrowRight size={13} />
+              View services <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </div>
         </motion.div>

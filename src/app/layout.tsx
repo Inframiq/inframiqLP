@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
 import Navbar from "@/components/Navbar";
+import EntryLoaderProvider from "@/components/EntryLoaderProvider";
 import { team } from "@/lib/team";
 import "./globals.css";
 
@@ -174,11 +175,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        {/* Rendered here (not per-page) so it never remounts or gets swept
-            into the page-transition animation in template.tsx — it stays
-            fixed while the page content underneath slides. */}
-        <Navbar />
-        {children}
+        <EntryLoaderProvider>
+          {/* Rendered here (not per-page) so it never remounts or gets swept
+              into the page-transition animation in template.tsx — it stays
+              fixed while the page content underneath slides. */}
+          <Navbar />
+          {children}
+        </EntryLoaderProvider>
         <Analytics />
       </body>
     </html>

@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { Home, Package, Briefcase, Users, Mail } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
+const CTA_HREF = "/#demo";
+
 const navLinks = [
   { label: "Home",     href: "/",         icon: Home     },
   { label: "Products", href: "/products", icon: Package  },
@@ -42,57 +44,56 @@ export default function Navbar() {
 
   return (
     <>
-      {/* The menu bar — a real light OS menu bar sitting atop the desk,
-          rather than a marketing header. Sits flush until scroll gives it
-          a hairline + shadow to separate from the page beneath it. */}
+      {/* The menu bar — a floating pill sitting just above the desk, rather
+          than a flush marketing header. Always carries its own shadow/border
+          so it reads as a physical bar resting on the page beneath it;
+          scroll only deepens that shadow slightly. */}
       <motion.header
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b backdrop-blur-xl ${
-          scrolled
-            ? "bg-[var(--menubar-bg-scrolled)] border-[var(--border)] shadow-[0_1px_0_rgba(15,23,42,0.04)]"
-            : "bg-[var(--menubar-bg)] border-transparent"
-        }`}
+        className="fixed top-4 inset-x-3 sm:inset-x-5 lg:left-1/2 lg:right-auto lg:-translate-x-1/2 lg:w-[calc(100%-2.5rem)] lg:max-w-[1360px] z-50"
       >
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-[52px]">
-            <Link href="/" className="flex items-center gap-2">
-              <span
-                className="w-5 h-5 rounded-[6px] flex items-center justify-center font-mono text-[9px] font-semibold text-white"
-                style={{ background: "linear-gradient(155deg, var(--accent), var(--accent-strong))" }}
-                aria-hidden
-              >
-                iQ
-              </span>
-              <span className="font-mono text-[13px] tracking-[0.02em] leading-none text-[var(--text-1)] select-none">
-                inframIQ
-              </span>
+        <div
+          className={`flex items-center justify-between h-[62px] pl-6 pr-3 rounded-full border backdrop-blur-xl bg-[var(--surface)] border-[var(--border)] transition-shadow duration-300 ${
+            scrolled ? "shadow-[0_16px_40px_-16px_rgba(15,23,42,0.22)]" : "shadow-[0_10px_30px_-14px_rgba(15,23,42,0.14)]"
+          }`}
+        >
+          <Link href="/" className="flex items-center">
+            <span className="font-brand text-[19px] font-bold tracking-tight leading-none text-[var(--text-1)] select-none">
+              inframIQ
+            </span>
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-7">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleHashLink(e, link.href)}
+                  className={`text-[14px] transition-colors duration-200 ${
+                    active
+                      ? "font-medium text-[var(--text-1)]"
+                      : "text-[var(--text-2)] hover:text-[var(--text-1)]"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href={CTA_HREF}
+              onClick={(e) => handleHashLink(e, CTA_HREF)}
+              className="hidden sm:inline-flex items-center h-11 px-6 rounded-full bg-[var(--text-1)] text-[var(--bg)] text-[14px] font-medium hover:opacity-85 active:scale-[0.97] transition-all duration-150"
+            >
+              Request Demo
             </Link>
-
-            <nav className="hidden md:flex items-center gap-5">
-              {navLinks.map((link) => {
-                const active = isActive(link.href);
-                return (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    onClick={(e) => handleHashLink(e, link.href)}
-                    className={`text-[14px] transition-colors duration-200 ${
-                      active
-                        ? "font-medium text-[var(--text-1)]"
-                        : "text-[var(--text-2)] hover:text-[var(--text-1)]"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
-            </div>
           </div>
         </div>
       </motion.header>

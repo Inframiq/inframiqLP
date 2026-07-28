@@ -57,7 +57,10 @@ function SimulynChart({ seats }: { seats: number }) {
   );
 }
 
-export function SimulynWindow({ className = "" }: { className?: string } = {}) {
+export function SimulynWindow({
+  className = "",
+  chrome = "browser",
+}: { className?: string; chrome?: "browser" | "app" } = {}) {
   const [seats, setSeats] = useState(SEATS_DEFAULT);
   const [dragging, setDragging] = useState(false);
   const dragStart = useRef<{ x: number; seats: number } | null>(null);
@@ -91,13 +94,8 @@ export function SimulynWindow({ className = "" }: { className?: string } = {}) {
     }
   };
 
-  return (
-    <BrowserWindow url="app.inframiq.com/simulyn" className={className}>
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Simulyn — Pricing Model</span>
-        <span className="font-mono text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide">Draft</span>
-      </div>
-
+  const body = (
+    <>
       <div className="flex-1 flex flex-col p-6 lg:p-7">
         <div className="flex flex-wrap items-end gap-x-3 gap-y-1 mb-5">
           <span
@@ -142,6 +140,24 @@ export function SimulynWindow({ className = "" }: { className?: string } = {}) {
           </div>
         </div>
       </div>
+    </>
+  );
+
+  if (chrome === "app") {
+    return (
+      <BrowserWindow variant="app" title="Simulyn · Pricing Simulator" status="Draft" className={className}>
+        {body}
+      </BrowserWindow>
+    );
+  }
+
+  return (
+    <BrowserWindow url="app.inframiq.com/simulyn" className={className}>
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Simulyn — Pricing Model</span>
+        <span className="font-mono text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide">Draft</span>
+      </div>
+      {body}
     </BrowserWindow>
   );
 }
@@ -171,18 +187,15 @@ const verdictDim: Record<string, string> = {
   Suspicious: "var(--lw-warning-dim)",
 };
 
-export function MailShieldWindow({ className = "" }: { className?: string } = {}) {
+export function MailShieldWindow({
+  className = "",
+  chrome = "browser",
+}: { className?: string; chrome?: "browser" | "app" } = {}) {
   const [selectedId, setSelectedId] = useState(mailJourneys[0].id);
   const journey = mailJourneys.find((j) => j.id === selectedId)!;
 
-  return (
-    <BrowserWindow url="app.inframiq.com/mail-shield" className={className}>
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield — Inbound Queue</span>
-        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
-      </div>
-
-      <div className="flex-1 min-h-0 grid sm:grid-cols-[190px_1fr]">
+  const body = (
+    <div className="flex-1 min-h-0 grid sm:grid-cols-[190px_1fr]">
         <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] h-full overflow-y-auto">
           {mailJourneys.map((j) => {
             const isActive = selectedId === j.id;
@@ -250,6 +263,23 @@ export function MailShieldWindow({ className = "" }: { className?: string } = {}
           </div>
         </div>
       </div>
+  );
+
+  if (chrome === "app") {
+    return (
+      <BrowserWindow variant="app" title="Mail Shield · Inbound Queue" status="Live" statusColor="var(--lw-success)" className={className}>
+        {body}
+      </BrowserWindow>
+    );
+  }
+
+  return (
+    <BrowserWindow url="app.inframiq.com/mail-shield" className={className}>
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield — Inbound Queue</span>
+        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
+      </div>
+      {body}
     </BrowserWindow>
   );
 }

@@ -388,6 +388,42 @@ select {
   font-family: var(--font-geist-mono);
 }
 
+/* App chrome bar — a native-desktop-app variant of .browser-chrome-bar for
+   windows that aren't a browser tab (internal ops dashboards, not something
+   opened via a URL). Same frame, but the traffic lights collapse to a single
+   muted dot and the title sits directly in the bar instead of a separate
+   header row underneath, so the two variants read as different kinds of
+   software rather than the same chrome repeated with new labels. */
+.browser-chrome-bar--app {
+  gap: 5px;
+}
+.app-chrome-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background-color: rgba(15, 23, 42, 0.2);
+  flex-shrink: 0;
+}
+.app-chrome-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #3f4552;
+  margin-left: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-chrome-status {
+  margin-left: auto;
+  padding-left: 8px;
+  font-family: var(--font-geist-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* Terminal chrome — the one deliberate dark exception (ClosingStatement):
    a real terminal window sitting on the light desk, carrying its own
    literal palette rather than reusing --bg. */

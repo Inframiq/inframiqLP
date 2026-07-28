@@ -3,42 +3,70 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Phone, MessageCircle, MousePointerClick } from "lucide-react";
+import { ArrowRight, Headset, MousePointerClick } from "lucide-react";
 import { MailShieldWindow, SimulynWindow } from "@/components/products/ProductWindows";
+import BrowserWindow from "@/components/instruments/BrowserWindow";
+import KineticText from "@/components/animations/KineticText";
+import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 // A compact preview of the ops console — the same "workspace" the visitor
 // lands in fully expanded further down the page (TheSplit). Small here on
 // purpose: it's a window glimpsed on the desk, not a competing centerpiece.
+// Uses the "app" chrome variant, not "browser" — this is a desk tool, not
+// a page you'd navigate to by URL, and it sits stacked against two real
+// browser-variant product windows so the trio doesn't read as three copies
+// of the same chrome.
+const opsKpis = [
+  { value: "12", label: "Open" },
+  { value: "5", label: "In progress" },
+  { value: "41", label: "Resolved" },
+];
+
+const opsActivity = [
+  "Voice queue — line 2 answered in 8s",
+  "Chat #4821 resolved by Agent M.",
+  "Chat #4823 assigned to Agent S.",
+  "Ticket #2095 resolved by Agent K.",
+];
+
 function OpsPreviewWindow() {
-  const rows = [
-    { icon: Phone, text: "Billing enquiry — plan upgrade", tag: "voice" },
-    { icon: MessageCircle, text: "Order status follow-up", tag: "chat" },
-  ];
   return (
-    <div className="browser-chrome w-full">
-      <div className="browser-chrome-bar">
-        <span className="browser-chrome-dot" style={{ backgroundColor: "#ff5f57" }} />
-        <span className="browser-chrome-dot" style={{ backgroundColor: "#febc2e" }} />
-        <span className="browser-chrome-dot" style={{ backgroundColor: "#28c840" }} />
-        <div className="browser-chrome-url">
-          <span className="truncate">ops.inframiq.com/live</span>
+    <BrowserWindow
+      variant="app"
+      title="Ops Desk · Live Queue"
+      icon={<Headset size={13} style={{ color: "var(--lw-accent)" }} />}
+      className="w-full"
+    >
+      <div className="p-4">
+        <div className="flex items-center gap-1.5 mb-3">
+          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--lw-success)" }} />
+          <span className="font-mono text-[9px] uppercase tracking-wide" style={{ color: "var(--lw-success)" }}>
+            Live
+          </span>
         </div>
-      </div>
-      <div className="bg-[var(--lw-bg)] p-4">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[12px] font-semibold text-[var(--lw-text-1)]">Ops Desk</span>
-          <span className="font-mono text-[9px] text-[var(--lw-success)] uppercase tracking-wide">on shift</span>
+
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          {opsKpis.map((k) => (
+            <div key={k.label} className="rounded-md px-2 py-2 text-center" style={{ backgroundColor: "var(--lw-surface-2)" }}>
+              <p className="text-[15px] font-semibold text-[var(--lw-text-1)] tabular-nums">{k.value}</p>
+              <p className="text-[8.5px] text-[var(--lw-text-3)] mt-0.5">{k.label}</p>
+            </div>
+          ))}
         </div>
-        <div className="space-y-2">
-          {rows.map((r) => (
-            <div key={r.text} className="flex items-center gap-2 rounded-md px-2.5 py-2" style={{ backgroundColor: "var(--lw-surface)" }}>
-              <r.icon size={11} className="text-[var(--lw-accent)] flex-shrink-0" />
-              <span className="text-[10.5px] text-[var(--lw-text-2)] truncate">{r.text}</span>
+
+        <div className="space-y-1.5">
+          {opsActivity.map((line) => (
+            <div
+              key={line}
+              className="rounded-md px-2.5 py-1.5 text-[10px] text-[var(--lw-text-2)] truncate"
+              style={{ backgroundColor: "var(--lw-surface)" }}
+            >
+              {line}
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </BrowserWindow>
   );
 }
 
@@ -63,8 +91,8 @@ const DEPTH = [
 export default function HeroSection() {
   const windows = useMemo<DeskWindow[]>(
     () => [
-      { id: "mail", label: "Mail Shield", width: 460, node: <MailShieldWindow /> },
-      { id: "simulyn", label: "Simulyn", width: 400, node: <SimulynWindow /> },
+      { id: "mail", label: "Mail Shield", width: 460, node: <MailShieldWindow chrome="app" /> },
+      { id: "simulyn", label: "Simulyn", width: 400, node: <SimulynWindow chrome="app" /> },
       { id: "ops", label: "Ops Desk", width: 320, node: <OpsPreviewWindow /> },
     ],
     []
@@ -77,6 +105,7 @@ export default function HeroSection() {
 
   const sectionRef = useRef<HTMLElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const revealed = useEntryRevealed();
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = sectionRef.current;
@@ -140,16 +169,12 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.08 }}
-              className="font-brand font-semibold text-[34px] sm:text-[44px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-7"
-            >
-              We don&apos;t describe
+            <h1 className="font-brand font-semibold text-[34px] sm:text-[44px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-7">
+              <KineticText as="span" text="We don't describe" play={revealed} />
               <br />
-              our software. <span className="text-[var(--accent-strong)]">We open it.</span>
-            </motion.h1>
+              <KineticText as="span" text="our software. " play={revealed} />
+              <KineticText as="span" text="We open it." className="text-[var(--accent-strong)]" play={revealed} />
+            </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 12 }}

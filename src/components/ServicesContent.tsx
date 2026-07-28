@@ -57,14 +57,13 @@ const CALL_VOLUME = [12, 18, 15, 22, 30, 26, 34, 29, 38, 33];
 function VoiceDashboard() {
   const elapsed = useElapsed();
   return (
-    <BrowserWindow url="ops.inframiq.com/voice">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
-          <Phone size={13} style={{ color: "var(--lw-accent)" }} />
-          Voice Desk
-        </span>
-        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
-      </div>
+    <BrowserWindow
+      variant="app"
+      title="Voice Desk"
+      icon={<Phone size={13} style={{ color: "var(--lw-accent)" }} />}
+      status="Live"
+      statusColor="var(--lw-success)"
+    >
       <KpiRow items={[{ label: "Active calls", value: "6" }, { label: "Avg handle", value: "3m 40s" }, { label: "Calls today", value: "212" }]} />
       <div className="p-4">
         <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Call volume — today</p>
@@ -93,14 +92,13 @@ function ChatDashboard() {
     { from: "agent", text: "Found it — ships today, tracking by 6pm." },
   ];
   return (
-    <BrowserWindow url="ops.inframiq.com/chat">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
-          <MessageCircle size={13} style={{ color: "var(--lw-accent)" }} />
-          Chat Desk
-        </span>
-        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
-      </div>
+    <BrowserWindow
+      variant="app"
+      title="Chat Desk"
+      icon={<MessageCircle size={13} style={{ color: "var(--lw-accent)" }} />}
+      status="Live"
+      statusColor="var(--lw-success)"
+    >
       <KpiRow items={[{ label: "Open chats", value: "14" }, { label: "First response", value: "22s" }, { label: "CSAT", value: "97%" }]} />
       <div className="p-4">
         <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Conversations — today</p>
@@ -141,14 +139,13 @@ const statusStyle: Record<string, { bg: string; fg: string }> = {
 
 function TicketingDashboard() {
   return (
-    <BrowserWindow url="ops.inframiq.com/tickets">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
-          <Wrench size={13} style={{ color: "var(--lw-accent)" }} />
-          Technical Desk
-        </span>
-        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
-      </div>
+    <BrowserWindow
+      variant="app"
+      title="Technical Desk"
+      icon={<Wrench size={13} style={{ color: "var(--lw-accent)" }} />}
+      status="Live"
+      statusColor="var(--lw-success)"
+    >
       <KpiRow items={[{ label: "Open", value: "31" }, { label: "Resolved today", value: "48" }, { label: "SLA met", value: "99%" }]} />
       <div className="divide-y divide-[var(--lw-border)]">
         {tickets.map((t) => (
@@ -190,14 +187,13 @@ function CoverageDashboard() {
   }, []);
 
   return (
-    <BrowserWindow url="ops.inframiq.com/coverage">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
-          <Headset size={13} style={{ color: "var(--lw-accent)" }} />
-          Desk Coverage
-        </span>
-        <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">24/7</span>
-      </div>
+    <BrowserWindow
+      variant="app"
+      title="Desk Coverage"
+      icon={<Headset size={13} style={{ color: "var(--lw-accent)" }} />}
+      status="24/7"
+      statusColor="var(--lw-success)"
+    >
       <div className="grid grid-cols-3 divide-x divide-[var(--lw-border)]">
         {zones.map((z, i) => (
           <div key={z.tz} className="px-4 py-6 text-center">
@@ -451,13 +447,11 @@ export default function ServicesContent() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <BrowserWindow url="ops.inframiq.com/account">
-                <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-                  <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--lw-text-1)]">
-                    <CheckCircle2 size={13} style={{ color: "var(--lw-accent)" }} />
-                    Account Specs
-                  </span>
-                </div>
+              <BrowserWindow
+                variant="app"
+                title="Account Specs"
+                icon={<CheckCircle2 size={13} style={{ color: "var(--lw-accent)" }} />}
+              >
                 <div className="divide-y divide-[var(--lw-border)]">
                   {[
                     { label: "Coverage", value: "24 hours a day, every day" },

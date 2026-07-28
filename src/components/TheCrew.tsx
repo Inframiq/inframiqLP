@@ -51,7 +51,6 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
         onPointerMove={handlePointerMove}
         onPointerLeave={() => setTilt({ x: 0, y: 0 })}
         animate={{ rotateX: tilt.x, rotateY: tilt.y }}
-        whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 150, damping: 15 }}
         className="relative w-full rounded-[28px] overflow-hidden"
         style={{

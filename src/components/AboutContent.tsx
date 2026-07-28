@@ -7,6 +7,8 @@ import { Eye, Target } from "lucide-react";
 import { values } from "@/lib/values";
 import TheCrew from "@/components/TheCrew";
 import AuroraGrain from "@/components/AuroraGrain";
+import KineticText from "@/components/animations/KineticText";
+import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 const timeline = [
   { hash: "a3f1c2", label: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
@@ -244,6 +246,7 @@ function ArchitectureDiagram() {
 }
 
 export default function AboutContent() {
+  const revealed = useEntryRevealed();
   return (
     <>
       {/* Hero */}
@@ -262,9 +265,9 @@ export default function AboutContent() {
               <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
 
               <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
-                Built for people
+                <KineticText as="span" text="Built for people" play={revealed} />
                 <br />
-                <span className="text-[var(--text-3)]">who expect things to just work.</span>
+                <KineticText as="span" text="who expect things to just work." className="text-[var(--text-3)]" play={revealed} />
               </h1>
 
               <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-xl">

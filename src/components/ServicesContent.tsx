@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall, CheckCircle2 } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 import AuroraGrain from "@/components/AuroraGrain";
+import KineticText from "@/components/animations/KineticText";
+import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
 
@@ -336,6 +338,7 @@ function ServicesConstellation() {
 }
 
 export default function ServicesContent() {
+  const revealed = useEntryRevealed();
   return (
     <>
       {/* Hero */}
@@ -354,9 +357,9 @@ export default function ServicesContent() {
               <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
 
               <h1 className="font-brand text-[36px] lg:text-[44px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
-                Your customers, answered
+                <KineticText as="span" text="Your customers, answered" play={revealed} />
                 <br />
-                <span className="text-[var(--text-3)]">by real people, around the clock.</span>
+                <KineticText as="span" text="by real people, around the clock." className="text-[var(--text-3)]" play={revealed} />
               </h1>
 
               <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-xl">

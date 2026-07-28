@@ -160,10 +160,13 @@ const statusPillStyle: Record<string, { bg: string; fg: string }> = {
 
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const visualLeft = index % 2 === 0;
-  const tilt = visualLeft ? "rotate-2" : "-rotate-2";
+  // Tilt only from `sm` up — at full mobile width the window already fills
+  // its column, so any rotation pushes its corners past the card's
+  // overflow-hidden edge and clips content (the "LIVE" badge, in practice).
+  const tilt = visualLeft ? "sm:rotate-2" : "sm:-rotate-2";
 
   const content = (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center min-w-0">
       <div className="flex items-start justify-between gap-4 mb-4">
         <div className="flex items-center gap-1.5">
           <product.categoryIcon size={12} className="text-[var(--accent)]" />
@@ -214,7 +217,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
   );
 
   const visual = (
-    <div className={`relative transition-transform duration-300 hover:rotate-0 ${tilt}`}>
+    <div className={`relative min-w-0 transition-transform duration-300 hover:rotate-0 ${tilt}`}>
       {product.window}
     </div>
   );

@@ -195,8 +195,8 @@ export function MailShieldWindow({
   const journey = mailJourneys.find((j) => j.id === selectedId)!;
 
   const body = (
-    <div className="flex-1 min-h-0 grid sm:grid-cols-[190px_1fr]">
-        <div className="border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] h-full overflow-y-auto">
+    <div className="flex-1 min-h-0 min-w-0 grid sm:grid-cols-[190px_1fr]">
+        <div className="min-w-0 border-r border-[var(--lw-border)] divide-y divide-[var(--lw-border)] h-full overflow-y-auto">
           {mailJourneys.map((j) => {
             const isActive = selectedId === j.id;
             return (
@@ -221,7 +221,7 @@ export function MailShieldWindow({
           })}
         </div>
 
-        <div className="h-full flex flex-col p-5">
+        <div className="min-w-0 h-full flex flex-col p-5">
           <p className="font-mono text-[10px] text-[var(--lw-text-3)] mb-1">{journey.from}</p>
           <p className="text-[13px] text-[var(--lw-text-1)] mb-5">{journey.subject}</p>
 

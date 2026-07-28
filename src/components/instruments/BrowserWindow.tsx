@@ -32,7 +32,7 @@ export default function BrowserWindow(props: BrowserWindowProps) {
   const { children, className = "" } = props;
 
   return (
-    <div className={`browser-chrome flex flex-col ${className}`}>
+    <div className={`browser-chrome flex flex-col min-w-0 ${className}`}>
       {props.variant === "app" ? (
         <div className="browser-chrome-bar browser-chrome-bar--app flex-shrink-0">
           <span className="app-chrome-dot" />
@@ -57,7 +57,7 @@ export default function BrowserWindow(props: BrowserWindowProps) {
           </div>
         </div>
       )}
-      <div className="bg-[var(--lw-bg)] text-[var(--lw-text-1)] flex-1 min-h-0 flex flex-col">{children}</div>
+      <div className="bg-[var(--lw-bg)] text-[var(--lw-text-1)] flex-1 min-h-0 min-w-0 flex flex-col">{children}</div>
     </div>
   );
 }

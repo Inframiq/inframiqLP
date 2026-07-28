@@ -5,16 +5,17 @@
 export interface TeamMember {
   name: string;
   role: string;
+  employeeId: string;
 }
 
 export const team: TeamMember[] = [
-  { name: "Bhargav", role: "Co-Founder" },
-  { name: "Bharath.K", role: "Co-Founder & CEO" },
-  { name: "Jaswanth Kongara", role: "Global Client Management Lead" },
-  { name: "Kundrapu Tanishq", role: "Technical Head" },
-  { name: "Manideep Boorla", role: "CFO" },
-  { name: "Srinivas Katragadda", role: "Full Stack Developer" },
-  { name: "Kundrapu Jaya Sai Deep", role: "Full Stack Developer" },
-  { name: "Ashok Reddy", role: "Sales Associate" },
-  { name: "Mounika", role: "Service Desk Lead" },
+  { name: "Bhargav", role: "Co-Founder", employeeId: "2605001" },
+  { name: "Bharath.K", role: "Co-Founder & CEO", employeeId: "2605002" },
+  { name: "Jaswanth Kongara", role: "Global Client Management Lead", employeeId: "2607001" },
+  { name: "Kundrapu Tanishq", role: "Technical Head", employeeId: "2606001" },
+  { name: "Manideep Boorla", role: "CFO", employeeId: "2607002" },
+  { name: "Srinivas Katragadda", role: "Full Stack Developer", employeeId: "2607003" },
+  { name: "Kundrapu Jaya Sai Deep", role: "Full Stack Developer", employeeId: "2607004" },
+  { name: "Ashok Reddy", role: "Sales Associate", employeeId: "2607005" },
+  { name: "Mounika", role: "Service Desk Lead", employeeId: "2607006" },
 ];

@@ -6,15 +6,12 @@ import { ChevronRight } from "lucide-react";
 import { team } from "@/lib/team";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
-// Deterministic 6-digit badge code from a name, so each entry looks like a
-// real issued ID rather than a randomly-reshuffled number on every render.
+// Used only to seed the decorative barcode strip's bar heights — the ID
+// badge itself now shows each person's real employee ID, not a hash.
 function hashOf(name: string) {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
   return hash;
-}
-function badgeCode(name: string) {
-  return String((hashOf(name) % 900000) + 100000);
 }
 // Deterministic bar heights for the decorative barcode strip — looks like a
 // real scan line without any per-render randomness (which would also cause
@@ -30,7 +27,7 @@ function barcodeHeights(name: string, count: number) {
 // security badge (holographic sheen tied to the same pointer position that
 // drives the tilt, corner-bracket "scanner" frame, chip + barcode) rather
 // than a plain rounded card with initials in a box.
-function CredentialBadge({ name, role }: { name: string; role: string }) {
+function CredentialBadge({ name, role, employeeId }: { name: string; role: string; employeeId: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [pointer, setPointer] = useState({ px: 0.5, py: 0.5 });
@@ -125,7 +122,7 @@ function CredentialBadge({ name, role }: { name: string; role: string }) {
         <div className="relative h-px w-full bg-[var(--border)]" />
         <div className="relative px-5 py-2.5 flex items-center justify-between">
           <span className="font-mono text-[8px] text-[var(--text-3)] uppercase tracking-wide">Inframiq</span>
-          <span className="font-mono text-[8px] text-[var(--text-3)]">ID · {badgeCode(name)}</span>
+          <span className="font-mono text-[8px] text-[var(--text-3)]">ID · {employeeId}</span>
         </div>
       </motion.div>
     </div>
@@ -235,7 +232,7 @@ export default function TheCrew() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: (i % 6) * 0.06 }}
               >
-                <CredentialBadge name={member.name} role={member.role} />
+                <CredentialBadge name={member.name} role={member.role} employeeId={member.employeeId} />
               </motion.div>
             ))}
           </div>

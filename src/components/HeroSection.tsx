@@ -211,13 +211,34 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
+          {/* Mobile — the absolute-positioned 3D depth stack below is built
+              on fixed pixel widths (320-460px) that clip against a <400px
+              viewport, and the click-to-bring-forward interaction is a
+              desktop hover/cursor idea anyway. Below `sm`, swap it for the
+              same three windows laid out full-width in normal flow instead
+              of reworking the desktop version. */}
+          <div className="sm:hidden space-y-5">
+            {windows.map((w, i) => (
+              <motion.div
+                key={w.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                className="rounded-xl overflow-hidden"
+                style={{ boxShadow: "0 30px 60px -28px rgba(15,23,42,0.28)" }}
+              >
+                {w.node}
+              </motion.div>
+            ))}
+          </div>
+
           {/* The window stack — hero centerpiece and signature interaction:
               click any tile to bring it forward, like real window management. */}
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative h-[420px] sm:h-[460px] lg:h-[480px]"
+            className="hidden sm:block relative h-[420px] sm:h-[460px] lg:h-[480px]"
             style={{ perspective: 1400 }}
           >
             <motion.div

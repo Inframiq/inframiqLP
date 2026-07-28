@@ -8,6 +8,7 @@ import { MailShieldWindow, SimulynWindow } from "@/components/products/ProductWi
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 import KineticText from "@/components/animations/KineticText";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
+import AuroraGrain from "@/components/AuroraGrain";
 
 // A compact preview of the ops console — the same "workspace" the visitor
 // lands in fully expanded further down the page (TheSplit). Small here on
@@ -128,7 +129,7 @@ export default function HeroSection() {
           white: layered light blooms, a faint blueprint grid, and slow
           drifting motes give the surface depth before any window loads. */}
       <div className="absolute inset-0 desk-surface" />
-      <div className="absolute inset-0 schematic-grid pointer-events-none opacity-60" />
+      <AuroraGrain />
       <div className="absolute inset-0 cursor-light" />
       {[
         { top: "18%", left: "8%", size: 6, dur: 11, dx: 14, dy: -18 },

@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Mail, Calculator, CheckCircle2, type LucideIcon } from "lucide-react";
+import { ArrowRight, Mail, Calculator, type LucideIcon } from "lucide-react";
 import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWindows";
+import AuroraGrain from "@/components/AuroraGrain";
 
 // ─── Product data ────────────────────────────────────────────────────────────
 
@@ -38,7 +39,7 @@ const products: Product[] = [
     ],
     status: "Coming Soon",
     hasPage: false,
-    window: <MailShieldWindow />,
+    window: <MailShieldWindow chrome="app" />,
   },
   {
     slug: "simulyn",
@@ -57,7 +58,7 @@ const products: Product[] = [
     ],
     status: "Coming Soon",
     hasPage: false,
-    window: <SimulynWindow />,
+    window: <SimulynWindow chrome="app" />,
   },
   // Future products can be added here.
 ];
@@ -149,48 +150,43 @@ function ProductsConstellation() {
 
 // ─── Product row ─────────────────────────────────────────────────────────────
 
+const statusPillStyle: Record<string, { bg: string; fg: string }> = {
+  Available: { bg: "var(--bg-raised)", fg: "var(--success)" },
+  Beta: { bg: "var(--bg-raised)", fg: "var(--warning)" },
+  "Coming Soon": { bg: "var(--bg-raised)", fg: "var(--text-3)" },
+};
+
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const visualLeft = index % 2 === 0;
-
-  const statusDot: Record<string, string> = {
-    Available: "var(--success)",
-    Beta: "var(--warning)",
-    "Coming Soon": "var(--text-3)",
-  };
+  const tilt = visualLeft ? "rotate-2" : "-rotate-2";
 
   const content = (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55 }}
-      className="flex flex-col justify-center"
-    >
-      <div className="flex items-center gap-2.5 mb-5">
+    <div className="flex flex-col justify-center">
+      <div className="flex items-start justify-between gap-4 mb-4">
         <div className="flex items-center gap-1.5">
           <product.categoryIcon size={12} className="text-[var(--accent)]" />
-          <span className="font-mono text-[11px] text-[var(--accent-strong)] tracking-[0.02em]">
-            {product.category.toLowerCase()}
+          <span className="font-mono text-[11px] text-[var(--accent-strong)] uppercase tracking-[0.06em]">
+            {product.category}
           </span>
         </div>
-        <span className="text-[var(--border-strong)]">·</span>
-        <span className="flex items-center gap-1.5 font-mono text-[11px] text-[var(--text-3)]">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: statusDot[product.status] }} />
-          {product.status.toLowerCase()}
+        <span
+          className="flex-shrink-0 font-mono text-[10.5px] px-2.5 py-1 rounded-full"
+          style={{ backgroundColor: statusPillStyle[product.status].bg, color: statusPillStyle[product.status].fg }}
+        >
+          {product.status}
         </span>
       </div>
 
-      <h2 className="font-brand text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-3">
+      <h2 className="font-brand text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-4">
         {product.name}
       </h2>
-      <p className="text-[15px] text-[var(--text-2)] font-medium mb-4 leading-snug">{product.tagline}</p>
       <p className="text-[13.5px] text-[var(--text-2)] leading-[1.75] mb-7 max-w-md">{product.description}</p>
 
-      <ul className="space-y-2 mb-8">
-        {product.features.map((f) => (
+      <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
+        {product.features.slice(0, 6).map((f) => (
           <li key={f} className="flex items-start gap-2.5">
-            <CheckCircle2 size={14} className="text-[var(--accent)] flex-shrink-0 mt-[2px]" />
-            <span className="text-[13px] text-[var(--text-2)]">{f}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-[6px] flex-shrink-0" />
+            <span className="text-[13px] text-[var(--text-2)] leading-snug">{f}</span>
           </li>
         ))}
       </ul>
@@ -212,26 +208,25 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
           Request a Demo
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 
   const visual = (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: 0.1 }}
-      className="relative"
-    >
+    <div className={`relative transition-transform duration-300 hover:rotate-0 ${tilt}`}>
       {product.window}
-      <div className="absolute inset-0 -z-10 rounded-xl bg-[var(--glow)] opacity-[0.06] blur-3xl scale-110 pointer-events-none" />
-    </motion.div>
+    </div>
   );
 
   return (
-    <div>
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16">
-        <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
+    <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.55 }}
+        className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 lg:p-12 overflow-hidden"
+      >
+        <div className={`relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
           {visualLeft ? (
             <>
               {visual}
@@ -244,7 +239,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             </>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -256,8 +251,7 @@ export default function ProductCatalog() {
     <>
       {/* Page header */}
       <section className="relative bg-[var(--bg)] pt-[110px] pb-16 overflow-hidden">
-        <div className="absolute inset-0 schematic-grid pointer-events-none opacity-70" />
-        <div className="absolute inset-0 ambient-glow pointer-events-none" style={{ "--glow-x": "85%", "--glow-y": "0%" } as React.CSSProperties} />
+        <AuroraGrain />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">

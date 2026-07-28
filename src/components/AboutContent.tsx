@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Eye, Target } from "lucide-react";
 import { values } from "@/lib/values";
 import TheCrew from "@/components/TheCrew";
+import AuroraGrain from "@/components/AuroraGrain";
 
 const timeline = [
   { hash: "a3f1c2", label: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
@@ -247,8 +248,7 @@ export default function AboutContent() {
     <>
       {/* Hero */}
       <section className="relative bg-[var(--bg)] pt-[110px] pb-16 overflow-hidden">
-        <div className="absolute inset-0 schematic-grid pointer-events-none opacity-70" />
-        <div className="absolute inset-0 ambient-glow pointer-events-none" style={{ "--glow-x": "85%", "--glow-y": "0%" } as React.CSSProperties} />
+        <AuroraGrain />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">

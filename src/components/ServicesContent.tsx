@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall, CheckCircle2 } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
+import AuroraGrain from "@/components/AuroraGrain";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
 
@@ -339,8 +340,7 @@ export default function ServicesContent() {
     <>
       {/* Hero */}
       <section className="relative bg-[var(--bg)] pt-[110px] pb-16 overflow-hidden">
-        <div className="absolute inset-0 schematic-grid pointer-events-none opacity-70" />
-        <div className="absolute inset-0 ambient-glow pointer-events-none" style={{ "--glow-x": "85%", "--glow-y": "0%" } as React.CSSProperties} />
+        <AuroraGrain />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-center">

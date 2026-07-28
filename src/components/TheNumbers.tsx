@@ -23,7 +23,7 @@ const instruments = [
 // static row of tiles.
 export default function TheNumbers() {
   return (
-    <section id="about" className="py-24 lg:py-32 border-t border-[var(--border)]">
+    <section id="about" className="py-24 lg:py-32">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <motion.div
           initial="hidden"

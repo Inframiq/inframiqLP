@@ -4,8 +4,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
-const industries = ["Financial Services", "Healthcare", "Education", "Government", "Retail", "Logistics"];
-
 const pillContainer = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
@@ -53,6 +51,11 @@ export default function TheStandard() {
             transition={{ duration: 0.5 }}
             className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-10 lg:p-14 overflow-hidden"
           >
+            <div className="pillar-glow" aria-hidden>
+              <span className="pillar-glow-blob pillar-glow-blob-1" />
+              <span className="pillar-glow-blob pillar-glow-blob-2" />
+            </div>
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -60,6 +63,7 @@ export default function TheStandard() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
               >
                 <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
                   0{active + 1} / 06 — {pillars[active].tag}
@@ -72,75 +76,51 @@ export default function TheStandard() {
                 </p>
               </motion.div>
             </AnimatePresence>
+          </motion.div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-40px" }}
-              variants={pillContainer}
-              className="inline-flex flex-wrap gap-1 rounded-full bg-[var(--surface-2)] p-1 mt-8"
-            >
-              {pillars.map((p, i) => {
-                const isActive = active === i;
-                const label = p.tag.charAt(0).toUpperCase() + p.tag.slice(1);
-                return (
-                  <motion.button
-                    key={p.tag}
-                    variants={pillItem}
-                    type="button"
-                    onClick={() => setActive(i)}
-                    whileHover={{ scale: isActive ? 1 : 1.06 }}
-                    whileTap={{ scale: 0.96 }}
-                    className="relative inline-flex items-center justify-center text-[12.5px] leading-none px-3.5 py-2 rounded-full"
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={pillContainer}
+            className="inline-flex flex-wrap gap-1 rounded-full bg-[var(--surface-2)] p-1 mt-6"
+          >
+            {pillars.map((p, i) => {
+              const isActive = active === i;
+              const label = p.tag.charAt(0).toUpperCase() + p.tag.slice(1);
+              return (
+                <motion.button
+                  key={p.tag}
+                  variants={pillItem}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  whileHover={{ scale: isActive ? 1 : 1.06 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="relative inline-flex items-center justify-center text-[12.5px] leading-none px-3.5 py-2 rounded-full"
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="standard-pill-highlight"
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: "linear-gradient(135deg, var(--accent), var(--accent-strong))",
+                        boxShadow: "0 8px 18px -8px color-mix(in srgb, var(--accent) 55%, transparent)",
+                      }}
+                      transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                    />
+                  )}
+                  <span
+                    className={`relative z-10 transition-colors duration-200 ${
+                      isActive ? "font-medium text-white" : "text-[var(--text-3)] hover:text-[var(--text-1)]"
+                    }`}
                   >
-                    {isActive && (
-                      <motion.span
-                        layoutId="standard-pill-highlight"
-                        className="absolute inset-0 rounded-full"
-                        style={{
-                          background: "linear-gradient(135deg, var(--accent), var(--accent-strong))",
-                          boxShadow: "0 8px 18px -8px color-mix(in srgb, var(--accent) 55%, transparent)",
-                        }}
-                        transition={{ type: "spring", stiffness: 420, damping: 38 }}
-                      />
-                    )}
-                    <span
-                      className={`relative z-10 transition-colors duration-200 ${
-                        isActive ? "font-medium text-white" : "text-[var(--text-3)] hover:text-[var(--text-1)]"
-                      }`}
-                    >
-                      {label}
-                    </span>
-                  </motion.button>
-                );
-              })}
-            </motion.div>
+                    {label}
+                  </span>
+                </motion.button>
+              );
+            })}
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-14"
-        >
-          <p className="text-center font-mono text-[11px] uppercase tracking-wide text-[var(--text-3)] mb-4">
-            Trusted across
-          </p>
-          <div className="marquee-fade overflow-hidden">
-            <div className="flex w-max marquee-track">
-              {[...industries, ...industries].map((label, i) => (
-                <span
-                  key={i}
-                  className="flex-shrink-0 mx-2 px-4 py-1.5 rounded-full border border-[var(--border)] text-[12.5px] text-[var(--text-2)] whitespace-nowrap"
-                >
-                  {label}
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

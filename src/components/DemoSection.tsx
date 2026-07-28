@@ -74,7 +74,7 @@ export default function DemoSection() {
     "w-full h-10 bg-[var(--lw-surface)] border border-[var(--lw-border-strong)] rounded-md px-3 text-[13.5px] text-[var(--lw-text-1)] placeholder-[var(--lw-text-3)] focus:border-[var(--lw-accent)]/60 transition-all duration-150";
 
   return (
-    <section id="demo" className="py-28 lg:py-36 border-t border-[var(--border)]">
+    <section id="demo" className="section-fade-top py-28 lg:py-36" style={{ "--fade-to": "var(--bg)" } as React.CSSProperties}>
       <div className="max-w-[880px] mx-auto px-6">
         <motion.div
           initial="hidden"

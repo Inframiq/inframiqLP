@@ -49,7 +49,7 @@ export default function ClosingStatement() {
   const statusRowDelay = cursor + 0.2;
 
   return (
-    <section className="py-24 lg:py-32 border-t border-[var(--border)] bg-[var(--bg-raised)]">
+    <section className="section-fade-top py-24 lg:py-32 bg-[var(--bg-raised)]">
       <div className="max-w-[640px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

@@ -368,6 +368,73 @@ select {
     animation: none;
   }
 }
+/* Smoother variant — same drifting blobs, grain texture suppressed. */
+.aurora-grain-smooth .aurora-grain-canvas {
+  display: none;
+}
+
+/* Pure-CSS soft glow for the pillar card — no canvas/grain, just two large,
+   heavily-blurred blue blobs drifting slowly. Kept separate from
+   .aurora-grain so this stays silky even where the gritty texture reads
+   too noisy against body copy. */
+.pillar-glow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pillar-glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+  animation: aurora-float 30s ease-in-out infinite;
+}
+.pillar-glow-blob-1 {
+  width: 520px;
+  height: 520px;
+  top: -30%;
+  left: -12%;
+  opacity: 0.16;
+  background: radial-gradient(circle, var(--accent), transparent 72%);
+  animation-name: aurora-float-1;
+  animation-duration: 32s;
+}
+.pillar-glow-blob-2 {
+  width: 460px;
+  height: 460px;
+  bottom: -28%;
+  right: -10%;
+  opacity: 0.13;
+  background: radial-gradient(circle, var(--accent-strong), transparent 72%);
+  animation-name: aurora-float-2;
+  animation-duration: 36s;
+  animation-delay: -8s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pillar-glow-blob {
+    animation: none;
+  }
+}
+
+/* Section boundary fade — replaces a hard border-t divider with a soft
+   opacity/color gradient so the previous section melts into this one
+   instead of cutting off at a visible line. Put on the section that sits
+   on the differing background (e.g. bg-raised); it fades in from
+   transparent using this section's own bg color. */
+.section-fade-top {
+  position: relative;
+}
+.section-fade-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--fade-to, var(--bg-raised)));
+  pointer-events: none;
+}
 
 /* Window chrome — a light glass panel used for consoles, changelogs and
    other "app-like" content that isn't a full browser window. Floats on the

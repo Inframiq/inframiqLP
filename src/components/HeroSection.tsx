@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Headset, MousePointerClick } from "lucide-react";
@@ -68,6 +68,45 @@ function OpsPreviewWindow() {
         </div>
       </div>
     </BrowserWindow>
+  );
+}
+
+// Renders `children` at its natural fixed `width` (the same size the
+// desktop version uses), then scales the whole thing down — text included,
+// not just the box — to fit whatever width the mobile column actually has.
+// A narrower flex container alone wouldn't shrink the fixed-px text/padding
+// inside these windows; this is a real "zoom out", not a reflow.
+function ScaleToFit({ width, children }: { width: number; children: React.ReactNode }) {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const [naturalHeight, setNaturalHeight] = useState(0);
+
+  useEffect(() => {
+    const outer = outerRef.current;
+    const inner = innerRef.current;
+    if (!outer || !inner) return;
+
+    const recompute = () => {
+      const outerWidth = outer.clientWidth;
+      if (!outerWidth) return;
+      setScale(Math.min(1, outerWidth / width));
+      setNaturalHeight(inner.offsetHeight);
+    };
+
+    recompute();
+    const ro = new ResizeObserver(recompute);
+    ro.observe(outer);
+    ro.observe(inner);
+    return () => ro.disconnect();
+  }, [width]);
+
+  return (
+    <div ref={outerRef} className="min-w-0" style={{ height: naturalHeight * scale }}>
+      <div ref={innerRef} style={{ width, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -215,9 +254,12 @@ export default function HeroSection() {
               on fixed pixel widths (320-460px) that clip against a <400px
               viewport, and the click-to-bring-forward interaction is a
               desktop hover/cursor idea anyway. Below `sm`, swap it for the
-              same three windows laid out full-width in normal flow instead
-              of reworking the desktop version. */}
-          <div className="sm:hidden space-y-5">
+              same three windows at their real desktop size, zoomed out
+              (ScaleToFit) to the column width — same window, same text
+              proportions, just smaller, instead of stretching them full
+              width where the text stays desktop-sized and the layout
+              reflows into a single tall column. */}
+          <div className="sm:hidden space-y-5 min-w-0">
             {windows.map((w, i) => (
               <motion.div
                 key={w.id}
@@ -227,7 +269,7 @@ export default function HeroSection() {
                 className="rounded-xl overflow-hidden"
                 style={{ boxShadow: "0 30px 60px -28px rgba(15,23,42,0.28)" }}
               >
-                {w.node}
+                <ScaleToFit width={w.width}>{w.node}</ScaleToFit>
               </motion.div>
             ))}
           </div>

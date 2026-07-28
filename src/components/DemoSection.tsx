@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2, Inbox } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
+import SectionAurora from "@/components/SectionAurora";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const queueContainer = {
@@ -74,8 +75,9 @@ export default function DemoSection() {
     "w-full h-10 bg-[var(--lw-surface)] border border-[var(--lw-border-strong)] rounded-md px-3 text-[13.5px] text-[var(--lw-text-1)] placeholder-[var(--lw-text-3)] focus:border-[var(--lw-accent)]/60 transition-all duration-150";
 
   return (
-    <section id="demo" className="section-fade-top py-28 lg:py-36" style={{ "--fade-to": "var(--bg)" } as React.CSSProperties}>
-      <div className="max-w-[880px] mx-auto px-6">
+    <section id="demo" className="relative overflow-hidden py-28 lg:py-36 border-t border-[var(--border)]">
+      <SectionAurora />
+      <div className="relative max-w-[880px] mx-auto px-6">
         <motion.div
           initial="hidden"
           whileInView="visible"

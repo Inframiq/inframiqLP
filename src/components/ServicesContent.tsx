@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall, CheckCircle2 } from "lucide-react";
+import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall, CheckCircle2, Globe } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 import AuroraGrain from "@/components/AuroraGrain";
 import KineticText from "@/components/animations/KineticText";
@@ -209,6 +209,59 @@ function CoverageDashboard() {
   );
 }
 
+// ─── Web: a launched-site preview inside the same dashboard chrome ─────────
+
+const WEB_CLIENT_TYPES = ["Hotels", "Schools", "Restaurants"];
+
+function WebStudioDashboard() {
+  return (
+    <BrowserWindow
+      variant="app"
+      title="Web Studio"
+      icon={<Globe size={13} style={{ color: "var(--lw-accent)" }} />}
+      status="Live"
+      statusColor="var(--lw-success)"
+    >
+      <KpiRow items={[{ label: "Sites launched", value: "40+" }, { label: "Avg turnaround", value: "3 wks" }, { label: "Uptime", value: "99.9%" }]} />
+      <div className="p-4">
+        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-2">Built for</p>
+        <div className="flex flex-wrap gap-1.5">
+          {WEB_CLIENT_TYPES.map((c) => (
+            <span
+              key={c}
+              className="text-[10.5px] px-2.5 py-1 rounded-full"
+              style={{ backgroundColor: "var(--lw-surface-2)", color: "var(--lw-text-2)" }}
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="mx-4 mb-4 rounded-lg overflow-hidden border" style={{ borderColor: "var(--lw-border)" }}>
+        <div className="px-3 py-2 flex items-center justify-between" style={{ backgroundColor: "var(--lw-surface-2)" }}>
+          <span className="font-mono text-[10px] text-[var(--lw-text-3)]">harbor-inn.com</span>
+          <span
+            className="font-mono text-[9px] px-1.5 py-0.5 rounded"
+            style={{ backgroundColor: "var(--lw-success-dim)", color: "var(--lw-success)" }}
+          >
+            live
+          </span>
+        </div>
+        <div className="p-3.5">
+          <div className="h-2 w-2/3 rounded-full mb-2" style={{ backgroundColor: "var(--lw-border)" }} />
+          <div className="h-2 w-1/2 rounded-full mb-3" style={{ backgroundColor: "var(--lw-border)" }} />
+          <span
+            className="inline-flex items-center text-[10px] px-2.5 py-1.5 rounded-md"
+            style={{ backgroundColor: "var(--lw-accent-dim)", color: "var(--lw-accent)" }}
+          >
+            Book now
+          </span>
+        </div>
+      </div>
+    </BrowserWindow>
+  );
+}
+
 interface Service {
   icon: typeof Phone;
   tag: string;
@@ -251,19 +304,30 @@ const services: Service[] = [
     points: ["Dedicated, trained agent teams", "Round-the-clock coverage", "Direct oversight, not a call-center queue"],
     window: <CoverageDashboard />,
   },
+  {
+    icon: Globe,
+    tag: "web",
+    title: "Website design & development",
+    description: "Custom-built websites for hotels, schools, restaurants, and other local businesses — designed and developed by our team, not assembled from a template.",
+    points: ["Custom design, not a theme", "Booking & enquiry forms built in", "Fast, mobile-first, SEO-ready"],
+    window: <WebStudioDashboard />,
+  },
 ];
 
 // ─── Hero visual — a services diagram, not a dashboard screenshot. Voice
 // support already gets its own real, fully interactive dashboard in the list
 // below; reusing that same window up here would just show it twice. This
-// shows how the four service lines relate to Inframiq as a core instead. ───
+// shows how the five service lines relate to Inframiq as a core instead. ───
 
 const SERVICES_CORE = { x: 200, y: 160 };
+// Pentagon around the core, one point per service — kept in sync with
+// `services` by index, so a 6th service needs a 6th coordinate here too.
 const SERVICES_NODES = [
-  { x: 70, y: 60 },
-  { x: 330, y: 60 },
-  { x: 70, y: 260 },
-  { x: 330, y: 260 },
+  { x: 200, y: 45 },
+  { x: 355, y: 130 },
+  { x: 290, y: 280 },
+  { x: 110, y: 280 },
+  { x: 45, y: 130 },
 ];
 
 function ServicesConstellation() {

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CoverageDial, SystemsIndicator, TeamMeter } from "@/components/instruments/Gauges";
+import SectionAurora from "@/components/SectionAurora";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const timeline = [
@@ -23,8 +24,9 @@ const instruments = [
 // static row of tiles.
 export default function TheNumbers() {
   return (
-    <section id="about" className="py-24 lg:py-32">
-      <div className="max-w-4xl mx-auto px-6 text-center">
+    <section id="about" className="relative overflow-hidden py-24 lg:py-32 border-t border-[var(--border)]">
+      <SectionAurora />
+      <div className="relative max-w-4xl mx-auto px-6 text-center">
         <motion.div
           initial="hidden"
           whileInView="visible"

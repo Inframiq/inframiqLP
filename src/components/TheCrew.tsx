@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, animate } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Pause, Play } from "lucide-react";
 import { team } from "@/lib/team";
+import SectionAurora from "@/components/SectionAurora";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 // Used only to seed the decorative barcode strip's bar heights — the ID
@@ -33,6 +34,13 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
   const [pointer, setPointer] = useState({ px: 0.5, py: 0.5 });
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Scrolling with the cursor stationary over a card moves the card
+    // under it — some browsers re-fire pointermove at the same screen
+    // coordinates to refresh hover state, which this tilt handler would
+    // otherwise read as a real move (the card's rect shifted, the pointer
+    // didn't) and jerk the tilt. movementX/Y are 0 for these synthetic
+    // events since the pointer itself never actually moved.
+    if (e.movementX === 0 && e.movementY === 0) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -131,21 +139,26 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
 const CARD_WIDTH = 220;
 const CARD_GAP = 16;
 const STEP = CARD_WIDTH + CARD_GAP;
+const AUTOPLAY_PX_PER_SEC = 110;
 
 export default function TheCrew() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [pageCount, setPageCount] = useState(team.length);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Dots represent actual reachable stopping points, not one per person —
   // with several cards visible at once, the number of distinct scroll
   // positions is far smaller than team.length. Recomputed on resize since
   // how many cards fit (and therefore how many stops exist) is responsive.
+  // Sized off team.length rather than el.scrollWidth because the track
+  // renders the team list twice (for the seamless autoplay marquee below),
+  // which would otherwise double-count the scrollable width.
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
     const measure = () => {
-      const maxScroll = el.scrollWidth - el.clientWidth;
+      const maxScroll = team.length * STEP - el.clientWidth;
       const pages = maxScroll <= 0 ? 1 : Math.round(maxScroll / STEP) + 1;
       setPageCount(Math.min(team.length, Math.max(1, pages)));
     };
@@ -186,13 +199,77 @@ export default function TheCrew() {
   const handleScroll = () => {
     const el = scrollerRef.current;
     if (!el) return;
+    // While playing, scrollLeft is driven by the marquee loop itself
+    // (including its wrap-around jump) — reading dot position off it here
+    // would just fight that and flicker the (hidden) dots.
+    if (isPlaying) return;
     const idx = Math.round(el.scrollLeft / STEP);
     setActiveIndex(Math.max(0, Math.min(pageCount - 1, idx)));
   };
 
+  // Play control converts the carousel into a continuous, infinite marquee
+  // — the team list is rendered twice back to back (below) so once scrollLeft
+  // passes the width of one full set, it can jump back by that same width
+  // into the duplicate copy without any visible seam.
+  const singleSetWidth = team.length * STEP;
+  useEffect(() => {
+    if (!isPlaying) return;
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.style.scrollSnapType = "none";
+    let rafId: number;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      el.scrollLeft += AUTOPLAY_PX_PER_SEC * dt;
+      if (el.scrollLeft >= singleSetWidth) el.scrollLeft -= singleSetWidth;
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [isPlaying, singleSetWidth]);
+
+  const stopAutoplayAndSnap = () => {
+    setIsPlaying(false);
+    const el = scrollerRef.current;
+    if (!el) return;
+    const nearest = Math.round(el.scrollLeft / STEP) % team.length;
+    scrollToIndex(nearest);
+  };
+
+  const goToIndex = (i: number) => {
+    setIsPlaying(false);
+    scrollToIndex(i);
+  };
+
+  // Chrome (and others) redirect a plain vertical mouse-wheel scroll into
+  // this element's scrollLeft, since it only overflows horizontally — the
+  // page appears "stuck" and the cards shift sideways instead of the
+  // visitor scrolling past the section. Hand vertical-dominant wheel
+  // gestures back to the page; only let genuinely horizontal ones (trackpad
+  // swipe, shift+wheel) move the carousel.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        // "instant", not "auto" — the page has scroll-behavior: smooth
+        // globally, and "auto" inherits it, so every wheel tick would
+        // start a fresh smooth-scroll animation that interrupts the last
+        // one and makes the page crawl instead of tracking the wheel 1:1.
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: "instant" });
+      }
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   return (
-    <section className="py-24 lg:py-32">
-      <div className="max-w-5xl mx-auto px-6 lg:px-10">
+    <section className="relative overflow-hidden py-24 lg:py-32">
+      <SectionAurora />
+      <div className="relative max-w-5xl mx-auto px-6 lg:px-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -214,16 +291,19 @@ export default function TheCrew() {
         >
           {/* Horizontal scroll carousel — drag/swipe to browse, or use the
               dots/arrow below. Scroll-snap keeps each card settling flush
-              instead of stopping mid-card. */}
+              instead of stopping mid-card. The team list is rendered twice
+              back to back so the play control can loop it as a seamless
+              infinite marquee (see the autoplay effect above) — the second
+              copy is inert until then. */}
           <div
             ref={scrollerRef}
             onScroll={handleScroll}
             className="flex gap-4 overflow-x-auto no-scrollbar pb-2"
             style={{ scrollSnapType: "x mandatory" }}
           >
-            {team.map((member, i) => (
+            {[...team, ...team].map((member, i) => (
               <motion.div
-                key={member.name}
+                key={`${member.name}-${i}`}
                 className="flex-shrink-0"
                 style={{ width: CARD_WIDTH, scrollSnapAlign: "start" }}
                 initial={{ opacity: 0, y: 20 }}
@@ -237,13 +317,15 @@ export default function TheCrew() {
           </div>
 
           {/* Apple-style pagination — dots morph into a pill for the current
-              card, plus a circular button to advance. */}
+              card, plus a circular button to advance. Both step aside for
+              the play control while it's running the infinite marquee,
+              since a fixed card position doesn't mean anything mid-loop. */}
           <div className="flex items-center justify-center gap-2 mt-8">
-            {Array.from({ length: pageCount }, (_, i) => (
+            {!isPlaying && Array.from({ length: pageCount }, (_, i) => (
               <button
                 key={i}
                 type="button"
-                onClick={() => scrollToIndex(i)}
+                onClick={() => goToIndex(i)}
                 aria-label={`Go to slide ${i + 1}`}
                 aria-current={activeIndex === i}
                 className="h-1.5 rounded-full transition-all duration-300"
@@ -253,14 +335,29 @@ export default function TheCrew() {
                 }}
               />
             ))}
+            {!isPlaying && (
+              <button
+                type="button"
+                onClick={() => goToIndex(activeIndex + 1)}
+                disabled={activeIndex >= pageCount - 1}
+                aria-label="Next team member"
+                className="ml-3 flex items-center justify-center w-8 h-8 rounded-full border border-[var(--border-strong)] bg-[var(--surface)] hover:bg-[var(--surface-2)] disabled:opacity-30 disabled:pointer-events-none transition-colors duration-200"
+              >
+                <ChevronRight size={14} className="text-[var(--text-1)]" />
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => scrollToIndex(activeIndex + 1)}
-              disabled={activeIndex >= pageCount - 1}
-              aria-label="Next team member"
-              className="ml-3 flex items-center justify-center w-8 h-8 rounded-full border border-[var(--border-strong)] bg-[var(--surface)] hover:bg-[var(--surface-2)] disabled:opacity-30 disabled:pointer-events-none transition-colors duration-200"
+              onClick={() => (isPlaying ? stopAutoplayAndSnap() : setIsPlaying(true))}
+              aria-label={isPlaying ? "Pause team autoplay" : "Play through the team"}
+              aria-pressed={isPlaying}
+              className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-[var(--border-strong)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors duration-200"
             >
-              <ChevronRight size={14} className="text-[var(--text-1)]" />
+              {isPlaying ? (
+                <Pause size={13} fill="currentColor" className="text-[var(--text-1)]" />
+              ) : (
+                <Play size={13} fill="currentColor" className="ml-0.5 text-[var(--text-1)]" />
+              )}
             </button>
           </div>
         </motion.div>

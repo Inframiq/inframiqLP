@@ -417,23 +417,47 @@ select {
   }
 }
 
-/* Section boundary fade — replaces a hard border-t divider with a soft
-   opacity/color gradient so the previous section melts into this one
-   instead of cutting off at a visible line. Put on the section that sits
-   on the differing background (e.g. bg-raised); it fades in from
-   transparent using this section's own bg color. */
-.section-fade-top {
-  position: relative;
-}
-.section-fade-top::before {
-  content: "";
+/* Ambient aurora — same idea as .pillar-glow, sized for a full section
+   rather than one card. Threads the hero's blue drift through other
+   sections (see SectionAurora.tsx) without repeating the canvas/grain. */
+.ambient-aurora {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, transparent, var(--fade-to, var(--bg-raised)));
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
+}
+.ambient-aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+  animation: aurora-float 34s ease-in-out infinite;
+}
+.ambient-aurora-blob-1 {
+  width: 480px;
+  height: 480px;
+  top: -18%;
+  left: -10%;
+  opacity: 0.14;
+  background: radial-gradient(circle, var(--accent), transparent 72%);
+  animation-name: aurora-float-1;
+  animation-duration: 34s;
+}
+.ambient-aurora-blob-2 {
+  width: 420px;
+  height: 420px;
+  bottom: -18%;
+  right: -8%;
+  opacity: 0.11;
+  background: radial-gradient(circle, var(--accent-strong), transparent 72%);
+  animation-name: aurora-float-2;
+  animation-duration: 38s;
+  animation-delay: -9s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-aurora-blob {
+    animation: none;
+  }
 }
 
 /* Window chrome — a light glass panel used for consoles, changelogs and
@@ -567,19 +591,17 @@ select {
 .terminal-chrome {
   border-radius: 12px;
   overflow: hidden;
-  background-color: #0b0c0f;
+  background-color: #000000;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 60px 120px -32px rgba(15, 23, 42, 0.35),
-    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 60px 120px -32px rgba(0, 0, 0, 0.5);
 }
 .terminal-chrome-bar {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 9px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background-color: #131418;
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 /* Instrument console — the second earned dark exception (TheNumbers): a
@@ -796,9 +818,7 @@ select {
 }
 :root[data-theme="dark"] .terminal-chrome {
   border-color: rgba(255, 255, 255, 0.12);
-  box-shadow:
-    0 60px 120px -32px rgba(0, 0, 0, 0.6),
-    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  box-shadow: 0 60px 120px -32px rgba(0, 0, 0, 0.6);
 }
 :root[data-theme="dark"] .card-elevated {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);

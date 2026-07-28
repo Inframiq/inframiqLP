@@ -140,7 +140,7 @@ function SignalDiagram() {
 
 export default function TheSplit() {
   return (
-    <section id="systems" className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="systems" className="relative border-t border-[var(--border)] py-24 lg:pt-32 lg:pb-16 overflow-hidden">
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-80" style={{ "--glow-x": "90%", "--glow-y": "0%" } as React.CSSProperties} />
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
         <motion.div

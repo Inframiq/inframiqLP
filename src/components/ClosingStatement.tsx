@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import SectionAurora from "@/components/SectionAurora";
 
 // Reveals `text` one character at a time — each char is its own motion.span
 // with its own viewport-triggered delay, so the line "types" itself out
@@ -49,8 +50,9 @@ export default function ClosingStatement() {
   const statusRowDelay = cursor + 0.2;
 
   return (
-    <section className="section-fade-top py-24 lg:py-32 bg-[var(--bg-raised)]">
-      <div className="max-w-[640px] mx-auto px-6">
+    <section className="relative overflow-hidden py-24 lg:py-32 border-t border-[var(--border)] bg-[var(--bg-raised)]">
+      <SectionAurora />
+      <div className="relative max-w-[640px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -62,7 +64,7 @@ export default function ClosingStatement() {
             <span className="w-2 h-2 rounded-full bg-white/15" />
             <span className="w-2 h-2 rounded-full bg-white/15" />
             <span className="w-2 h-2 rounded-full bg-white/15" />
-            <span className="ml-2 text-[10px] font-mono text-white/40">where this is going</span>
+            <span className="ml-2 text-[11px] font-mono tracking-[0.03em] text-white/55">where this is going</span>
           </div>
           <div className="p-6 lg:p-8 font-mono text-[13px] leading-[1.9]">
             {lines.map((line, i) => (

@@ -150,15 +150,14 @@ const organizationJsonLd = {
 };
 
 // Sets data-theme on <html> before first paint — reading the stored
-// preference, falling back to system preference — so toggling never causes
-// a flash of the wrong theme on load or on repeat visits.
+// preference, defaulting to light for first-time visitors (not system
+// preference) — so toggling never causes a flash of the wrong theme on
+// load or on repeat visits.
 const themeInitScript = `
 (function () {
   try {
     var stored = localStorage.getItem("inframiq-theme");
-    var theme = stored === "dark" || stored === "light"
-      ? stored
-      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var theme = stored === "dark" || stored === "light" ? stored : "light";
     document.documentElement.setAttribute("data-theme", theme);
   } catch (e) {}
 })();

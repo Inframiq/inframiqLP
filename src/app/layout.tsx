@@ -18,7 +18,7 @@ const SITE_URL = "https://inframiq.com";
 const SITE_NAME = "Inframiq";
 // Kept under ~60 characters so it doesn't truncate in search results —
 // the longer version used to live here, but it ran to 81 characters.
-const SITE_TITLE = "Inframiq — 24/7 Customer Support & Intelligent Software";
+const SITE_TITLE = "Inframiq — Software & Support, Built Right";
 const SITE_DESCRIPTION =
   "Inframiq is a BPO that deploys trained human agents for 24/7 voice and live chat customer service — handling enquiries and technical support — alongside intelligent security, business, and everyday software products.";
 

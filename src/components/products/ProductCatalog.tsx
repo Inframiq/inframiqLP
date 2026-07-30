@@ -8,8 +8,38 @@ import AuroraGrain from "@/components/AuroraGrain";
 import KineticText from "@/components/animations/KineticText";
 import HeadlineVariant from "@/components/HeadlineVariant";
 import CtaLink from "@/components/CtaLink";
+import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import type { HeadlineGroupKey } from "@/lib/headlineVariants";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
+
+// Every answer here is a restatement of a claim already made elsewhere on
+// this page (description/features/status) — nothing new is asserted.
+const productsFaq: FaqItem[] = [
+  {
+    question: "What does Mail Shield do?",
+    answer:
+      "Mail Shield integrates directly into Gmail and analyzes each email's links, attachments, and content the moment it's opened — flagging phishing, domain spoofing, and lookalike-domain attacks. It also enforces DMARC, DKIM, and SPF, and keeps an immutable audit log for compliance.",
+  },
+  {
+    question: "Is Mail Shield available now?",
+    answer:
+      "Mail Shield is currently in active development and marked Coming Soon. You can request a demo to be notified as soon as it's available, or talk to our team about your email security needs today.",
+  },
+  {
+    question: "What does Simulyn do?",
+    answer:
+      "Simulyn is a pricing simulation tool for founders, finance teams, and sales leaders. It models margin, break-even, and growth scenarios in real time — for subscription, seat-based, or usage pricing — so you can see the outcome of a pricing decision before committing to it.",
+  },
+  {
+    question: "Is Simulyn available now?",
+    answer:
+      "Simulyn is currently in active development and marked Coming Soon. The interactive pricing simulator on this page is fully live, though — try dragging the seat count to see how the model responds.",
+  },
+  {
+    question: "Which platforms does Mail Shield integrate with?",
+    answer: "Mail Shield integrates natively with Gmail and Google Workspace, plus Microsoft 365.",
+  },
+];
 
 // ─── Product data ────────────────────────────────────────────────────────────
 
@@ -329,6 +359,8 @@ export default function ProductCatalog() {
       {products.map((product, index) => (
         <ProductRow key={product.slug} product={product} index={index} />
       ))}
+
+      <FaqSection items={productsFaq} eyebrow="Questions" heading="Frequently asked questions" />
     </>
   );
 }

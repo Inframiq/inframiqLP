@@ -61,6 +61,19 @@ export default function Footer() {
               <p className="font-mono text-[11px] uppercase tracking-wide text-[var(--text-3)] mb-4">Contact</p>
               <UnderlineLink href="mailto:support@inframiq.com">support@inframiq.com</UnderlineLink>
             </div>
+
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-wide text-[var(--text-3)] mb-4">Follow</p>
+              <a
+                href="https://www.linkedin.com/company/inframiqsolutions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-block text-[14px] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors duration-150"
+              >
+                LinkedIn
+                <span className="absolute left-0 -bottom-0.5 h-px w-full origin-left scale-x-0 bg-[var(--text-1)] transition-transform duration-300 group-hover:scale-x-100" />
+              </a>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -68,6 +81,9 @@ export default function Footer() {
       <div className="border-t border-[var(--border)]">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-[13px] text-[var(--text-3)]">© {new Date().getFullYear()} Inframiq Technologies, Inc.</p>
+          <p className="text-[12px] text-[var(--text-3)]">
+            Site last updated {new Date().toLocaleDateString(undefined, { month: "long", year: "numeric" })}
+          </p>
           <p className="font-mono text-[13px] text-[var(--text-3)]">Still online. Still true.</p>
         </div>
       </div>

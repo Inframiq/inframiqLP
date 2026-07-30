@@ -16,7 +16,9 @@ import "./globals.css";
 
 const SITE_URL = "https://inframiq.com";
 const SITE_NAME = "Inframiq";
-const SITE_TITLE = "Inframiq — 24/7 Voice & Chat Customer Support, Plus Intelligent Software Products";
+// Kept under ~60 characters so it doesn't truncate in search results —
+// the longer version used to live here, but it ran to 81 characters.
+const SITE_TITLE = "Inframiq — 24/7 Customer Support & Intelligent Software";
 const SITE_DESCRIPTION =
   "Inframiq is a BPO that deploys trained human agents for 24/7 voice and live chat customer service — handling enquiries and technical support — alongside intelligent security, business, and everyday software products.";
 
@@ -86,7 +88,7 @@ const organizationJsonLd = {
   url: SITE_URL,
   description: SITE_DESCRIPTION,
   email: "support@inframiq.com",
-  sameAs: [],
+  sameAs: ["https://www.linkedin.com/company/inframiqsolutions"],
   founder: founders.map((member) => ({ "@type": "Person", name: member.name })),
   employee: team.map((member) => ({
     "@type": "Person",

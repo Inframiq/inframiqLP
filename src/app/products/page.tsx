@@ -21,10 +21,13 @@ export const metadata: Metadata = {
     title: `${TITLE} — Inframiq`,
     description: DESCRIPTION,
     url: "/products",
+    images: ["/opengraph-image"],
   },
   twitter: {
+    card: "summary_large_image",
     title: `${TITLE} — Inframiq`,
     description: DESCRIPTION,
+    images: ["/opengraph-image"],
   },
 };
 

@@ -8,9 +8,35 @@ import BrowserWindow from "@/components/instruments/BrowserWindow";
 import AuroraGrain from "@/components/AuroraGrain";
 import HeadlineVariant from "@/components/HeadlineVariant";
 import CtaLink from "@/components/CtaLink";
+import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
+
+// Every answer restates a claim already made elsewhere on this page —
+// nothing new is asserted.
+const servicesFaq: FaqItem[] = [
+  {
+    question: "What services does Inframiq offer?",
+    answer:
+      "Inframiq provides 24/7 voice support, live chat support, technical support (tier 1 and tier 2), dedicated round-the-clock agent teams, and custom website design and development for businesses like hotels, schools, and restaurants.",
+  },
+  {
+    question: "Are Inframiq's support agents real people?",
+    answer:
+      "Yes. Every call and chat is handled by a trained human agent, not a bot or an automated script. Agents are dedicated to your account, so customers get a consistent team instead of a different stranger every time.",
+  },
+  {
+    question: "How quickly will Inframiq respond to a request?",
+    answer:
+      "We'll reach out within one business day to talk through your support needs — no obligation, no sales pressure.",
+  },
+  {
+    question: "Does Inframiq offer 24/7 coverage?",
+    answer:
+      "Yes — Inframiq staffs dedicated agent teams around the clock, covering every timezone your customers are in, across voice, chat, and technical support.",
+  },
+];
 
 // ─── Shared light-dashboard building blocks ─────────────────────────────────
 
@@ -541,6 +567,8 @@ export default function ServicesContent() {
           </div>
         </div>
       </section>
+
+      <FaqSection items={servicesFaq} eyebrow="Questions" heading="Frequently asked questions" />
 
       {/* CTA */}
       <section className="py-20">

@@ -7,7 +7,7 @@ import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const timeline = [
   { label: "Founded", detail: "Inframiq established with a focus on building intelligent, well-engineered products." },
-  { label: "First product", detail: "Mail Shield launched — addressing phishing and domain impersonation at scale." },
+  { label: "First product", detail: "Mail Shield in active development — addressing phishing and domain impersonation at scale." },
   { label: "Today", detail: "Expanding into a growing portfolio spanning enterprise security to everyday life." },
 ];
 

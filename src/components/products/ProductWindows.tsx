@@ -267,7 +267,7 @@ export function MailShieldWindow({
 
   if (chrome === "app") {
     return (
-      <BrowserWindow variant="app" title="Mail Shield · Inbound Queue" status="Live" statusColor="var(--lw-success)" className={className}>
+      <BrowserWindow variant="app" title="Mail Shield · Opened in Gmail" status="Live" statusColor="var(--lw-success)" className={className}>
         {body}
       </BrowserWindow>
     );
@@ -276,7 +276,7 @@ export function MailShieldWindow({
   return (
     <BrowserWindow url="app.inframiq.com/mail-shield" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield — Inbound Queue</span>
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield — Opened in Gmail</span>
         <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
       {body}

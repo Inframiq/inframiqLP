@@ -31,7 +31,7 @@ function TypedText({ text, startDelay }: { text: string; startDelay: number }) {
 export default function ClosingStatement() {
   const lines = [
     { prefix: "$", text: "inframiq --status" },
-    { prefix: ">", text: "2 systems in production. 1 operations desk, staffed 24/7." },
+    { prefix: ">", text: "2 systems in active development. 1 operations desk, staffed 24/7." },
     { prefix: ">", text: "Every product after Mail Shield and Simulyn gets built exactly this carefully — or it doesn't get built." },
   ];
 

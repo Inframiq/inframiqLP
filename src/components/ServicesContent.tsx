@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Phone, MessageCircle, Wrench, Headset, ArrowRight, PhoneCall, CheckCircle2, Globe } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 import AuroraGrain from "@/components/AuroraGrain";
-import KineticText from "@/components/animations/KineticText";
+import HeadlineVariant from "@/components/HeadlineVariant";
+import CtaLink from "@/components/CtaLink";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
@@ -420,11 +421,12 @@ export default function ServicesContent() {
 
               <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
 
-              <h1 className="font-brand text-[36px] lg:text-[44px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
-                <KineticText as="span" text="Your customers, answered" play={revealed} />
-                <br />
-                <KineticText as="span" text="by real people, around the clock." className="text-[var(--text-3)]" play={revealed} />
-              </h1>
+              <HeadlineVariant
+                group="services"
+                as="h1"
+                className="font-brand text-[36px] lg:text-[44px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl"
+                play={revealed}
+              />
 
               <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-xl">
                 Inframiq operates as your customer service team — deploying trained
@@ -557,13 +559,11 @@ export default function ServicesContent() {
                 what coverage you need and whether we&apos;re the right fit.
               </p>
             </div>
-            <Link
-              href="/#demo"
+            <CtaLink
+              group="services"
               className="inline-flex items-center gap-1.5 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150 flex-shrink-0"
-            >
-              Get in touch
-              <ArrowRight size={14} />
-            </Link>
+              icon={<ArrowRight size={14} />}
+            />
           </motion.div>
         </div>
       </section>

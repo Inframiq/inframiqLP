@@ -2,13 +2,23 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Inter } from "next/font/google";
 import { ArrowRight, Headset, MousePointerClick } from "lucide-react";
 import { MailShieldWindow, SimulynWindow } from "@/components/products/ProductWindows";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
-import KineticText from "@/components/animations/KineticText";
+import HeadlineVariant from "@/components/HeadlineVariant";
+import CtaLink from "@/components/CtaLink";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 import AuroraGrain from "@/components/AuroraGrain";
+
+// Real SF Pro (what apple.com's headlines actually render in on Apple
+// devices) isn't licensed for web embedding — apple.com itself just falls
+// back to the OS font stack rather than bundling it, which is why the site's
+// own system-font stack renders as SF Pro on Mac/iOS but Segoe UI elsewhere.
+// Inter is the standard free substitute: geometrically close enough to SF
+// Pro Display that it reads the same way cross-platform. Scoped to just the
+// hero headline — the rest of the site stays on the system stack.
+const inter = Inter({ subsets: ["latin"], weight: ["600", "700"], display: "swap" });
 
 // A compact preview of the ops console — the same "workspace" the visitor
 // lands in fully expanded further down the page (TheSplit). Small here on
@@ -196,8 +206,15 @@ export default function HeroSection() {
 
       <div className="relative z-10 w-full max-w-[1360px] mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-[0.78fr_1.22fr] gap-14 lg:gap-10 items-center">
-          {/* Thesis — smaller than the visual, on purpose */}
-          <div>
+          {/* Thesis — smaller than the visual, on purpose. `containerType:
+              inline-size` turns this column itself into the sizing
+              reference for the headline below: the `cqw` unit in its
+              font-size is a percentage of THIS column's actual resolved
+              width (post-grid, post-breakpoint), not the viewport — so the
+              headline scales to fill exactly the space this section gives
+              it at every width, instead of jumping between a few fixed
+              breakpoint sizes. */}
+          <div style={{ containerType: "inline-size" }}>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -209,12 +226,12 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            <h1 className="font-brand font-semibold text-[34px] sm:text-[44px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-7">
-              <KineticText as="span" text="We don't describe" play={revealed} />
-              <br />
-              <KineticText as="span" text="our software. " play={revealed} />
-              <KineticText as="span" text="We open it." className="text-[var(--accent-strong)]" play={revealed} />
-            </h1>
+            <HeadlineVariant
+              group="main"
+              as="h1"
+              className={`${inter.className} font-semibold text-[clamp(3.5rem,16cqw,6.25rem)] leading-[1.03] tracking-[-0.03em] text-[var(--text-1)] mb-7`}
+              play={revealed}
+            />
 
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -234,13 +251,11 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.26 }}
               className="flex flex-wrap items-center gap-8"
             >
-              <Link
-                href="/#demo"
+              <CtaLink
+                group="main"
                 className="inline-flex items-center gap-2 h-12 px-7 rounded-md bg-[var(--accent)] text-white text-[14px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
-              >
-                Request a Demo
-                <ArrowRight size={14} />
-              </Link>
+                icon={<ArrowRight size={14} />}
+              />
               <a
                 href="#systems"
                 className="inline-flex items-center gap-1.5 text-[14px] text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors duration-150 underline decoration-[var(--border-strong)] underline-offset-4 hover:decoration-[var(--accent)]"

@@ -6,6 +6,9 @@ import { ArrowRight, Mail, Calculator, type LucideIcon } from "lucide-react";
 import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWindows";
 import AuroraGrain from "@/components/AuroraGrain";
 import KineticText from "@/components/animations/KineticText";
+import HeadlineVariant from "@/components/HeadlineVariant";
+import CtaLink from "@/components/CtaLink";
+import type { HeadlineGroupKey } from "@/lib/headlineVariants";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 // ─── Product data ────────────────────────────────────────────────────────────
@@ -16,6 +19,9 @@ interface Product {
   category: string;
   categoryIcon: LucideIcon;
   tagline: string;
+  /** Headline-testing group key (see src/lib/headlineVariants.ts) — omit for
+   *  products that don't have variants set up yet. */
+  headlineGroup?: HeadlineGroupKey;
   description: string;
   features: string[];
   status: "Available" | "Beta" | "Coming Soon";
@@ -29,15 +35,16 @@ const products: Product[] = [
     name: "Mail Shield",
     category: "Email Security",
     categoryIcon: Mail,
-    tagline: "Enterprise email protection that stops threats before delivery.",
+    tagline: "Scans links, attachments, and content the instant you open an email — inside Gmail.",
+    headlineGroup: "mail-shield",
     description:
-      "Mail Shield is an enterprise-grade email security platform designed for organizations where a single phishing email can compromise an entire network. Intelligent filtering, domain impersonation detection, and real-time threat analysis — without the noise of traditional rule-based filters.",
+      "Mail Shield integrates directly into Gmail and analyzes each email the moment it's opened — because opening an email doesn't put an organization at risk, but the links, attachments, and content inside it can. Every message is scanned for malicious links, dangerous attachments, and phishing or impersonation patterns right as it's opened, without the noise of traditional rule-based filters.",
     features: [
       "ML-powered phishing and spoofing detection",
-      "Real-time content inspection before delivery",
+      "Real-time analysis of links, attachments, and content the moment an email is opened",
       "DMARC, DKIM, and SPF enforcement",
       "Immutable audit log for compliance",
-      "Native integration with Microsoft 365 and Google Workspace",
+      "Native integration with Gmail and Google Workspace, plus Microsoft 365",
     ],
     status: "Coming Soon",
     hasPage: false,
@@ -49,6 +56,7 @@ const products: Product[] = [
     category: "Pricing & Business Tools",
     categoryIcon: Calculator,
     tagline: "Know your numbers before you set your price.",
+    headlineGroup: "simulyn",
     description:
       "Simulyn is a pricing simulation tool built for founders, finance teams, and sales leaders who need to understand margin, break-even, and growth scenarios before committing to a price. Model plans, seats, and discounts — see the outcome instantly, no spreadsheet required.",
     features: [
@@ -182,9 +190,18 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
         </span>
       </div>
 
-      <h2 className="font-brand text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-4">
+      <h2 className="font-brand text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-3">
         {product.name}
       </h2>
+      {product.headlineGroup ? (
+        <HeadlineVariant
+          group={product.headlineGroup}
+          as="h3"
+          className="text-[14.5px] font-medium text-[var(--accent-strong)] mb-4"
+        />
+      ) : (
+        <p className="text-[14.5px] font-medium text-[var(--accent-strong)] mb-4">{product.tagline}</p>
+      )}
       <p className="text-[13.5px] text-[var(--text-2)] leading-[1.75] mb-7 max-w-md">{product.description}</p>
 
       <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
@@ -206,12 +223,19 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             <ArrowRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
           </Link>
         )}
-        <Link
-          href={`/?product=${encodeURIComponent(product.name)}#demo`}
-          className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
-        >
-          Request a Demo
-        </Link>
+        {product.headlineGroup ? (
+          <CtaLink
+            group={product.headlineGroup}
+            className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
+          />
+        ) : (
+          <Link
+            href={`/?product=${encodeURIComponent(product.name)}#demo`}
+            className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-[var(--accent)] text-white text-[13.5px] font-medium hover:bg-[var(--accent-strong)] active:scale-[0.98] transition-all duration-150"
+          >
+            Request a Demo
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -279,7 +303,7 @@ export default function ProductCatalog() {
               <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-4">
                 <KineticText as="span" text="Every problem," play={revealed} />
                 <br />
-                <KineticText as="span" text="engineered to an exacting standard." className="text-[var(--text-3)]" play={revealed} />
+                <KineticText as="span" text="engineered to an exacting standard." className="text-[var(--text-1)]" play={revealed} />
               </h1>
               <p className="text-[15px] text-[var(--text-2)] max-w-xl leading-[1.75]">
                 Inframiq is building a portfolio of purpose-built products — enterprise

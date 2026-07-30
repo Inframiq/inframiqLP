@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
 import Navbar from "@/components/Navbar";
 import EntryLoaderProvider from "@/components/EntryLoaderProvider";
+import PostHogProvider from "@/components/PostHogProvider";
 import { team } from "@/lib/team";
 import "./globals.css";
 
@@ -130,7 +131,7 @@ const organizationJsonLd = {
         "@type": "SoftwareApplication",
         name: "Mail Shield",
         applicationCategory: "SecurityApplication",
-        description: "Enterprise email protection that stops phishing and domain-impersonation threats before delivery.",
+        description: "Enterprise email protection that integrates with Gmail and analyzes links, attachments, and content the moment an email is opened, stopping phishing and domain-impersonation threats before they can do harm.",
         url: `${SITE_URL}/products`,
         provider: { "@type": "Organization", name: SITE_NAME },
       },
@@ -182,6 +183,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </EntryLoaderProvider>
         <Analytics />
+        <PostHogProvider />
       </body>
     </html>
   );

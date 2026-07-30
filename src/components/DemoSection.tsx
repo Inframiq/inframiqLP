@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2, Inbox } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 import SectionAurora from "@/components/SectionAurora";
+import FeedbackSurvey from "@/components/FeedbackSurvey";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const queueContainer = {
@@ -24,6 +25,11 @@ const checklist = [
   "No obligation, no sales pressure",
 ];
 
+// PLACEHOLDER — illustrative only, not real customer data. These names/
+// statuses exist purely to show what the "Request Management" dashboard
+// looks like with entries in it, sitting deliberately next to the real form
+// below. Do not treat as proof/testimonials, and don't add real customer
+// names here without their consent.
 const recentRequests = [
   { company: "Northwind Retail", need: "Voice support", status: "Scheduled" },
   { company: "Arclight Labs", need: "Mail Shield demo", status: "Reviewed" },
@@ -37,20 +43,18 @@ const requestStatusStyle: Record<string, { bg: string; fg: string }> = {
 
 export default function DemoSection() {
   const searchParams = useSearchParams();
+  const product = searchParams.get("product");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   // Arriving from a product's "Request a Demo" button — pre-fill the message
   // so the requester doesn't have to retype which product they're asking about.
-  const [form, setForm] = useState(() => {
-    const product = searchParams.get("product");
-    return {
-      name: "",
-      company: "",
-      email: "",
-      message: product ? `Interested in a demo of ${product}.` : "",
-    };
-  });
+  const [form, setForm] = useState(() => ({
+    name: "",
+    company: "",
+    email: "",
+    message: product ? `Interested in a demo of ${product}.` : "",
+  }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,6 +168,7 @@ export default function DemoSection() {
                     <p className="text-[12.5px] text-[var(--lw-text-2)] leading-relaxed">
                       We&apos;ll reach out within one business day to talk through your support needs.
                     </p>
+                    <FeedbackSurvey context={product || "general"} email={form.email} />
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-3.5">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWindows";
+import CtaLink from "@/components/CtaLink";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 export default function ProductsShowcase() {
@@ -39,12 +40,11 @@ export default function ProductsShowcase() {
             <SimulynWindow className="flex-1" />
             <div className="flex items-center justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Know your numbers before you set your price.</p>
-              <Link
-                href="/?product=Simulyn#demo"
+              <CtaLink
+                group="simulyn"
                 className="group inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
-              >
-                Demo <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+                icon={<ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />}
+              />
             </div>
           </motion.div>
 
@@ -59,12 +59,11 @@ export default function ProductsShowcase() {
             <MailShieldWindow className="flex-1" />
             <div className="flex items-center justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Stops phishing and spoofing before delivery.</p>
-              <Link
-                href="/?product=Mail%20Shield#demo"
+              <CtaLink
+                group="mail-shield"
                 className="group inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"
-              >
-                Demo <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+                icon={<ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />}
+              />
             </div>
           </motion.div>
         </div>

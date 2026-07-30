@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import TheSplit from "@/components/TheSplit";
 import TheStandard from "@/components/TheStandard";
 import ProductsShowcase from "@/components/ProductsShowcase";
+import PainPointSection from "@/components/PainPointSection";
 import TheNumbers from "@/components/TheNumbers";
 import TheCrew from "@/components/TheCrew";
 import ClosingStatement from "@/components/ClosingStatement";
@@ -16,6 +17,7 @@ export default function HomePage() {
       <TheSplit />
       <TheStandard />
       <ProductsShowcase />
+      <PainPointSection />
       <TheNumbers />
       <TheCrew />
       <ClosingStatement />

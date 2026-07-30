@@ -97,8 +97,8 @@ export function TeamMeter() {
   );
 }
 
-// A three-slot indicator: two systems lit and in production, one dim slot
-// reserved for what's already in active development.
+// A three-slot indicator: two systems lit and in active development, one
+// dim slot reserved for what comes after them.
 export function SystemsIndicator() {
   const [started, setStarted] = useState(false);
   const count = useCountUp(2, started, 0.7);
@@ -126,7 +126,7 @@ export function SystemsIndicator() {
         ))}
       </motion.div>
       <span className="font-mono text-[22px] text-[var(--text-1)] leading-none mt-3 tabular-nums">{count}</span>
-      <span className="font-mono text-[8.5px] text-[var(--text-3)] uppercase tracking-wide mt-1">systems live</span>
+      <span className="font-mono text-[8.5px] text-[var(--text-3)] uppercase tracking-wide mt-1">in development</span>
     </div>
   );
 }

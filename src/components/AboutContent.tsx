@@ -12,7 +12,7 @@ import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 
 const timeline = [
   { hash: "a3f1c2", label: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
-  { hash: "9b7e04", label: "First product", event: "Mail Shield launched — addressing phishing and domain impersonation at scale." },
+  { hash: "9b7e04", label: "First product", event: "Mail Shield in active development — addressing phishing and domain impersonation at scale." },
   { hash: "HEAD", label: "Today", event: "Expanding into a growing portfolio of products — spanning enterprise security to everyday life — engineered with the same uncompromising rigor." },
 ];
 
@@ -46,7 +46,7 @@ function ManifestoWindow() {
               key={d.key}
               type="button"
               onClick={() => setActive(i)}
-              className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[10px] font-mono"
+              className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[12.5px] font-brand font-semibold"
             >
               {isActive && (
                 <motion.span
@@ -267,7 +267,7 @@ export default function AboutContent() {
               <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
                 <KineticText as="span" text="Built for people" play={revealed} />
                 <br />
-                <KineticText as="span" text="who expect things to just work." className="text-[var(--text-3)]" play={revealed} />
+                <KineticText as="span" text="who expect things to just work." className="text-[var(--text-1)]" play={revealed} />
               </h1>
 
               <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-xl">

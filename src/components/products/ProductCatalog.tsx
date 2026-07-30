@@ -120,9 +120,11 @@ function ProductsConstellation() {
         <motion.circle
           cx={DIAGRAM_CORE.x}
           cy={DIAGRAM_CORE.y}
+          r={32}
           fill="var(--surface)"
           stroke="var(--border-strong)"
           strokeWidth="1.5"
+          initial={{ r: 32 }}
           animate={{ r: [32, 34, 32] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />

@@ -365,9 +365,11 @@ function ServicesConstellation() {
         <motion.circle
           cx={SERVICES_CORE.x}
           cy={SERVICES_CORE.y}
+          r={28}
           fill="var(--surface)"
           stroke="var(--border-strong)"
           strokeWidth="1.5"
+          initial={{ r: 28 }}
           animate={{ r: [28, 30, 28] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />

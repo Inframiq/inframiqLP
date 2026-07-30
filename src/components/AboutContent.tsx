@@ -210,9 +210,11 @@ function ArchitectureDiagram() {
         <motion.circle
           cx={ARCH_CENTER.x}
           cy={ARCH_CENTER.y}
+          r={26}
           fill="var(--surface)"
           stroke="var(--border-strong)"
           strokeWidth="1"
+          initial={{ r: 26 }}
           animate={{ r: [26, 28, 26] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />

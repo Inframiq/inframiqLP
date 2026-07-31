@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import Navbar from "@/components/Navbar";
 import EntryLoaderProvider from "@/components/EntryLoaderProvider";
 import PostHogProvider from "@/components/PostHogProvider";
@@ -177,6 +178,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </EntryLoaderProvider>
         <Analytics />
+        <SpeedInsights />
         <PostHogProvider />
       </body>
     </html>

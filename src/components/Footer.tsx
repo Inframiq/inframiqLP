@@ -9,7 +9,7 @@ const navigateLinks = [
   { label: "Products", href: "/products" },
   { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#demo" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function UnderlineLink({ href, children }: { href: string; children: React.ReactNode }) {

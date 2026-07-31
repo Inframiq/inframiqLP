@@ -8,6 +8,7 @@ import BrowserWindow from "@/components/instruments/BrowserWindow";
 import SectionAurora from "@/components/SectionAurora";
 import FeedbackSurvey from "@/components/FeedbackSurvey";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
+import { buildConsultationMailto } from "@/lib/mailTemplates";
 
 const queueContainer = {
   hidden: {},
@@ -41,12 +42,18 @@ const requestStatusStyle: Record<string, { bg: string; fg: string }> = {
   New: { bg: "var(--lw-surface-2)", fg: "var(--lw-text-3)" },
 };
 
-export default function DemoSection() {
+interface DemoSectionProps {
+  /** Homepage embeds this mid-page after ClosingStatement, so it wants the
+   *  full border-t + generous py-28/36 for section separation. Standalone
+   *  pages sit it directly under the navbar instead, where that same
+   *  padding just reads as dead space. */
+  standalone?: boolean;
+}
+
+export default function DemoSection({ standalone = false }: DemoSectionProps) {
   const searchParams = useSearchParams();
   const product = searchParams.get("product");
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   // Arriving from a product's "Request a Demo" button — pre-fill the message
   // so the requester doesn't have to retype which product they're asking about.
   const [form, setForm] = useState(() => ({
@@ -56,30 +63,29 @@ export default function DemoSection() {
     message: product ? `Interested in a demo of ${product}.` : "",
   }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // No backend round-trip: the visitor's own mail client composes and sends
+  // the message, pre-filled from our standard template, so it arrives at
+  // support@inframiq.com from a real inbox instead of a transactional
+  // sender spam filters distrust.
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(false);
-    try {
-      const res = await fetch("/api/consultation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error("Request failed");
-      setSubmitted(true);
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+    const mailto = buildConsultationMailto({ ...form, product });
+    window.open(mailto, "_blank");
+    setSubmitted(true);
   };
 
   const inputClass =
     "w-full h-10 bg-[var(--lw-surface)] border border-[var(--lw-border-strong)] rounded-md px-3 text-[13.5px] text-[var(--lw-text-1)] placeholder-[var(--lw-text-3)] focus:border-[var(--lw-accent)]/60 transition-all duration-150";
 
   return (
-    <section id="demo" className="relative overflow-hidden py-28 lg:py-36 border-t border-[var(--border)]">
+    <section
+      id="demo"
+      className={
+        standalone
+          ? "relative overflow-hidden pt-12 pb-28 lg:pb-36"
+          : "relative overflow-hidden py-28 lg:py-36 border-t border-[var(--border)]"
+      }
+    >
       <SectionAurora />
       <div className="relative max-w-[880px] mx-auto px-6">
         <motion.div
@@ -164,9 +170,10 @@ export default function DemoSection() {
                     >
                       <CheckCircle2 size={18} style={{ color: "var(--lw-accent)" }} />
                     </div>
-                    <h3 className="text-[15px] text-[var(--lw-text-1)] mb-2">Request received</h3>
+                    <h3 className="text-[15px] text-[var(--lw-text-1)] mb-2">Almost there</h3>
                     <p className="text-[12.5px] text-[var(--lw-text-2)] leading-relaxed">
-                      We&apos;ll reach out within one business day to talk through your support needs.
+                      Your email app should now be open with the request pre-filled — just hit send and
+                      we&apos;ll reach out within one business day.
                     </p>
                     <FeedbackSurvey context={product || "general"} email={form.email} />
                   </motion.div>
@@ -225,26 +232,12 @@ export default function DemoSection() {
 
                     <button
                       type="submit"
-                      disabled={loading}
-                      className="w-full h-10 rounded-md text-white text-[13.5px] font-medium active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 transition-all duration-150 flex items-center justify-center gap-2 mt-1"
+                      className="w-full h-10 rounded-md text-white text-[13.5px] font-medium active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 mt-1"
                       style={{ backgroundColor: "var(--lw-accent)" }}
                     >
-                      {loading ? (
-                        <span className="font-mono">Submitting…</span>
-                      ) : (
-                        <>
-                          Submit Request
-                          <ArrowRight size={13} />
-                        </>
-                      )}
+                      Submit Request
+                      <ArrowRight size={13} />
                     </button>
-
-                    {error && (
-                      <p className="text-[11px] text-center" style={{ color: "var(--lw-danger)" }}>
-                        Something went wrong — please try again, or email{" "}
-                        <a href="mailto:support@inframiq.com" className="underline">support@inframiq.com</a> directly.
-                      </p>
-                    )}
 
                     <p className="text-[10.5px] text-[var(--lw-text-3)] text-center">
                       No credit card required. We respect your privacy.

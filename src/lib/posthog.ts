@@ -2,7 +2,7 @@ import posthog from "posthog-js";
 
 // Guards double-init in dev (React Strict Mode mounts effects twice) and
 // lets every other call in this module become a safe no-op until a key is
-// configured, mirroring how /api/consultation degrades when RESEND_API_KEY
+// configured, mirroring how /api/feedback degrades when RESEND_API_KEY
 // is missing rather than throwing.
 let initialized = false;
 

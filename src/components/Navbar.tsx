@@ -14,7 +14,7 @@ const navLinks = [
   { label: "Products", href: "/products", icon: Package  },
   { label: "Services", href: "/services", icon: Briefcase},
   { label: "About",    href: "/about",    icon: Users    },
-  { label: "Contact",  href: "/#demo",    icon: Mail     },
+  { label: "Contact",  href: "/contact",  icon: Mail     },
 ];
 
 export default function Navbar() {

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-// Reuses the same Resend → inbox pipe as /api/consultation, rather than
-// standing up a new destination (no CRM/webhook exists anywhere in this
-// codebase — see the audit) — just a different subject/body so the two
-// stay distinguishable in the inbox.
+// The consultation form itself now hands off to the visitor's mail client
+// (see src/lib/mailTemplates.ts) rather than sending server-side, but this
+// feedback survey still posts here — no CRM/webhook exists anywhere in this
+// codebase (see the audit), so Resend stays the one server-side send path.
 const TO_EMAIL = "support@inframiq.com";
 const FROM_EMAIL = "Inframiq Website <onboarding@resend.dev>";
 

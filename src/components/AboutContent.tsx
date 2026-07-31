@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Eye, Target } from "lucide-react";
 import { values } from "@/lib/values";
+import { team } from "@/lib/team";
 import TheCrew from "@/components/TheCrew";
 import AuroraGrain from "@/components/AuroraGrain";
 import KineticText from "@/components/animations/KineticText";
@@ -172,7 +173,7 @@ const archNodes = [
   { key: "ops", label: "Operations Desk", sub: "24/7 voice & chat", x: 70, y: 60 },
   { key: "mail", label: "Mail Shield", sub: "Email security", x: 330, y: 60 },
   { key: "sim", label: "Simulyn", sub: "Pricing intelligence", x: 70, y: 260 },
-  { key: "eng", label: "Engineering", sub: "10+ specialists", x: 330, y: 260 },
+  { key: "eng", label: "Engineering", sub: `${team.length} specialists`, x: 330, y: 260 },
 ] as const;
 const ARCH_CENTER = { x: 200, y: 160 };
 

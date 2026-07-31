@@ -1,38 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { team } from "@/lib/team";
 
 // Shared status instruments used across the homepage, /about, and /products
 // — kept in one place so every page's "status panel" reads as the same
 // physical instrument rather than a page-specific recreation of it.
-
-// Counts up to `target` once `started` flips true (driven by a motion
-// element's onViewportEnter, not mount) — so the number arrives in sync
-// with the dial/bars around it instead of just being static text sitting
-// next to something animated.
-function useCountUp(target: number, started: boolean, durationSec = 1) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!started) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      if (reduced) {
-        setValue(target);
-        return;
-      }
-      const t = Math.min(1, (now - start) / (durationSec * 1000));
-      const eased = 1 - Math.pow(1 - t, 3);
-      setValue(Math.round(target * eased));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [started, target, durationSec]);
-  return value;
-}
+//
+// Numbers render as static text rather than counting up from 0 client-side —
+// a prior count-up-on-scroll version left "0" as the only value present in
+// server-rendered HTML, which read as a live data-accuracy bug to crawlers
+// that don't wait for the animation. The bars/dots still animate in; only
+// the digits themselves are always the real, final value.
 
 // A circular dial, fully lit, standing in for "always on" — the sweep is
 // decorative confirmation of a true, un-embellished fact (24/7), not a fake
@@ -67,19 +46,15 @@ export function CoverageDial() {
   );
 }
 
-// A ten-cell level meter — headcount as an honest tally, not a projected
-// percentage of some invented ceiling.
+// A level meter — headcount as an honest tally, not a projected percentage
+// of some invented ceiling. Bar count is derived from the team roster
+// (src/lib/team.ts) so it can't drift out of sync with the actual headcount.
 export function TeamMeter() {
-  const [started, setStarted] = useState(false);
-  const count = useCountUp(10, started, 1.1);
+  const count = team.length;
   return (
     <div className="flex flex-col items-center">
-      <motion.div
-        className="flex items-end gap-[3px] h-[70px] mb-4"
-        onViewportEnter={() => setStarted(true)}
-        viewport={{ once: true }}
-      >
-        {Array.from({ length: 10 }, (_, i) => (
+      <motion.div className="flex items-end gap-[3px] h-[70px] mb-4">
+        {Array.from({ length: count }, (_, i) => (
           <motion.span
             key={i}
             initial={{ height: 0 }}
@@ -100,15 +75,10 @@ export function TeamMeter() {
 // A three-slot indicator: two systems lit and in active development, one
 // dim slot reserved for what comes after them.
 export function SystemsIndicator() {
-  const [started, setStarted] = useState(false);
-  const count = useCountUp(2, started, 0.7);
+  const count = 2;
   return (
     <div className="flex flex-col items-center">
-      <motion.div
-        className="flex items-center gap-3 h-[70px]"
-        onViewportEnter={() => setStarted(true)}
-        viewport={{ once: true }}
-      >
+      <motion.div className="flex items-center gap-3 h-[70px]">
         {[true, true, false].map((lit, i) => (
           <motion.div
             key={i}

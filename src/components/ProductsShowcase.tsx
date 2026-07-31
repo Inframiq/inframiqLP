@@ -58,7 +58,7 @@ export default function ProductsShowcase() {
           >
             <MailShieldWindow className="flex-1" />
             <div className="flex items-center justify-between mt-4 px-1">
-              <p className="text-[12.5px] text-[var(--text-3)]">Stops phishing and spoofing before delivery.</p>
+              <p className="text-[12.5px] text-[var(--text-3)]">Scans every email the moment it&apos;s opened.</p>
               <CtaLink
                 group="mail-shield"
                 className="group inline-flex items-center gap-1.5 text-[13px] text-[var(--text-1)] hover:text-[var(--accent-strong)] transition-colors duration-150 flex-shrink-0"

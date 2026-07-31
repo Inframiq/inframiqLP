@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
@@ -41,19 +41,18 @@ function FaqRow({ item, defaultOpen }: { item: FaqItem; defaultOpen: boolean }) 
           className={`flex-shrink-0 text-[var(--text-3)] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <p className="text-[13.5px] text-[var(--text-2)] leading-[1.75] pb-5 max-w-2xl">{item.answer}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Always mounted (never conditionally rendered) so the answer text is
+          present in the server-rendered HTML for every question, not just
+          the one open by default — search/AI crawlers read static markup,
+          not post-hydration accordion state. */}
+      <motion.div
+        initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        className="overflow-hidden"
+      >
+        <p className="text-[13.5px] text-[var(--text-2)] leading-[1.75] pb-5 max-w-2xl">{item.answer}</p>
+      </motion.div>
     </div>
   );
 }

@@ -369,7 +369,7 @@ export default function TheCrew() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-[13px] text-[var(--text-3)] mt-8 text-center"
         >
-          Backed by a growing team of 10+ engineers, designers, and specialists.
+          Backed by a growing team of {team.length} engineers, designers, and specialists.
         </motion.p>
       </div>
     </section>

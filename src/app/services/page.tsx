@@ -9,14 +9,6 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: [
-    "BPO services",
-    "24/7 customer support outsourcing",
-    "voice customer support",
-    "live chat support services",
-    "outsourced technical support",
-    "call center services",
-  ],
   alternates: { canonical: "/services" },
   openGraph: {
     title: `${TITLE} — Inframiq`,

@@ -14,13 +14,19 @@ import "./globals.css";
 // the mono stack below is the equivalent system pairing (SF Mono locally,
 // sane monospace fallbacks elsewhere) for data/status/timestamp text.
 
-const SITE_URL = "https://inframiq.com";
+// www is the canonical host — the apex domain redirects to it at the DNS/
+// Vercel level, so every URL emitted here (canonical, OG, schema, sitemap)
+// needs to match or crawlers see a host mismatch between what's declared
+// and what actually served the page.
+const SITE_URL = "https://www.inframiq.com";
 const SITE_NAME = "Inframiq";
 // Kept under ~60 characters so it doesn't truncate in search results —
 // the longer version used to live here, but it ran to 81 characters.
 const SITE_TITLE = "Inframiq — Software & Support, Built Right";
+// Kept within the ~150-160 char range search engines display before
+// truncating — a longer, 216-character version used to live here.
 const SITE_DESCRIPTION =
-  "Inframiq is a BPO that deploys trained human agents for 24/7 voice and live chat customer service — handling enquiries and technical support — alongside intelligent security, business, and everyday software products.";
+  "Inframiq deploys trained human agents for 24/7 voice, live chat, and technical support, alongside intelligent security and business software products.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -29,20 +35,6 @@ export const metadata: Metadata = {
     template: "%s — Inframiq",
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    "Inframiq",
-    "BPO services",
-    "24/7 customer support outsourcing",
-    "voice customer support",
-    "live chat support services",
-    "outsourced technical support",
-    "call center services",
-    "enterprise cybersecurity",
-    "email security software",
-    "phishing prevention",
-    "custom enterprise software",
-    "business pricing simulation software",
-  ],
   authors: [{ name: "Inframiq" }],
   creator: "Inframiq",
   publisher: "Inframiq",

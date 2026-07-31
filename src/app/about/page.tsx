@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import AboutContent from "@/components/AboutContent";
 import { team } from "@/lib/team";
 
-const SITE_URL = "https://inframiq.com";
+const SITE_URL = "https://www.inframiq.com";
 const TITLE = "About";
 const DESCRIPTION =
   "Inframiq is an early-stage company building intelligent products and services — security systems, business tools, and everyday software — with the same uncompromising engineering standard across every product.";
@@ -11,13 +11,6 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: [
-    "about Inframiq",
-    "Inframiq team",
-    "Inframiq founders",
-    "Inframiq company",
-    ...team.map((member) => member.name),
-  ],
   alternates: { canonical: "/about" },
   openGraph: {
     title: `${TITLE} — Inframiq`,

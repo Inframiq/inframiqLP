@@ -9,13 +9,6 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: [
-    "Mail Shield phishing protection",
-    "domain impersonation detection",
-    "Simulyn pricing simulator",
-    "enterprise security products",
-    "business software products",
-  ],
   alternates: { canonical: "/products" },
   openGraph: {
     title: `${TITLE} — Inframiq`,

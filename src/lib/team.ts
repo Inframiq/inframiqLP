@@ -1,11 +1,8 @@
 // Single source of truth for the team roster — consumed by AboutContent.tsx
-// for display and by layout.tsx for Organization/Person structured data, so
-// the two never drift out of sync.
-//
-// CONFIRM: this list has 9 entries, but TheCrew.tsx's "10+ engineers,
-// designers, and specialists" caption and Gauges.tsx's TeamMeter (hardcoded
-// to count up to 10) both assume 10. Add the missing member(s) here, or the
-// displayed count and this roster will keep silently disagreeing.
+// and TheCrew.tsx for display, by Gauges.tsx's TeamMeter for the headcount
+// instrument, and by layout.tsx for Organization/Person structured data, so
+// every displayed team count derives from team.length rather than a
+// hardcoded number that can drift out of sync with this list.
 
 export interface TeamMember {
   name: string;

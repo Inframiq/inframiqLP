@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Inter } from "next/font/google";
 import { ArrowRight, Headset, MousePointerClick } from "lucide-react";
 import { MailShieldWindow, SimulynWindow } from "@/components/products/ProductWindows";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
@@ -10,15 +9,7 @@ import HeadlineVariant from "@/components/HeadlineVariant";
 import CtaLink from "@/components/CtaLink";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 import AuroraGrain from "@/components/AuroraGrain";
-
-// Real SF Pro (what apple.com's headlines actually render in on Apple
-// devices) isn't licensed for web embedding — apple.com itself just falls
-// back to the OS font stack rather than bundling it, which is why the site's
-// own system-font stack renders as SF Pro on Mac/iOS but Segoe UI elsewhere.
-// Inter is the standard free substitute: geometrically close enough to SF
-// Pro Display that it reads the same way cross-platform. Scoped to just the
-// hero headline — the rest of the site stays on the system stack.
-const inter = Inter({ subsets: ["latin"], weight: ["600", "700"], display: "swap" });
+import { inter } from "@/lib/fonts";
 
 // A compact preview of the ops console — the same "workspace" the visitor
 // lands in fully expanded further down the page (TheSplit). Small here on
@@ -221,7 +212,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2.5 mb-7"
             >
-              <span className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase">
+              <span className="font-brand text-[13px] font-bold tracking-[0.08em] uppercase" style={{ color: "#3a3a3a" }}>
                 A live desk — click to explore
               </span>
             </motion.div>

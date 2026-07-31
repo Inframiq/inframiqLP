@@ -10,6 +10,7 @@ import HeadlineVariant from "@/components/HeadlineVariant";
 import CtaLink from "@/components/CtaLink";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
+import { inter } from "@/lib/fonts";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
 
@@ -452,11 +453,11 @@ export default function ServicesContent() {
               <HeadlineVariant
                 group="services"
                 as="h1"
-                className="font-brand text-[36px] lg:text-[44px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl"
+                className={`${inter.className} font-semibold text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-6 max-w-2xl`}
                 play={revealed}
               />
 
-              <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-xl">
+              <p className="text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
                 Inframiq operates as your customer service team — deploying trained
                 agents for voice and chat support, staffed 24/7 to handle enquiries
                 and technical issues as they come in.

@@ -11,6 +11,7 @@ import CtaLink from "@/components/CtaLink";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import type { HeadlineGroupKey } from "@/lib/headlineVariants";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
+import { inter } from "@/lib/fonts";
 
 // Every answer here is a restatement of a claim already made elsewhere on
 // this page (description/features/status) — nothing new is asserted.
@@ -332,12 +333,12 @@ export default function ProductCatalog() {
 
               <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">product suite</p>
 
-              <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-4">
+              <h1 className={`${inter.className} font-semibold text-[38px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-4`}>
                 <KineticText as="span" text="Every problem," play={revealed} />
                 <br />
                 <KineticText as="span" text="engineered to an exacting standard." className="text-[var(--text-1)]" play={revealed} />
               </h1>
-              <p className="text-[15px] text-[var(--text-2)] max-w-xl leading-[1.75]">
+              <p className="text-[16px] text-[var(--text-2)] max-w-xl leading-[1.75]">
                 Inframiq is building a portfolio of purpose-built products — enterprise
                 security infrastructure, precision pricing intelligence, and refined
                 everyday software. Distinct in purpose, uncompromising in craft.

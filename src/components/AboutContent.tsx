@@ -10,6 +10,7 @@ import TheCrew from "@/components/TheCrew";
 import AuroraGrain from "@/components/AuroraGrain";
 import KineticText from "@/components/animations/KineticText";
 import { useEntryRevealed } from "@/components/EntryLoaderProvider";
+import { inter } from "@/lib/fonts";
 
 const timeline = [
   { hash: "a3f1c2", label: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
@@ -267,13 +268,13 @@ export default function AboutContent() {
 
               <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
 
-              <h1 className="font-brand text-[38px] lg:text-[48px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--text-1)] mb-6 max-w-2xl">
+              <h1 className={`${inter.className} font-semibold text-[38px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-6 max-w-2xl`}>
                 <KineticText as="span" text="Built for people" play={revealed} />
                 <br />
                 <KineticText as="span" text="who expect things to just work." className="text-[var(--text-1)]" play={revealed} />
               </h1>
 
-              <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-xl">
+              <p className="text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
                 Inframiq engineers intelligent software with uncompromising
                 precision — from enterprise-grade security infrastructure to
                 the refined, everyday tools businesses and individuals rely on.

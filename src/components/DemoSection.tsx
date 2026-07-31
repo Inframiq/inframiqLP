@@ -66,11 +66,12 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
   // No backend round-trip: the visitor's own mail client composes and sends
   // the message, pre-filled from our standard template, so it arrives at
   // support@inframiq.com from a real inbox instead of a transactional
-  // sender spam filters distrust.
+  // sender spam filters distrust. Navigating the current window (rather
+  // than window.open, which browsers can silently pop-up-block for a
+  // non-http scheme) is what reliably hands off to the mail app.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailto = buildConsultationMailto({ ...form, product });
-    window.open(mailto, "_blank");
+    window.location.href = buildConsultationMailto({ ...form, product });
     setSubmitted(true);
   };
 

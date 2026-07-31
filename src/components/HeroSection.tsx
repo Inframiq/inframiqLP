@@ -212,7 +212,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2.5 mb-7"
             >
-              <span className="font-brand text-[13px] font-bold tracking-[0.08em] uppercase" style={{ color: "#3a3a3a" }}>
+              <span className="font-brand text-[14px] font-bold tracking-[0.08em] uppercase" style={{ color: "#3a3a3a" }}>
                 A live desk — click to explore
               </span>
             </motion.div>

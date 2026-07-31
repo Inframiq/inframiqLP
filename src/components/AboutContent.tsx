@@ -266,7 +266,7 @@ export default function AboutContent() {
                 <span className="text-[var(--text-2)]">About</span>
               </div>
 
-              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
+              <p className="font-brand text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
 
               <h1 className={`${inter.className} font-semibold text-[38px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-6 max-w-2xl`}>
                 <KineticText as="span" text="Built for people" play={revealed} />

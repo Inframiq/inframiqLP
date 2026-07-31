@@ -448,7 +448,7 @@ export default function ServicesContent() {
                 <span className="text-[var(--text-2)]">Services</span>
               </div>
 
-              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
+              <p className="font-brand text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
 
               <HeadlineVariant
                 group="services"

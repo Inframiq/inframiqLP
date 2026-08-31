@@ -2,8 +2,8 @@ import { Gauge, PenLine, MessagesSquare } from "lucide-react";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 
 // Career Copilot is the one product that lives on its own domain
-// (resumebuilder.inframiq.com), so — unlike the Simulyn / Mail Shield
-// instruments — this window is a faithful static rendering of its resume-
+// (resumebuilder.inframiq.com), so, unlike the Simulyn / Mail Shield
+// instruments, this window is a faithful static rendering of its resume-
 // match view rather than the live app embedded. Same light-window design
 // language as the other two so the /products rows stay visually consistent.
 
@@ -17,7 +17,7 @@ const checks = [
 
 const capabilities = [
   { icon: Gauge, name: "ATS Score", detail: "How well your resume matches any job description." },
-  { icon: PenLine, name: "AI Tailoring", detail: "Rewrites your bullets to match keywords — with a humanize slider." },
+  { icon: PenLine, name: "AI Tailoring", detail: "Rewrites your bullets to match keywords, with a humanize slider." },
   { icon: MessagesSquare, name: "Interview Prep", detail: "Questions grounded in the job description and your resume." },
 ];
 
@@ -76,7 +76,7 @@ export function CareerCopilotWindow({
   return (
     <BrowserWindow url="resumebuilder.inframiq.com" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Career Copilot — Resume Match</span>
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Career Copilot - Resume Match</span>
         <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
       <Body />

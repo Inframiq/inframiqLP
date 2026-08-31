@@ -127,7 +127,7 @@ const organizationJsonLd = {
         name: "Career Copilot",
         applicationCategory: "BusinessApplication",
         description:
-          "AI job-application assistant — scores how well a resume matches a job description with a real ATS compatibility score, tailors bullet points to the job's keywords, and generates interview questions grounded in the role and the candidate's resume.",
+          "AI job-application assistant that scores how well a resume matches a job description with a real ATS compatibility score, tailors bullet points to the job's keywords, and generates interview questions grounded in the role and the candidate's resume.",
         url: "https://resumebuilder.inframiq.com",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
         provider: { "@type": "Organization", name: SITE_NAME },

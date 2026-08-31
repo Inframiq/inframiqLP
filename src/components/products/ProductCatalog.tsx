@@ -25,7 +25,7 @@ const productsFaq: FaqItem[] = [
   {
     question: "Is Career Copilot available now?",
     answer:
-      "Yes — Career Copilot is live at resumebuilder.inframiq.com, with a free tier you can start from without a card. It's the first Inframiq product available to the public.",
+      "Yes. Career Copilot is live at resumebuilder.inframiq.com, with a free tier you can start from without a card. It's the first Inframiq product available to the public.",
   },
   {
     question: "What does Mail Shield do?",
@@ -68,7 +68,7 @@ interface Product {
   features: string[];
   status: "Available" | "Beta" | "Coming Soon";
   hasPage: boolean;
-  /** Set for products that live on their own domain — the "Visit Product"
+  /** Set for products that live on their own domain: the "Visit Product"
    *  button becomes an external link instead of a route to /products/<slug>. */
   externalUrl?: string;
   window: React.ReactNode;
@@ -80,15 +80,15 @@ const products: Product[] = [
     name: "Career Copilot",
     category: "Career Tools",
     categoryIcon: FileText,
-    tagline: "Land your dream job with AI — resume, ATS score, and interview prep in one place.",
+    tagline: "Land your dream job with AI - tailoring, ATS scoring, and interview prep in one place.",
     description:
-      "Career Copilot is an AI job-application assistant. Paste any job description and it scores how well your resume matches with a real ATS compatibility score, rewrites your bullet points to match the job's keywords — with a humanize slider so it still sounds like you — and generates interview questions grounded in both the job description and your own experience.",
+      "Career Copilot is an AI job-application assistant. Paste any job description and it scores how well your resume matches with a real ATS compatibility score, rewrites your bullet points to match the job's keywords, with a humanize slider so it still sounds like you, and generates interview questions grounded in both the job description and your own experience.",
     features: [
       "Real ATS compatibility score against any job description",
       "AI bullet-point tailoring with a humanize slider",
       "Interview questions grounded in the job description and your resume",
       "Keyword, format, and readability checks before you apply",
-      "Free tier — start without a card",
+      "Free tier - start without a card",
     ],
     status: "Available",
     hasPage: false,

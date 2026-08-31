@@ -99,9 +99,9 @@ export default function ProductsShowcase() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-center mt-10 text-[12.5px] text-[var(--text-3)]"
         >
-          Career Copilot is live; Mail Shield and Simulyn are in active development —{" "}
+          Career Copilot is live; Mail Shield and Simulyn are in active development.{" "}
           <Link href="/products" className="text-[var(--text-2)] hover:text-[var(--text-1)] underline underline-offset-2">
-            view the full product suite
+            View the full product suite
           </Link>
           .
         </motion.p>

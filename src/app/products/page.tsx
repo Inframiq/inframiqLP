@@ -4,7 +4,7 @@ import ProductCatalog from "@/components/products/ProductCatalog";
 
 const TITLE = "Products";
 const DESCRIPTION =
-  "Inframiq's product suite — Mail Shield for phishing and domain-impersonation defense, Simulyn for business pricing simulation, and more in active development.";
+  "Inframiq's product suite — Career Copilot for AI resume tailoring, ATS scoring, and interview prep (live now), Mail Shield for phishing and domain-impersonation defense, and Simulyn for business pricing simulation.";
 
 export const metadata: Metadata = {
   title: TITLE,

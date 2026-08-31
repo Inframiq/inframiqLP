@@ -124,6 +124,19 @@ const organizationJsonLd = {
       "@type": "Offer",
       itemOffered: {
         "@type": "SoftwareApplication",
+        name: "Career Copilot",
+        applicationCategory: "BusinessApplication",
+        description:
+          "AI job-application assistant — scores how well a resume matches a job description with a real ATS compatibility score, tailors bullet points to the job's keywords, and generates interview questions grounded in the role and the candidate's resume.",
+        url: "https://resumebuilder.inframiq.com",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        provider: { "@type": "Organization", name: SITE_NAME },
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "SoftwareApplication",
         name: "Mail Shield",
         applicationCategory: "SecurityApplication",
         description: "Enterprise email protection that integrates with Gmail and analyzes links, attachments, and content the moment an email is opened, stopping phishing and domain-impersonation threats before they can do harm.",

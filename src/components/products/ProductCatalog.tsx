@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Mail, Calculator, type LucideIcon } from "lucide-react";
+import { ArrowRight, Mail, Calculator, FileText, type LucideIcon } from "lucide-react";
 import { SimulynWindow, MailShieldWindow } from "@/components/products/ProductWindows";
+import { CareerCopilotWindow } from "@/components/products/CareerCopilotWindow";
 import AuroraGrain from "@/components/AuroraGrain";
 import KineticText from "@/components/animations/KineticText";
 import HeadlineVariant from "@/components/HeadlineVariant";
@@ -16,6 +17,16 @@ import { inter } from "@/lib/fonts";
 // Every answer here is a restatement of a claim already made elsewhere on
 // this page (description/features/status) — nothing new is asserted.
 const productsFaq: FaqItem[] = [
+  {
+    question: "What does Career Copilot do?",
+    answer:
+      "Career Copilot is an AI job-application assistant. It scores how well a resume matches a specific job description with a real ATS compatibility score, rewrites bullet points to match the job's keywords (with a humanize slider to keep your own voice), and generates interview questions grounded in both the job description and your resume.",
+  },
+  {
+    question: "Is Career Copilot available now?",
+    answer:
+      "Yes — Career Copilot is live at resumebuilder.inframiq.com, with a free tier you can start from without a card. It's the first Inframiq product available to the public.",
+  },
   {
     question: "What does Mail Shield do?",
     answer:
@@ -57,10 +68,33 @@ interface Product {
   features: string[];
   status: "Available" | "Beta" | "Coming Soon";
   hasPage: boolean;
+  /** Set for products that live on their own domain — the "Visit Product"
+   *  button becomes an external link instead of a route to /products/<slug>. */
+  externalUrl?: string;
   window: React.ReactNode;
 }
 
 const products: Product[] = [
+  {
+    slug: "career-copilot",
+    name: "Career Copilot",
+    category: "Career Tools",
+    categoryIcon: FileText,
+    tagline: "Land your dream job with AI — resume, ATS score, and interview prep in one place.",
+    description:
+      "Career Copilot is an AI job-application assistant. Paste any job description and it scores how well your resume matches with a real ATS compatibility score, rewrites your bullet points to match the job's keywords — with a humanize slider so it still sounds like you — and generates interview questions grounded in both the job description and your own experience.",
+    features: [
+      "Real ATS compatibility score against any job description",
+      "AI bullet-point tailoring with a humanize slider",
+      "Interview questions grounded in the job description and your resume",
+      "Keyword, format, and readability checks before you apply",
+      "Free tier — start without a card",
+    ],
+    status: "Available",
+    hasPage: false,
+    externalUrl: "https://resumebuilder.inframiq.com",
+    window: <CareerCopilotWindow chrome="app" />,
+  },
   {
     slug: "mail-shield",
     name: "Mail Shield",
@@ -112,9 +146,11 @@ const products: Product[] = [
 // carry. ──────────────────────────────────────────────────────────────────
 
 const DIAGRAM_CORE = { x: 200, y: 150 };
+// One position per product, in the same order as the `products` array.
 const DIAGRAM_NODES = [
-  { x: 65, y: 150 },
-  { x: 335, y: 150 },
+  { x: 70, y: 150 },
+  { x: 330, y: 78 },
+  { x: 330, y: 222 },
 ];
 
 function ProductsConstellation() {
@@ -247,7 +283,17 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
       </ul>
 
       <div className="flex items-center gap-3">
-        {product.hasPage && (
+        {product.externalUrl ? (
+          <a
+            href={product.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 h-10 px-5 rounded-md border border-[var(--border-strong)] text-[13.5px] font-medium text-[var(--text-2)] hover:border-[var(--accent)]/40 hover:text-[var(--text-1)] active:scale-[0.98] transition-all duration-150 group"
+          >
+            Visit Product
+            <ArrowRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
+          </a>
+        ) : product.hasPage ? (
           <Link
             href={`/products/${product.slug}`}
             className="inline-flex items-center gap-2 h-10 px-5 rounded-md border border-[var(--border-strong)] text-[13.5px] font-medium text-[var(--text-2)] hover:border-[var(--accent)]/40 hover:text-[var(--text-1)] active:scale-[0.98] transition-all duration-150 group"
@@ -255,7 +301,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             Visit Product
             <ArrowRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150" />
           </Link>
-        )}
+        ) : null}
         {product.headlineGroup ? (
           <CtaLink
             group={product.headlineGroup}
@@ -340,8 +386,9 @@ export default function ProductCatalog() {
               </h1>
               <p className="text-[16px] text-[var(--text-2)] max-w-xl leading-[1.75]">
                 Inframiq is building a portfolio of purpose-built products — enterprise
-                security infrastructure, precision pricing intelligence, and refined
-                everyday software. Distinct in purpose, uncompromising in craft.
+                security infrastructure, precision pricing intelligence, and career
+                tools built to get people hired. Distinct in purpose, uncompromising
+                in craft.
               </p>
             </motion.div>
 

@@ -4,15 +4,15 @@ import { join } from "path";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Inframiq — 24/7 Customer Support & Intelligent Software";
+export const alt = "Inframiq - 24/7 Customer Support & Intelligent Software";
 
-// The 3D monogram, read off disk at render time and inlined as a data URI —
+// The 3D monogram, read off disk at render time and inlined as a data URI -
 // the light-on-dark version, since this card sits on a near-black field.
 const markSrc = `data:image/png;base64,${readFileSync(
   join(process.cwd(), "public", "inframiq-mark-dark.png")
 ).toString("base64")}`;
 
-// Root-level convention — applies to every route that doesn't define its
+// Root-level convention - applies to every route that doesn't define its
 // own opengraph-image, so every page gets a real preview image on social
 // shares instead of a blank card (previously true of the whole site).
 export default function OpengraphImage() {

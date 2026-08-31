@@ -20,7 +20,7 @@ const channels = [
 const DESK = { x: 320, y: 130 };
 const SOURCE_X = 60;
 
-// Cubic bezier point-at-t — used to sample the flowing dot's exact position
+// Cubic bezier point-at-t - used to sample the flowing dot's exact position
 // along the same curve the connector path draws, instead of tweening cx/cy
 // in a straight line between the two endpoints (which visibly cuts across
 // the curve whenever a channel's y differs from the desk's).
@@ -61,7 +61,7 @@ function SignalDiagram() {
           />
         ))}
 
-        {/* Live traffic — small dots looping continuously along each channel
+        {/* Live traffic - small dots looping continuously along each channel
             path, sampled from the exact same bezier curve the path draws. */}
         {channels.map((c, i) => {
           const p0 = { x: SOURCE_X + 26, y: c.y };
@@ -151,7 +151,7 @@ export default function TheSplit() {
           className="mb-12 max-w-xl"
         >
           <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
-            System 01 — Operations
+            System 01 - Operations
           </motion.p>
           <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Real people, running a real shift.
@@ -172,7 +172,7 @@ export default function TheSplit() {
           <div className="pt-1">
             <p className="text-[14px] text-[var(--text-2)] leading-[1.8] mb-6">
               Inframiq deploys trained agents for voice and live chat, staffed
-              24/7 — handling enquiries and technical support as an extension
+              24/7 - handling enquiries and technical support as an extension
               of your own team, not a shared, anonymous queue.
             </p>
             <motion.ul
@@ -184,7 +184,7 @@ export default function TheSplit() {
             >
               {[
                 "Dedicated, trained agent teams",
-                "Voice, chat, and tier 1–2 technical support",
+                "Voice, chat, and tier 1-2 technical support",
                 "Round-the-clock coverage, every timezone",
               ].map((point) => (
                 <motion.li

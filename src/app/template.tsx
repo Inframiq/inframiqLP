@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 
 // Next.js creates a brand-new instance of template.tsx on every navigation
 // (unlike layout.tsx, which persists), so this component itself already
-// remounts fresh per route — the initial->animate sequence below runs on
+// remounts fresh per route - the initial->animate sequence below runs on
 // its own each time without needing AnimatePresence.
 
 // Mirrors the navbar's left-to-right order, so moving to a route further
 // right slides the incoming page in from the right (like pushing forward),
-// and moving left slides in from the left (like popping back) — the same
+// and moving left slides in from the left (like popping back) - the same
 // spatial logic as iOS push/pop navigation.
 const ROUTE_ORDER = ["/", "/products", "/services", "/about"];
 
@@ -23,7 +23,7 @@ function routeIndex(pathname: string): number {
 }
 
 // A module-level binding (not React state) so it survives template.tsx's
-// per-navigation remounts — the module stays loaded across client-side
+// per-navigation remounts - the module stays loaded across client-side
 // navigations even though this component's own state doesn't.
 let previousPathname: string | null = null;
 

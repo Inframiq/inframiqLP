@@ -22,7 +22,7 @@ export default function ProductsShowcase() {
           className="mb-12 max-w-xl"
         >
           <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
-            System 02 — Engineering
+            System 02 - Engineering
           </motion.p>
           <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Three products. Built to one standard.

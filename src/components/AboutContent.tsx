@@ -14,8 +14,8 @@ import { inter } from "@/lib/fonts";
 
 const timeline = [
   { hash: "a3f1c2", label: "Founded", event: "Inframiq established with a focus on building intelligent, well-engineered products." },
-  { hash: "9b7e04", label: "First product", event: "Mail Shield in active development — addressing phishing and domain impersonation at scale." },
-  { hash: "HEAD", label: "Today", event: "Expanding into a growing portfolio of products — spanning enterprise security to everyday life — engineered with the same uncompromising rigor." },
+  { hash: "9b7e04", label: "First product", event: "Mail Shield in active development - addressing phishing and domain impersonation at scale." },
+  { hash: "HEAD", label: "Today", event: "Expanding into a growing portfolio of products - spanning enterprise security to everyday life - engineered with the same uncompromising rigor." },
 ];
 
 const docs = [
@@ -94,7 +94,7 @@ function PrinciplesDiagram() {
   const [active, setActive] = useState(0);
   return (
     <div className="grid lg:grid-cols-[260px_1fr] gap-10 lg:gap-14 items-center">
-      {/* Vertical stepper — a plain connector rail behind a column of dots,
+      {/* Vertical stepper - a plain connector rail behind a column of dots,
           never colinear with any label, unlike a radial layout's top/bottom
           points. */}
       <motion.div
@@ -154,7 +154,7 @@ function PrinciplesDiagram() {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
-              0{active + 1} / 0{values.length} — {values[active].tag}
+              0{active + 1} / 0{values.length} - {values[active].tag}
             </span>
             <h3 className="font-brand font-semibold text-[22px] lg:text-[26px] text-[var(--text-1)] mt-3 mb-4">
               {values[active].title}
@@ -167,7 +167,7 @@ function PrinciplesDiagram() {
   );
 }
 
-// The hero's visual centerpiece: an animated system-architecture diagram —
+// The hero's visual centerpiece: an animated system-architecture diagram -
 // four real subsystems wired into one core, with data visibly flowing along
 // each connector, rather than a status readout standing in for the company.
 const archNodes = [
@@ -276,7 +276,7 @@ export default function AboutContent() {
 
               <p className="text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
                 Inframiq engineers intelligent software with uncompromising
-                precision — from enterprise-grade security infrastructure to
+                precision - from enterprise-grade security infrastructure to
                 the refined, everyday tools businesses and individuals rely on.
                 Different products. One exacting standard.
               </p>
@@ -303,7 +303,7 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* Values — radial diagram */}
+      {/* Values - radial diagram */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <motion.div
@@ -323,7 +323,7 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* Timeline — rendered as a changelog window */}
+      {/* Timeline - rendered as a changelog window */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -334,7 +334,7 @@ export default function AboutContent() {
               </h2>
               <p className="text-[14px] text-[var(--text-2)] leading-[1.8]">
                 Inframiq is an early-stage company with a clear and deliberate roadmap.
-                We build with precision — one product, perfected, before the next.
+                We build with precision - one product, perfected, before the next.
                 Mail Shield addresses one of the most prevalent enterprise attack vectors,
                 and Simulyn is next, bringing the same rigor to business pricing decisions.
                 Several more products, spanning security, business, and everyday life, are
@@ -371,7 +371,7 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* Team — the same live directory used on the homepage */}
+      {/* Team - the same live directory used on the homepage */}
       <div>
         <TheCrew />
         <div className="max-w-5xl mx-auto px-6 lg:px-10 pb-16 -mt-4">

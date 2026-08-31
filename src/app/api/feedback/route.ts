@@ -3,7 +3,7 @@ import { Resend } from "resend";
 
 // The consultation form itself now hands off to the visitor's mail client
 // (see src/lib/mailTemplates.ts) rather than sending server-side, but this
-// feedback survey still posts here — no CRM/webhook exists anywhere in this
+// feedback survey still posts here - no CRM/webhook exists anywhere in this
 // codebase (see the audit), so Resend stays the one server-side send path.
 const TO_EMAIL = "support@inframiq.com";
 const FROM_EMAIL = "Inframiq Website <onboarding@resend.dev>";
@@ -11,7 +11,7 @@ const FROM_EMAIL = "Inframiq Website <onboarding@resend.dev>";
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.error("RESEND_API_KEY is not set — feedback could not be sent.");
+    console.error("RESEND_API_KEY is not set - feedback could not be sent.");
     return NextResponse.json({ error: "Email is not configured." }, { status: 500 });
   }
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   const intent = typeof body?.intent === "string" ? body.intent.trim() : "";
   const missing = typeof body?.missing === "string" ? body.missing.trim() : "";
 
-  // Skippable and every question is optional — the only thing that would
+  // Skippable and every question is optional - the only thing that would
   // make this submission pointless is if every field came back empty.
   if (!attention && !confusion && !intent && !missing) {
     return NextResponse.json({ error: "Empty feedback." }, { status: 400 });
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     from: FROM_EMAIL,
     to: TO_EMAIL,
     ...(email ? { replyTo: email } : {}),
-    subject: `Site feedback${context ? ` — ${context}` : ""}`,
+    subject: `Site feedback${context ? ` - ${context}` : ""}`,
     text: [
       context ? `Context: ${context}` : null,
       email ? `Email: ${email}` : null,

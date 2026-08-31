@@ -1,11 +1,11 @@
-// tag: a short category code, not a step number — these four principles
+// tag: a short category code, not a step number - these four principles
 // run in parallel, not in sequence.
 export const values = [
   {
     tag: "security",
     title: "Security-first engineering",
     description:
-      "Every architectural decision begins with the question: how does this behave under adversarial conditions? Security is not a feature layer — it is a design constraint.",
+      "Every architectural decision begins with the question: how does this behave under adversarial conditions? Security is not a feature layer - it is a design constraint.",
   },
   {
     tag: "trust",
@@ -17,7 +17,7 @@ export const values = [
     tag: "focus",
     title: "Minimal, focused products",
     description:
-      "We build lean, focused products — one problem, solved well. Every additional feature or dependency is a liability we consciously choose to accept or decline.",
+      "We build lean, focused products - one problem, solved well. Every additional feature or dependency is a liability we consciously choose to accept or decline.",
   },
   {
     tag: "longevity",

@@ -11,7 +11,7 @@ export function initPostHog() {
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   if (!key) {
     if (process.env.NODE_ENV !== "production") {
-      console.warn("NEXT_PUBLIC_POSTHOG_KEY is not set — PostHog events will not be sent.");
+      console.warn("NEXT_PUBLIC_POSTHOG_KEY is not set - PostHog events will not be sent.");
     }
     return;
   }

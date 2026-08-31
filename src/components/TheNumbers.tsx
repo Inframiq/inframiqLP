@@ -7,7 +7,7 @@ import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 const timeline = [
   { label: "Founded", detail: "Inframiq established with a focus on building intelligent, well-engineered products." },
-  { label: "First product", detail: "Mail Shield in active development — addressing phishing and domain impersonation at scale." },
+  { label: "First product", detail: "Mail Shield in active development - addressing phishing and domain impersonation at scale." },
   { label: "Today", detail: "Expanding into a growing portfolio spanning enterprise security to everyday life." },
 ];
 
@@ -17,7 +17,7 @@ const instruments = [
   { key: "team", node: <TeamMeter />, tint: "instrument-porthole--pink" },
 ];
 
-// Illustration/instrument-driven section — the three dials sit recessed into
+// Illustration/instrument-driven section - the three dials sit recessed into
 // one physical control-panel housing (an "earned" dark exception, same
 // license as the terminal chrome elsewhere) rather than three plain white
 // cards, and the timeline below reads as a live signal rail instead of a
@@ -49,7 +49,7 @@ export default function TheNumbers() {
           transition={{ duration: 0.6 }}
           className="instrument-console mb-14 text-left"
         >
-          {/* Sweeping light — plays once on scroll-in, then loops slowly so
+          {/* Sweeping light - plays once on scroll-in, then loops slowly so
               the panel keeps reading as brushed metal, not a flat gradient. */}
           <motion.span
             className="instrument-console-sheen"
@@ -70,7 +70,7 @@ export default function TheNumbers() {
           <div className="instrument-console-bar">
             <span className="instrument-console-led" />
             <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-2)]">
-              system status — live
+              system status - live
             </span>
             <span className="ml-auto font-mono text-[9px] text-[var(--text-3)]">panel 01 / rev.3</span>
           </div>
@@ -102,7 +102,7 @@ export default function TheNumbers() {
         </motion.p>
 
         <div className="mt-14">
-          {/* Signal rail — nodes live inside the same 3-col grid as the
+          {/* Signal rail - nodes live inside the same 3-col grid as the
               cards below, so each one is guaranteed to sit centered above
               its own card (grid alignment, not a guessed percentage) rather
               than floating disconnected above the row. */}

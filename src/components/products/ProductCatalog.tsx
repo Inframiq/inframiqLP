@@ -15,7 +15,7 @@ import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 import { inter } from "@/lib/fonts";
 
 // Every answer here is a restatement of a claim already made elsewhere on
-// this page (description/features/status) — nothing new is asserted.
+// this page (description/features/status) - nothing new is asserted.
 const productsFaq: FaqItem[] = [
   {
     question: "What does Career Copilot do?",
@@ -30,7 +30,7 @@ const productsFaq: FaqItem[] = [
   {
     question: "What does Mail Shield do?",
     answer:
-      "Mail Shield integrates directly into Gmail and analyzes each email's links, attachments, and content the moment it's opened — flagging phishing, domain spoofing, and lookalike-domain attacks. It also enforces DMARC, DKIM, and SPF, and keeps an immutable audit log for compliance.",
+      "Mail Shield integrates directly into Gmail and analyzes each email's links, attachments, and content the moment it's opened - flagging phishing, domain spoofing, and lookalike-domain attacks. It also enforces DMARC, DKIM, and SPF, and keeps an immutable audit log for compliance.",
   },
   {
     question: "Is Mail Shield available now?",
@@ -40,12 +40,12 @@ const productsFaq: FaqItem[] = [
   {
     question: "What does Simulyn do?",
     answer:
-      "Simulyn is a pricing simulation tool for founders, finance teams, and sales leaders. It models margin, break-even, and growth scenarios in real time — for subscription, seat-based, or usage pricing — so you can see the outcome of a pricing decision before committing to it.",
+      "Simulyn is a pricing simulation tool for founders, finance teams, and sales leaders. It models margin, break-even, and growth scenarios in real time - for subscription, seat-based, or usage pricing - so you can see the outcome of a pricing decision before committing to it.",
   },
   {
     question: "Is Simulyn available now?",
     answer:
-      "Simulyn is currently in active development and marked Coming Soon. The interactive pricing simulator on this page is fully live, though — try dragging the seat count to see how the model responds.",
+      "Simulyn is currently in active development and marked Coming Soon. The interactive pricing simulator on this page is fully live, though - try dragging the seat count to see how the model responds.",
   },
   {
     question: "Which platforms does Mail Shield integrate with?",
@@ -61,7 +61,7 @@ interface Product {
   category: string;
   categoryIcon: LucideIcon;
   tagline: string;
-  /** Headline-testing group key (see src/lib/headlineVariants.ts) — omit for
+  /** Headline-testing group key (see src/lib/headlineVariants.ts) - omit for
    *  products that don't have variants set up yet. */
   headlineGroup?: HeadlineGroupKey;
   description: string;
@@ -100,10 +100,10 @@ const products: Product[] = [
     name: "Mail Shield",
     category: "Email Security",
     categoryIcon: Mail,
-    tagline: "Scans links, attachments, and content the instant you open an email — inside Gmail.",
+    tagline: "Scans links, attachments, and content the instant you open an email - inside Gmail.",
     headlineGroup: "mail-shield",
     description:
-      "Mail Shield integrates directly into Gmail and analyzes each email the moment it's opened — because opening an email doesn't put an organization at risk, but the links, attachments, and content inside it can. Every message is scanned for malicious links, dangerous attachments, and phishing or impersonation patterns right as it's opened, without the noise of traditional rule-based filters.",
+      "Mail Shield integrates directly into Gmail and analyzes each email the moment it's opened - because opening an email doesn't put an organization at risk, but the links, attachments, and content inside it can. Every message is scanned for malicious links, dangerous attachments, and phishing or impersonation patterns right as it's opened, without the noise of traditional rule-based filters.",
     features: [
       "ML-powered phishing and spoofing detection",
       "Real-time analysis of links, attachments, and content the moment an email is opened",
@@ -123,7 +123,7 @@ const products: Product[] = [
     tagline: "Know your numbers before you set your price.",
     headlineGroup: "simulyn",
     description:
-      "Simulyn is a pricing simulation tool built for founders, finance teams, and sales leaders who need to understand margin, break-even, and growth scenarios before committing to a price. Model plans, seats, and discounts — see the outcome instantly, no spreadsheet required.",
+      "Simulyn is a pricing simulation tool built for founders, finance teams, and sales leaders who need to understand margin, break-even, and growth scenarios before committing to a price. Model plans, seats, and discounts - see the outcome instantly, no spreadsheet required.",
     features: [
       "Real-time pricing and revenue scenario modeling",
       "Break-even and margin analysis built in",
@@ -138,11 +138,11 @@ const products: Product[] = [
   // Future products can be added here.
 ];
 
-// ─── Header visual — a portfolio diagram, not a screenshot. Every product's
+// ─── Header visual - a portfolio diagram, not a screenshot. Every product's
 // actual, fully interactive window already appears once in its own row below;
 // reusing that same window (or a stack of them) up here just shows it twice.
-// This shows the *shape of the catalog* instead — how each product relates
-// to Inframiq as a core — which is information the rows themselves don't
+// This shows the *shape of the catalog* instead - how each product relates
+// to Inframiq as a core - which is information the rows themselves don't
 // carry. ──────────────────────────────────────────────────────────────────
 
 const DIAGRAM_CORE = { x: 200, y: 150 };
@@ -237,7 +237,7 @@ const statusPillStyle: Record<string, { bg: string; fg: string }> = {
 
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const visualLeft = index % 2 === 0;
-  // Tilt only from `sm` up — at full mobile width the window already fills
+  // Tilt only from `sm` up - at full mobile width the window already fills
   // its column, so any rotation pushes its corners past the card's
   // overflow-hidden edge and clips content (the "LIVE" badge, in practice).
   const tilt = visualLeft ? "sm:rotate-2" : "sm:-rotate-2";
@@ -385,7 +385,7 @@ export default function ProductCatalog() {
                 <KineticText as="span" text="engineered to an exacting standard." className="text-[var(--text-1)]" play={revealed} />
               </h1>
               <p className="text-[16px] text-[var(--text-2)] max-w-xl leading-[1.75]">
-                Inframiq is building a portfolio of purpose-built products — enterprise
+                Inframiq is building a portfolio of purpose-built products - enterprise
                 security infrastructure, precision pricing intelligence, and career
                 tools built to get people hired. Distinct in purpose, uncompromising
                 in craft.
@@ -403,7 +403,7 @@ export default function ProductCatalog() {
         </div>
       </section>
 
-      {/* Product catalog — each row manages its own full-bleed background */}
+      {/* Product catalog - each row manages its own full-bleed background */}
       {products.map((product, index) => (
         <ProductRow key={product.slug} product={product} index={index} />
       ))}

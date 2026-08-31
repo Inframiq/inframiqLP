@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/products" },
   openGraph: {
-    title: `${TITLE} — Inframiq`,
+    title: `${TITLE} - Inframiq`,
     description: DESCRIPTION,
     url: "/products",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${TITLE} — Inframiq`,
+    title: `${TITLE} - Inframiq`,
     description: DESCRIPTION,
     images: ["/opengraph-image"],
   },

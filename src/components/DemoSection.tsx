@@ -26,7 +26,7 @@ const checklist = [
   "No obligation, no sales pressure",
 ];
 
-// PLACEHOLDER — illustrative only, not real customer data. These names/
+// PLACEHOLDER - illustrative only, not real customer data. These names/
 // statuses exist purely to show what the "Request Management" dashboard
 // looks like with entries in it, sitting deliberately next to the real form
 // below. Do not treat as proof/testimonials, and don't add real customer
@@ -54,7 +54,7 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
   const searchParams = useSearchParams();
   const product = searchParams.get("product");
   const [submitted, setSubmitted] = useState(false);
-  // Arriving from a product's "Request a Demo" button — pre-fill the message
+  // Arriving from a product's "Request a Demo" button - pre-fill the message
   // so the requester doesn't have to retype which product they're asking about.
   const [form, setForm] = useState(() => ({
     name: "",
@@ -126,7 +126,7 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
             </div>
 
             <div className="grid md:grid-cols-[220px_1fr]">
-              {/* Request queue — the dashboard half */}
+              {/* Request queue - the dashboard half */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -156,7 +156,7 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
                 ))}
               </motion.div>
 
-              {/* New request — the real, functional form */}
+              {/* New request - the real, functional form */}
               <div className="p-6">
                 {submitted ? (
                   <motion.div
@@ -173,7 +173,7 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
                     </div>
                     <h3 className="text-[15px] text-[var(--lw-text-1)] mb-2">Almost there</h3>
                     <p className="text-[12.5px] text-[var(--lw-text-2)] leading-relaxed">
-                      Your email app should now be open with the request pre-filled — just hit send and
+                      Your email app should now be open with the request pre-filled - just hit send and
                       we&apos;ll reach out within one business day.
                     </p>
                     <FeedbackSurvey context={product || "general"} email={form.email} />

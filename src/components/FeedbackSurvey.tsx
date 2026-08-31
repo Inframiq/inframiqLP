@@ -6,7 +6,7 @@ import { CheckCircle2 } from "lucide-react";
 import { trackEvent } from "@/lib/posthog";
 
 interface FeedbackSurveyProps {
-  /** What this feedback is attached to — e.g. the product name from the demo
+  /** What this feedback is attached to - e.g. the product name from the demo
    *  request, so responses in the inbox and in PostHog stay correlated with
    *  what the visitor was actually looking at. */
   context: string;
@@ -54,7 +54,7 @@ export default function FeedbackSurvey({ context, email }: FeedbackSurveyProps) 
         body: JSON.stringify({ context, email, ...answers }),
       });
     } catch {
-      // Best-effort — a failed feedback send shouldn't block the visitor or
+      // Best-effort - a failed feedback send shouldn't block the visitor or
       // look like the (already-successful) request itself failed.
     }
     trackEvent("feedback_survey_submitted", { context, answered_count: answeredCount });
@@ -84,7 +84,7 @@ export default function FeedbackSurvey({ context, email }: FeedbackSurveyProps) 
       className="mt-6 pt-5 border-t border-[var(--lw-border)] text-left"
     >
       <p className="text-[12px] text-[var(--lw-text-2)] mb-3.5">
-        One quick favor, totally optional — helps us improve this page.
+        One quick favor, totally optional - helps us improve this page.
       </p>
       <div className="space-y-2.5">
         {questions.map((q) => (

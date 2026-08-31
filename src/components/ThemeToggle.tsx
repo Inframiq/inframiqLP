@@ -8,7 +8,7 @@ const STORAGE_KEY = "inframiq-theme";
 const THEME_EVENT = "inframiq-theme-change";
 
 // The theme lives on the DOM (<html data-theme>), set before paint by the
-// inline script in layout.tsx, and in localStorage — not in React state.
+// inline script in layout.tsx, and in localStorage - not in React state.
 // useSyncExternalStore reads that external source directly instead of
 // mirroring it into state via an effect, which is what avoids both a
 // hydration mismatch and a synchronous setState-in-effect.

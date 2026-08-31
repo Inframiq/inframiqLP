@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { createTimeline, stagger, svg } from "animejs";
 
-// A 12-line faceted diamond — outer ring, inner ring, then the spokes
+// A 12-line faceted diamond - outer ring, inner ring, then the spokes
 // connecting them, in that DOM order so the staggered draw reads
 // outward-to-inward rather than in an arbitrary sequence.
 const OUTER_RING = ["M100,14 L186,100", "M186,100 L100,186", "M100,186 L14,100", "M14,100 L100,14"];

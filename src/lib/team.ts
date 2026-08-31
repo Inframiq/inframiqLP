@@ -1,4 +1,4 @@
-// Single source of truth for the team roster — consumed by AboutContent.tsx
+// Single source of truth for the team roster - consumed by AboutContent.tsx
 // and TheCrew.tsx for display, by Gauges.tsx's TeamMeter for the headcount
 // instrument, and by layout.tsx for Organization/Person structured data, so
 // every displayed team count derives from team.length rather than a

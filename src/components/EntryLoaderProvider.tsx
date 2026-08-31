@@ -17,7 +17,7 @@ export function useEntryRevealed() {
 }
 
 // Whether this visit should play the splash lives in sessionStorage, not
-// React state — useSyncExternalStore reads it the same way ThemeToggle reads
+// React state - useSyncExternalStore reads it the same way ThemeToggle reads
 // the theme: getServerSnapshot always answers "yes, play it" so SSR and the
 // first client render agree (no hydration mismatch), and React re-syncs to
 // the real answer itself right after mount if a prior tab already set the
@@ -53,7 +53,7 @@ export default function EntryLoaderProvider({ children }: { children: React.Reac
     try {
       sessionStorage.setItem(SESSION_KEY, "1");
     } catch {
-      // sessionStorage unavailable — the loader will just replay next visit.
+      // sessionStorage unavailable - the loader will just replay next visit.
     }
     document.body.style.overflow = "";
     setIsLoading(false);
@@ -65,7 +65,7 @@ export default function EntryLoaderProvider({ children }: { children: React.Reac
   return (
     <EntryRevealedContext.Provider value={!contentHidden}>
       {showLoader && <SplashLoader onComplete={handleComplete} />}
-      {/* `top` + `position: relative`, not `transform`, drives the rise-in —
+      {/* `top` + `position: relative`, not `transform`, drives the rise-in -
           a `transform` here would make this div the containing block for
           the fixed-position Navbar underneath it, breaking its positioning
           for the length of the transition. */}

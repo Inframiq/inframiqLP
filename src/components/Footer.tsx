@@ -25,7 +25,7 @@ function UnderlineLink({ href, children }: { href: string; children: React.React
   );
 }
 
-// The dock — the desk metaphor's quiet floor. A real taskbar reads flat and
+// The dock - the desk metaphor's quiet floor. A real taskbar reads flat and
 // minimal, not another dark "closing" section, so it stays on the same
 // light surface as the rest of the page.
 export default function Footer() {

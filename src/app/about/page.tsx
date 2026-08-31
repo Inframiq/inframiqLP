@@ -6,27 +6,27 @@ import { team } from "@/lib/team";
 const SITE_URL = "https://www.inframiq.com";
 const TITLE = "About";
 const DESCRIPTION =
-  "Inframiq is an early-stage company building intelligent products and services — security systems, business tools, and everyday software — with the same uncompromising engineering standard across every product.";
+  "Inframiq is an early-stage company building intelligent products and services - security systems, business tools, and everyday software - with the same uncompromising engineering standard across every product.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
-    title: `${TITLE} — Inframiq`,
+    title: `${TITLE} - Inframiq`,
     description: DESCRIPTION,
     url: "/about",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${TITLE} — Inframiq`,
+    title: `${TITLE} - Inframiq`,
     description: DESCRIPTION,
     images: ["/opengraph-image"],
   },
 };
 
-// ItemList of Person entries — a dedicated, page-scoped structured-data
+// ItemList of Person entries - a dedicated, page-scoped structured-data
 // block (on top of the site-wide Organization/employee data in layout.tsx)
 // so a search engine indexing this specific page has the strongest possible
 // signal tying each name to Inframiq.

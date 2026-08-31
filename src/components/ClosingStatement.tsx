@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import SectionAurora from "@/components/SectionAurora";
 
-// Reveals `text` one character at a time — each char is its own motion.span
+// Reveals `text` one character at a time - each char is its own motion.span
 // with its own viewport-triggered delay, so the line "types" itself out
 // once the terminal scrolls into view, rather than fading in as one block.
 function TypedText({ text, startDelay }: { text: string; startDelay: number }) {
@@ -25,18 +25,18 @@ function TypedText({ text, startDelay }: { text: string; startDelay: number }) {
 }
 
 // The emotional exhale before the ask, staged as a terminal log rather than
-// a centered pull-quote — consistent with the instrument register the rest
+// a centered pull-quote - consistent with the instrument register the rest
 // of the page is built from. The blinking cursor and status line are the
 // same "still true" proof as the hero clock, placed right before the CTA.
 export default function ClosingStatement() {
   const lines = [
     { prefix: "$", text: "inframiq --status" },
     { prefix: ">", text: "2 systems in active development. 1 operations desk, staffed 24/7." },
-    { prefix: ">", text: "Every product after Mail Shield and Simulyn gets built exactly this carefully — or it doesn't get built." },
+    { prefix: ">", text: "Every product after Mail Shield and Simulyn gets built exactly this carefully - or it doesn't get built." },
   ];
 
   // Each line's typing starts only once the previous one has finished (plus
-  // a short pause) — a fixed per-line stagger would start line 2 typing
+  // a short pause) - a fixed per-line stagger would start line 2 typing
   // while line 1 was still mid-character, which reads as garbled rather
   // than sequential.
   const CHAR_STEP = 0.014;

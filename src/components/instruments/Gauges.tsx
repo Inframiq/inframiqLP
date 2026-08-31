@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 import { team } from "@/lib/team";
 
 // Shared status instruments used across the homepage, /about, and /products
-// — kept in one place so every page's "status panel" reads as the same
+// - kept in one place so every page's "status panel" reads as the same
 // physical instrument rather than a page-specific recreation of it.
 //
-// Numbers render as static text rather than counting up from 0 client-side —
+// Numbers render as static text rather than counting up from 0 client-side -
 // a prior count-up-on-scroll version left "0" as the only value present in
 // server-rendered HTML, which read as a live data-accuracy bug to crawlers
 // that don't wait for the animation. The bars/dots still animate in; only
 // the digits themselves are always the real, final value.
 
-// A circular dial, fully lit, standing in for "always on" — the sweep is
+// A circular dial, fully lit, standing in for "always on" - the sweep is
 // decorative confirmation of a true, un-embellished fact (24/7), not a fake
 // percentage.
 export function CoverageDial() {
@@ -46,7 +46,7 @@ export function CoverageDial() {
   );
 }
 
-// A level meter — headcount as an honest tally, not a projected percentage
+// A level meter - headcount as an honest tally, not a projected percentage
 // of some invented ceiling. Bar count is derived from the team roster
 // (src/lib/team.ts) so it can't drift out of sync with the actual headcount.
 export function TeamMeter() {
@@ -101,9 +101,9 @@ export function SystemsIndicator() {
   );
 }
 
-// A compact status window combining all three instruments — the visual
+// A compact status window combining all three instruments - the visual
 // anchor reused on any hero that needs to open with "proof, not a claim".
-export function StatusPanel({ title = "status-panel — read only" }: { title?: string }) {
+export function StatusPanel({ title = "status-panel - read only" }: { title?: string }) {
   return (
     <div className="window-chrome text-left">
       <div className="window-chrome-bar">

@@ -1,4 +1,4 @@
-// Standard template for outbound consultation/demo requests — the visitor's
+// Standard template for outbound consultation/demo requests - the visitor's
 // own mail client composes and sends it (mailto:), so the message always
 // arrives from a real inbox rather than a transactional sender that spam
 // filters distrust. Keep this in sync with support@inframiq.com being the
@@ -14,7 +14,7 @@ interface ConsultationMailFields {
 }
 
 export function buildConsultationMailto({ name, company, email, message, product }: ConsultationMailFields): string {
-  const subject = `Consultation request — ${company}`;
+  const subject = `Consultation request - ${company}`;
   const body = [
     "Hi Inframiq team,",
     "",

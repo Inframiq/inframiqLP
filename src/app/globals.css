@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
-/* Design system v8 — "The Live Desk". The page is a light, physical
+/* Design system v8 - "The Live Desk". The page is a light, physical
    workspace: a near-white desk surface holding real, floating application
    windows, diagrams and instruments. Depth and hierarchy come from soft
    layered shadows and hairline borders, not from alternating dark/light
-   page backgrounds. Dark chrome is reserved for the one place it's earned —
-   the terminal in ClosingStatement — via `.terminal-chrome`, which carries
+   page backgrounds. Dark chrome is reserved for the one place it's earned -
+   the terminal in ClosingStatement - via `.terminal-chrome`, which carries
    its own literal palette rather than reusing --bg. Every text/background
    pairing is checked against WCAG AA (4.5:1). */
 :root {
-  /* System-font stacks — -apple-system/BlinkMacSystemFont resolve to San
+  /* System-font stacks - -apple-system/BlinkMacSystemFont resolve to San
      Francisco on Apple devices (the actual mechanism Apple's own web
      properties use, since SF isn't licensed for @font-face embedding).
      One family for body/UI/display; a matching system-monospace stack
@@ -39,7 +39,7 @@
   --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-border: rgba(15, 23, 42, 0.08);
 
-  /* Light-interface tokens — content living *inside* a browser/app window.
+  /* Light-interface tokens - content living *inside* a browser/app window.
      The window is still visually distinct from the desk it floats on (white
      surface vs. --bg desk, plus shadow), so these stay separate tokens
      rather than collapsing into the page palette. */
@@ -60,7 +60,7 @@
   --lw-warning: #7c3aed;
   --lw-warning-dim: rgba(124, 58, 237, 0.1);
 
-  /* Menu bar / mobile-nav glass — split out from --surface because these
+  /* Menu bar / mobile-nav glass - split out from --surface because these
      sit as a translucent overlay above scrolling content, not an opaque
      card, so they need their own alpha per theme. */
   --menubar-bg: rgba(255, 255, 255, 0.5);
@@ -68,7 +68,7 @@
   --mobile-nav-bg: rgba(255, 255, 255, 0.92);
 }
 
-/* Design system v8 dark — the same Live Desk system, lit at night. Only the
+/* Design system v8 dark - the same Live Desk system, lit at night. Only the
    page-level tokens flip; --lw-* (content living inside a browser/app
    window) stays constant on purpose, since that's real software chrome
    being depicted, not the page it floats on. Toggled via [data-theme] on
@@ -182,7 +182,7 @@ select {
   background-color: var(--bg-raised);
 }
 
-/* Dot grid background pattern — a fine, quiet desk texture. */
+/* Dot grid background pattern - a fine, quiet desk texture. */
 .dot-grid {
   background-image: radial-gradient(circle, color-mix(in srgb, var(--text-1) 8%, transparent) 1px, transparent 1px);
   background-size: 28px 28px;
@@ -233,7 +233,7 @@ select {
 }
 
 /* Hides the scrollbar on a horizontally-scrollable container (the team
-   carousel) without disabling scroll/drag — navigation is via swipe, the
+   carousel) without disabling scroll/drag - navigation is via swipe, the
    dot pagination, or the arrow button, so a visible track adds nothing. */
 .no-scrollbar {
   scrollbar-width: none;
@@ -286,7 +286,7 @@ select {
   animation-play-state: paused;
 }
 
-/* Aurora grain — drifting accent-color blobs with a flickering, chunky
+/* Aurora grain - drifting accent-color blobs with a flickering, chunky
    pixel-grain layer blended on top (mix-blend-mode: overlay). Replaces
    .schematic-grid as the hero/header atmosphere: same drop-in spot, but
    alive instead of a static line pattern, and gritty instead of a smooth
@@ -336,7 +336,7 @@ select {
   animation-delay: -12s;
 }
 /* Each blob gets its own loop (not one shared keyframe with different
-   durations) so the drift paths don't all read as the same motion resized —
+   durations) so the drift paths don't all read as the same motion resized -
    smooth ease-in-out throughout, just a different, larger travel distance
    and direction per blob. */
 @keyframes aurora-float-1 {
@@ -368,12 +368,12 @@ select {
     animation: none;
   }
 }
-/* Smoother variant — same drifting blobs, grain texture suppressed. */
+/* Smoother variant - same drifting blobs, grain texture suppressed. */
 .aurora-grain-smooth .aurora-grain-canvas {
   display: none;
 }
 
-/* Pure-CSS soft glow for the pillar card — no canvas/grain, just two large,
+/* Pure-CSS soft glow for the pillar card - no canvas/grain, just two large,
    heavily-blurred blue blobs drifting slowly. Kept separate from
    .aurora-grain so this stays silky even where the gritty texture reads
    too noisy against body copy. */
@@ -417,7 +417,7 @@ select {
   }
 }
 
-/* Ambient aurora — same idea as .pillar-glow, sized for a full section
+/* Ambient aurora - same idea as .pillar-glow, sized for a full section
    rather than one card. Threads the hero's blue drift through other
    sections (see SectionAurora.tsx) without repeating the canvas/grain. */
 .ambient-aurora {
@@ -460,7 +460,7 @@ select {
   }
 }
 
-/* Window chrome — a light glass panel used for consoles, changelogs and
+/* Window chrome - a light glass panel used for consoles, changelogs and
    other "app-like" content that isn't a full browser window. Floats on the
    desk via shadow + hairline border rather than a dark frosted surface. */
 .window-chrome {
@@ -474,7 +474,7 @@ select {
     0 1px 0 rgba(255, 255, 255, 0.6) inset;
   transition: transform 250ms ease, box-shadow 250ms ease;
 }
-/* Every window responds physically to the cursor — even a single window
+/* Every window responds physically to the cursor - even a single window
    sitting alone in a row should feel touchable, not just decorative.
    Scoped to fine-pointer devices so touch taps don't leave it stuck "lifted". */
 @media (hover: hover) and (pointer: fine) {
@@ -500,7 +500,7 @@ select {
   background-color: var(--border-strong);
 }
 
-/* Browser chrome — the site's primary visual artifact: a real browser
+/* Browser chrome - the site's primary visual artifact: a real browser
    frame (traffic lights + URL bar) holding a light-mode software interface,
    floating on the desk surface. Border does the definition work that a
    dark backdrop used to; shadow reads as physical elevation, not contrast. */
@@ -549,7 +549,7 @@ select {
   font-family: var(--font-geist-mono);
 }
 
-/* App chrome bar — a native-desktop-app variant of .browser-chrome-bar for
+/* App chrome bar - a native-desktop-app variant of .browser-chrome-bar for
    windows that aren't a browser tab (internal ops dashboards, not something
    opened via a URL). Same frame, but the traffic lights collapse to a single
    muted dot and the title sits directly in the bar instead of a separate
@@ -585,7 +585,7 @@ select {
   flex-shrink: 0;
 }
 
-/* Terminal chrome — the one deliberate dark exception (ClosingStatement):
+/* Terminal chrome - the one deliberate dark exception (ClosingStatement):
    a real terminal window sitting on the light desk, carrying its own
    literal palette rather than reusing --bg. */
 .terminal-chrome {
@@ -604,7 +604,7 @@ select {
   border-bottom: 1px solid rgba(255, 255, 255, 0.45);
 }
 
-/* Instrument console — the second earned dark exception (TheNumbers): a
+/* Instrument console - the second earned dark exception (TheNumbers): a
    physical control-panel housing for the coverage/systems/team dials,
    brushed-metal instead of a flat card. Redefines --text-1/2/3, --border,
    and --surface-2 locally so the existing dial components (which read those
@@ -656,7 +656,7 @@ select {
   background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.04), transparent 70%);
   box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
-/* Each porthole gets its own tint — a console of three identical grey
+/* Each porthole gets its own tint - a console of three identical grey
    holes read as "industrial"; three warm color-coded glows read as
    considered rather than generic. */
 .instrument-porthole--blue {
@@ -668,7 +668,7 @@ select {
 .instrument-porthole--pink {
   background: radial-gradient(circle at 50% 30%, rgba(244, 114, 182, 0.16), transparent 70%);
 }
-/* Diagonal sheen sweeping across the console once it's in view — a light
+/* Diagonal sheen sweeping across the console once it's in view - a light
    catching brushed metal, not a decorative gradient sitting still. */
 .instrument-console-sheen {
   position: absolute;
@@ -684,7 +684,7 @@ select {
   pointer-events: none;
 }
 
-/* Ambient glow — a soft, low-intensity light bloom for hero/section
+/* Ambient glow - a soft, low-intensity light bloom for hero/section
    atmosphere. Considerably more subtle than a dark-theme glow, since it now
    sits on a near-white surface and only needs to suggest a light source. */
 .ambient-glow {
@@ -698,7 +698,7 @@ select {
   );
 }
 
-/* Cursor light — a pointer-tracked spotlight used on desk-metaphor
+/* Cursor light - a pointer-tracked spotlight used on desk-metaphor
    sections so the surface always reads as lit rather than flat. Position is
    driven by JS via --cursor-x/--cursor-y (falls back to center). */
 .cursor-light {
@@ -713,7 +713,7 @@ select {
   transition: background 120ms linear;
 }
 
-/* Desk surface — the atmospheric floor beneath a window stack: a soft
+/* Desk surface - the atmospheric floor beneath a window stack: a soft
    mesh of layered radial light plus the schematic grid, giving depth
    instead of empty white space. */
 .desk-surface {
@@ -726,7 +726,7 @@ select {
     radial-gradient(ellipse 60% 50% at 50% 100%, rgba(15, 23, 42, 0.04), transparent 70%);
 }
 
-/* Glass panel — lighter-weight frosted surface for inline chips/badges. */
+/* Glass panel - lighter-weight frosted surface for inline chips/badges. */
 .glass-panel {
   background-color: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -766,7 +766,7 @@ select {
   }
 }
 
-/* Slow ambient float — used for atmosphere particles/orbs on desk-metaphor
+/* Slow ambient float - used for atmosphere particles/orbs on desk-metaphor
    sections. Purely decorative motion, kept slow and subtle per the "breathe,
    don't pulse" motion rule. */
 @keyframes ambient-float {
@@ -782,7 +782,7 @@ select {
   }
 }
 
-/* Dark-mode primitive overrides — the handful of surfaces whose shadow or
+/* Dark-mode primitive overrides - the handful of surfaces whose shadow or
    gradient stops are hand-tuned rather than derived from --text-1/--border
    (which already flip correctly on their own). Each mirrors the pre-Live-Desk
    dark "instrument" treatment: frosted dark glass instead of a white card,
@@ -843,7 +843,7 @@ select {
   opacity: 1;
 }
 
-/* Brand mark — the 3D monogram cut from the master logo, kept as a raster so
+/* Brand mark - the 3D monogram cut from the master logo, kept as a raster so
    it keeps its dimensional shading. Two versions (navy for light, a light
    version for dark) toggled on the [data-theme] set before paint in
    layout.tsx, so the mark always has contrast against the chrome behind it. */

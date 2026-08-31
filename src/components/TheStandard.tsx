@@ -15,15 +15,15 @@ const pillItem = {
 };
 
 const pillars = [
-  { tag: "security", title: "Security-first", description: "Every product is tested and hardened against failure — whether it's a phishing email or an everyday app." },
-  { tag: "uptime", title: "Redundant", description: "Self-healing systems designed to stay online and perform — from enterprise security infrastructure to tools people use every day." },
+  { tag: "security", title: "Security-first", description: "Every product is tested and hardened against failure - whether it's a phishing email or an everyday app." },
+  { tag: "uptime", title: "Redundant", description: "Self-healing systems designed to stay online and perform - from enterprise security infrastructure to tools people use every day." },
   { tag: "privacy", title: "Private by default", description: "No implicit trust, no unnecessary data collection. Every product respects the people using it, not just the businesses buying it." },
-  { tag: "scale", title: "Built to scale", description: "From individual users and students to global enterprises — our products grow without architectural compromise." },
-  { tag: "design", title: "Considered design", description: "Intelligent systems paired with careful design — products that get smarter and simpler the more you use them." },
-  { tag: "ai", title: "Intelligence, applied", description: "Intelligence is part of the architecture, not a chatbot dropped on top — used only where it genuinely makes things faster." },
+  { tag: "scale", title: "Built to scale", description: "From individual users and students to global enterprises - our products grow without architectural compromise." },
+  { tag: "design", title: "Considered design", description: "Intelligent systems paired with careful design - products that get smarter and simpler the more you use them." },
+  { tag: "ai", title: "Intelligence, applied", description: "Intelligence is part of the architecture, not a chatbot dropped on top - used only where it genuinely makes things faster." },
 ] as const;
 
-// Scroll distance the pinned track occupies per pillar, desktop only —
+// Scroll distance the pinned track occupies per pillar, desktop only -
 // kept short and eased so the walk feels like a light nudge per card
 // rather than a heavy, effortful scroll.
 const VH_PER_STEP = 46;
@@ -47,7 +47,7 @@ export default function TheStandard() {
     target: trackRef,
     offset: ["start start", "end end"],
   });
-  // Softens the raw scroll fraction before it's turned into a step index —
+  // Softens the raw scroll fraction before it's turned into a step index -
   // the card swap lands a beat after the scroll itself, so it reads as a
   // smooth glide instead of snapping in lockstep with the wheel.
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
@@ -76,7 +76,7 @@ export default function TheStandard() {
   return (
     <section id="solutions" className="py-24 lg:pt-16 lg:pb-0">
       {/* Tall scroll track, desktop-with-a-mouse only (pinEnabled). Header
-          and card are pinned together as one unit — as the user scrolls
+          and card are pinned together as one unit - as the user scrolls
           through the track, the card below cycles through all 6 pillars
           one at a time before the page releases into the next section.
           Elsewhere (touch, no hover) this collapses back to plain flow: no
@@ -102,7 +102,7 @@ export default function TheStandard() {
             </motion.div>
 
             <div className="max-w-3xl">
-              {/* Active pillar detail — the pill row beneath does the switching,
+              {/* Active pillar detail - the pill row beneath does the switching,
                   so there's no separate selector competing for space next to it. */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -126,7 +126,7 @@ export default function TheStandard() {
                     className="relative"
                   >
                     <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
-                      0{active + 1} / 06 — {pillars[active].tag}
+                      0{active + 1} / 06 - {pillars[active].tag}
                     </span>
                     <h3 className="font-brand font-semibold text-[26px] lg:text-[30px] text-[var(--text-1)] mt-3 mb-4">
                       {pillars[active].title}

@@ -13,7 +13,7 @@ import {
 import { mailJourneys } from "@/lib/mailShieldJourneys";
 import BrowserWindow from "@/components/instruments/BrowserWindow";
 
-// Shared, real, windowed product instruments — light-mode software interfaces
+// Shared, real, windowed product instruments - light-mode software interfaces
 // floating over the dark page, reused on the homepage and on /products so
 // every page runs the identical interactive software instead of a
 // page-specific screenshot of it.
@@ -116,7 +116,7 @@ export function SimulynWindow({
               {seats}
             </span>
           </span>
-          <span className="font-mono text-[13px] text-[var(--lw-text-3)] mb-1.5">seats — drag to adjust</span>
+          <span className="font-mono text-[13px] text-[var(--lw-text-3)] mb-1.5">seats - drag to adjust</span>
         </div>
 
         <SimulynChart seats={seats} />
@@ -134,7 +134,7 @@ export function SimulynWindow({
           </div>
           <div>
             <p className="font-mono text-[17px] text-[var(--lw-text-1)] tabular-nums">
-              {Number.isFinite(scenario.breakEvenMonths) ? `Mo. ${scenario.breakEvenMonths}` : "—"}
+              {Number.isFinite(scenario.breakEvenMonths) ? `Mo. ${scenario.breakEvenMonths}` : "-"}
             </p>
             <p className="text-[10.5px] text-[var(--lw-text-3)] mt-1">Break-even</p>
           </div>
@@ -154,7 +154,7 @@ export function SimulynWindow({
   return (
     <BrowserWindow url="app.inframiq.com/simulyn" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Simulyn — Pricing Model</span>
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Simulyn - Pricing Model</span>
         <span className="font-mono text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide">Draft</span>
       </div>
       {body}
@@ -276,7 +276,7 @@ export function MailShieldWindow({
   return (
     <BrowserWindow url="app.inframiq.com/mail-shield" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield — Opened in Gmail</span>
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Mail Shield - Opened in Gmail</span>
         <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
       {body}

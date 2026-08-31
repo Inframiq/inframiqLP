@@ -7,7 +7,7 @@ import { trackEvent } from "@/lib/posthog";
 
 // Resolves which headline variant a visitor sees (?<group>=<id> in the URL,
 // falling back to the control variant) and fires a single "which variant did
-// this visitor see" event per mount — guarded by a ref so re-renders (e.g.
+// this visitor see" event per mount - guarded by a ref so re-renders (e.g.
 // from unrelated search param changes) don't re-fire it.
 export function useHeadlineVariant(groupKey: HeadlineGroupKey) {
   const group = headlineGroups[groupKey];

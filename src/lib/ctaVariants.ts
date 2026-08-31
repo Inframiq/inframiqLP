@@ -1,7 +1,7 @@
 // CTA copy variants, per group. Every group's *destination* stays exactly
-// what it is today — the demo/consultation form is the only conversion path
+// what it is today - the demo/consultation form is the only conversion path
 // anywhere in this codebase (no self-serve signup, checkout, or free trial
-// exists) — so only the label's commitment-level framing varies, never the
+// exists) - so only the label's commitment-level framing varies, never the
 // underlying claim. "Start free" / "Sign up" style copy is deliberately
 // excluded for that reason: it would imply a self-serve flow that doesn't
 // exist yet.

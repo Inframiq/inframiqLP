@@ -7,14 +7,14 @@ import { team } from "@/lib/team";
 import SectionAurora from "@/components/SectionAurora";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
 
-// Used only to seed the decorative barcode strip's bar heights — the ID
+// Used only to seed the decorative barcode strip's bar heights - the ID
 // badge itself now shows each person's real employee ID, not a hash.
 function hashOf(name: string) {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
   return hash;
 }
-// Deterministic bar heights for the decorative barcode strip — looks like a
+// Deterministic bar heights for the decorative barcode strip - looks like a
 // real scan line without any per-render randomness (which would also cause
 // a hydration mismatch).
 function barcodeHeights(name: string, count: number) {
@@ -22,7 +22,7 @@ function barcodeHeights(name: string, count: number) {
   return Array.from({ length: count }, (_, i) => 25 + ((seed + i * 47) % 75));
 }
 
-// Portrait/credential-driven card — a floating physical object with a
+// Portrait/credential-driven card - a floating physical object with a
 // tilt-on-hover response, sized to sit as one card in the horizontal
 // scroller rather than a single centered badge. Styled as a laminated
 // security badge (holographic sheen tied to the same pointer position that
@@ -35,7 +35,7 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     // Scrolling with the cursor stationary over a card moves the card
-    // under it — some browsers re-fire pointermove at the same screen
+    // under it - some browsers re-fire pointermove at the same screen
     // coordinates to refresh hover state, which this tilt handler would
     // otherwise read as a real move (the card's rect shifted, the pointer
     // didn't) and jerk the tilt. movementX/Y are 0 for these synthetic
@@ -67,7 +67,7 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
           boxShadow: "0 30px 60px -28px rgba(47,111,237,0.22)",
         }}
       >
-        {/* Holographic sheen — an iridescent streak that shifts with the
+        {/* Holographic sheen - an iridescent streak that shifts with the
             same pointer position driving the tilt, so it reads as light
             catching a laminated card rather than a static gradient. */}
         <div
@@ -147,7 +147,7 @@ export default function TheCrew() {
   const [pageCount, setPageCount] = useState(team.length);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Dots represent actual reachable stopping points, not one per person —
+  // Dots represent actual reachable stopping points, not one per person -
   // with several cards visible at once, the number of distinct scroll
   // positions is far smaller than team.length. Recomputed on resize since
   // how many cards fit (and therefore how many stops exist) is responsive.
@@ -168,7 +168,7 @@ export default function TheCrew() {
     return () => observer.disconnect();
   }, []);
 
-  // A hand-driven tween instead of native scrollTo({behavior:"smooth"}) —
+  // A hand-driven tween instead of native scrollTo({behavior:"smooth"}) -
   // browser-native smooth scroll uses whatever easing/duration that browser
   // ships with (inconsistent, and never quite Apple's signature slow-settle
   // deceleration). Animating scrollLeft directly with the same ease curve
@@ -179,7 +179,7 @@ export default function TheCrew() {
     if (!el) return;
     const clamped = Math.max(0, Math.min(pageCount - 1, i));
     const target = clamped * STEP;
-    // scroll-snap-type fights a manual scrollLeft tween — the browser
+    // scroll-snap-type fights a manual scrollLeft tween - the browser
     // "corrects" every intermediate frame straight to the nearest snap
     // point, collapsing the animation into an instant jump. Suspend it for
     // the duration of the tween, then restore it for drag/swipe.
@@ -200,7 +200,7 @@ export default function TheCrew() {
     const el = scrollerRef.current;
     if (!el) return;
     // While playing, scrollLeft is driven by the marquee loop itself
-    // (including its wrap-around jump) — reading dot position off it here
+    // (including its wrap-around jump) - reading dot position off it here
     // would just fight that and flicker the (hidden) dots.
     if (isPlaying) return;
     const idx = Math.round(el.scrollLeft / STEP);
@@ -208,7 +208,7 @@ export default function TheCrew() {
   };
 
   // Play control converts the carousel into a continuous, infinite marquee
-  // — the team list is rendered twice back to back (below) so once scrollLeft
+  // - the team list is rendered twice back to back (below) so once scrollLeft
   // passes the width of one full set, it can jump back by that same width
   // into the duplicate copy without any visible seam.
   const singleSetWidth = team.length * STEP;
@@ -244,7 +244,7 @@ export default function TheCrew() {
   };
 
   // Chrome (and others) redirect a plain vertical mouse-wheel scroll into
-  // this element's scrollLeft, since it only overflows horizontally — the
+  // this element's scrollLeft, since it only overflows horizontally - the
   // page appears "stuck" and the cards shift sideways instead of the
   // visitor scrolling past the section. Hand vertical-dominant wheel
   // gestures back to the page; only let genuinely horizontal ones (trackpad
@@ -255,7 +255,7 @@ export default function TheCrew() {
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
-        // "instant", not "auto" — the page has scroll-behavior: smooth
+        // "instant", not "auto" - the page has scroll-behavior: smooth
         // globally, and "auto" inherits it, so every wheel tick would
         // start a fresh smooth-scroll animation that interrupts the last
         // one and makes the page crawl instead of tracking the wheel 1:1.
@@ -289,11 +289,11 @@ export default function TheCrew() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          {/* Horizontal scroll carousel — drag/swipe to browse, or use the
+          {/* Horizontal scroll carousel - drag/swipe to browse, or use the
               dots/arrow below. Scroll-snap keeps each card settling flush
               instead of stopping mid-card. The team list is rendered twice
               back to back so the play control can loop it as a seamless
-              infinite marquee (see the autoplay effect above) — the second
+              infinite marquee (see the autoplay effect above) - the second
               copy is inert until then. */}
           <div
             ref={scrollerRef}
@@ -316,7 +316,7 @@ export default function TheCrew() {
             ))}
           </div>
 
-          {/* Apple-style pagination — dots morph into a pill for the current
+          {/* Apple-style pagination - dots morph into a pill for the current
               card, plus a circular button to advance. Both step aside for
               the play control while it's running the infinite marquee,
               since a fixed card position doesn't mean anything mid-loop. */}

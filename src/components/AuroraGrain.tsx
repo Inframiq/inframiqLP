@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 // Replaces the static .schematic-grid overlay: three slow-drifting accent
 // blobs (the "aurora mesh") plus a flickering, chunky pixel-grain canvas
-// blended on top via mix-blend-mode: overlay — the gritty/old-CRT texture
+// blended on top via mix-blend-mode: overlay - the gritty/old-CRT texture
 // that keeps the color drift from reading as a smooth modern SaaS gradient.
 // Drop-in for the same spot: absolute, inset-0, pointer-events-none.
 export default function AuroraGrain({ className = "" }: { className?: string } = {}) {

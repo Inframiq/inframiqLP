@@ -17,8 +17,8 @@ function Inner({ group, as, className, play }: Required<HeadlineVariantProps>) {
   return <KineticText as={as} text={variant.headline} className={className} play={play} />;
 }
 
-// The fallback renders the control (variant "a") copy — identical to what
-// Inner would render for a visitor with no ?<group>= param — so there's no
+// The fallback renders the control (variant "a") copy - identical to what
+// Inner would render for a visitor with no ?<group>= param - so there's no
 // blank flash while useSearchParams resolves after hydration, only a swap
 // on the rare request that asks for a non-control variant.
 export default function HeadlineVariant({ group, as = "span", className = "", play = true }: HeadlineVariantProps) {

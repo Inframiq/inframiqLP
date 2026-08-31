@@ -67,7 +67,7 @@ export function CareerCopilotWindow({
 }: { className?: string; chrome?: "browser" | "app" } = {}) {
   if (chrome === "app") {
     return (
-      <BrowserWindow variant="app" title="Career Copilot · Resume Match" status="Live" statusColor="var(--lw-success)" className={className}>
+      <BrowserWindow variant="app" title="Career Copilot · Tailoring" status="Live" statusColor="var(--lw-success)" className={className}>
         <Body />
       </BrowserWindow>
     );
@@ -76,7 +76,7 @@ export function CareerCopilotWindow({
   return (
     <BrowserWindow url="resumebuilder.inframiq.com" className={className}>
       <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--lw-border)]">
-        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Career Copilot - Resume Match</span>
+        <span className="text-[13px] font-semibold text-[var(--lw-text-1)]">Career Copilot - Tailoring</span>
         <span className="font-mono text-[10px] text-[var(--lw-success)] uppercase tracking-wide">Live</span>
       </div>
       <Body />

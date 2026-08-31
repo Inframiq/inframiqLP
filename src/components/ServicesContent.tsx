@@ -14,7 +14,7 @@ import { inter } from "@/lib/fonts";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
 
-// Every answer restates a claim already made elsewhere on this page —
+// Every answer restates a claim already made elsewhere on this page -
 // nothing new is asserted.
 const servicesFaq: FaqItem[] = [
   {
@@ -30,12 +30,12 @@ const servicesFaq: FaqItem[] = [
   {
     question: "How quickly will Inframiq respond to a request?",
     answer:
-      "We'll reach out within one business day to talk through your support needs — no obligation, no sales pressure.",
+      "We'll reach out within one business day to talk through your support needs - no obligation, no sales pressure.",
   },
   {
     question: "Does Inframiq offer 24/7 coverage?",
     answer:
-      "Yes — Inframiq staffs dedicated agent teams around the clock, covering every timezone your customers are in, across voice, chat, and technical support.",
+      "Yes - Inframiq staffs dedicated agent teams around the clock, covering every timezone your customers are in, across voice, chat, and technical support.",
   },
 ];
 
@@ -97,7 +97,7 @@ function VoiceDashboard() {
     >
       <KpiRow items={[{ label: "Active calls", value: "6" }, { label: "Avg handle", value: "3m 40s" }, { label: "Calls today", value: "212" }]} />
       <div className="p-4">
-        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Call volume — today</p>
+        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Call volume - today</p>
         <Sparkline points={CALL_VOLUME} />
       </div>
       <div className="mx-4 mb-4 rounded-lg p-3 flex items-center gap-3" style={{ backgroundColor: "var(--lw-surface-2)" }}>
@@ -105,7 +105,7 @@ function VoiceDashboard() {
           <PhoneCall size={14} style={{ color: "var(--lw-accent)" }} />
         </div>
         <div className="min-w-0">
-          <p className="text-[12px] text-[var(--lw-text-1)] truncate">Inbound — Customer Line</p>
+          <p className="text-[12px] text-[var(--lw-text-1)] truncate">Inbound - Customer Line</p>
           <p className="font-mono text-[10.5px] text-[var(--lw-text-3)]">connected · {elapsed}</p>
         </div>
       </div>
@@ -119,8 +119,8 @@ const CHAT_VOLUME = [8, 14, 11, 17, 15, 20, 18, 24, 21, 27];
 
 function ChatDashboard() {
   const messages = [
-    { from: "customer", text: "Hi, my order hasn't shipped yet — order #48213" },
-    { from: "agent", text: "Found it — ships today, tracking by 6pm." },
+    { from: "customer", text: "Hi, my order hasn't shipped yet - order #48213" },
+    { from: "agent", text: "Found it - ships today, tracking by 6pm." },
   ];
   return (
     <BrowserWindow
@@ -132,7 +132,7 @@ function ChatDashboard() {
     >
       <KpiRow items={[{ label: "Open chats", value: "14" }, { label: "First response", value: "22s" }, { label: "CSAT", value: "97%" }]} />
       <div className="p-4">
-        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Conversations — today</p>
+        <p className="text-[10px] text-[var(--lw-text-3)] uppercase tracking-wide mb-1.5">Conversations - today</p>
         <Sparkline points={CHAT_VOLUME} color="var(--lw-success)" />
       </div>
       <div className="px-4 pb-4 space-y-2">
@@ -320,7 +320,7 @@ const services: Service[] = [
     icon: Wrench,
     tag: "tech",
     title: "Technical support",
-    description: "Trained agents who can actually troubleshoot — walking customers through issues instead of routing every ticket upward.",
+    description: "Trained agents who can actually troubleshoot - walking customers through issues instead of routing every ticket upward.",
     points: ["Tier 1 & tier 2 troubleshooting", "Product & account issue resolution", "Structured ticket escalation"],
     window: <TicketingDashboard />,
   },
@@ -328,7 +328,7 @@ const services: Service[] = [
     icon: Headset,
     tag: "always-on",
     title: "24/7 dedicated teams",
-    description: "A consistent team of agents assigned to your business, not a shared, rotating pool — covering every timezone your customers are in.",
+    description: "A consistent team of agents assigned to your business, not a shared, rotating pool - covering every timezone your customers are in.",
     points: ["Dedicated, trained agent teams", "Round-the-clock coverage", "Direct oversight, not a call-center queue"],
     window: <CoverageDashboard />,
   },
@@ -336,19 +336,19 @@ const services: Service[] = [
     icon: Globe,
     tag: "web",
     title: "Website design & development",
-    description: "Custom-built websites for hotels, schools, restaurants, and other local businesses — designed and developed by our team, not assembled from a template.",
+    description: "Custom-built websites for hotels, schools, restaurants, and other local businesses - designed and developed by our team, not assembled from a template.",
     points: ["Custom design, not a theme", "Booking & enquiry forms built in", "Fast, mobile-first, SEO-ready"],
     window: <WebStudioDashboard />,
   },
 ];
 
-// ─── Hero visual — a services diagram, not a dashboard screenshot. Voice
+// ─── Hero visual - a services diagram, not a dashboard screenshot. Voice
 // support already gets its own real, fully interactive dashboard in the list
 // below; reusing that same window up here would just show it twice. This
 // shows how the five service lines relate to Inframiq as a core instead. ───
 
 const SERVICES_CORE = { x: 200, y: 160 };
-// Pentagon around the core, one point per service — kept in sync with
+// Pentagon around the core, one point per service - kept in sync with
 // `services` by index, so a 6th service needs a 6th coordinate here too.
 const SERVICES_NODES = [
   { x: 200, y: 45 },
@@ -458,7 +458,7 @@ export default function ServicesContent() {
               />
 
               <p className="text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
-                Inframiq operates as your customer service team — deploying trained
+                Inframiq operates as your customer service team - deploying trained
                 agents for voice and chat support, staffed 24/7 to handle enquiries
                 and technical issues as they come in.
               </p>
@@ -471,7 +471,7 @@ export default function ServicesContent() {
         </div>
       </section>
 
-      {/* Services — each with a real light dashboard window */}
+      {/* Services - each with a real light dashboard window */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="space-y-16 lg:space-y-24">
@@ -586,7 +586,7 @@ export default function ServicesContent() {
                 Need a team behind your support line?
               </h2>
               <p className="text-[14px] text-[var(--text-2)] max-w-lg leading-relaxed">
-                Tell us about your call and chat volume — we&apos;ll tell you honestly
+                Tell us about your call and chat volume - we&apos;ll tell you honestly
                 what coverage you need and whether we&apos;re the right fit.
               </p>
             </div>

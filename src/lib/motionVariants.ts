@@ -1,4 +1,4 @@
-// Shared scroll-reveal variants — used in place of a single flat
+// Shared scroll-reveal variants - used in place of a single flat
 // "container fades up" motion.div. Staggering the eyebrow/heading/body as
 // separate children reads as a choreographed reveal rather than one blunt
 // fade, and is reused across every homepage section so the whole page has

@@ -4,21 +4,21 @@ import ServicesContent from "@/components/ServicesContent";
 
 const TITLE = "Services";
 const DESCRIPTION =
-  "Inframiq deploys trained human agents for voice and live chat customer service, 24/7 — handling customer enquiries and technical support for your business.";
+  "Inframiq deploys trained human agents for voice and live chat customer service, 24/7 - handling customer enquiries and technical support for your business.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: "/services" },
   openGraph: {
-    title: `${TITLE} — Inframiq`,
+    title: `${TITLE} - Inframiq`,
     description: DESCRIPTION,
     url: "/services",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${TITLE} — Inframiq`,
+    title: `${TITLE} - Inframiq`,
     description: DESCRIPTION,
     images: ["/opengraph-image"],
   },

@@ -45,7 +45,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* The menu bar — a floating pill sitting just above the desk, rather
+      {/* The menu bar - a floating pill sitting just above the desk, rather
           than a flush marketing header. Always carries its own shadow/border
           so it reads as a physical bar resting on the page beneath it;
           scroll only deepens that shadow slightly. */}

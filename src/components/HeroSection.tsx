@@ -11,10 +11,10 @@ import { useEntryRevealed } from "@/components/EntryLoaderProvider";
 import AuroraGrain from "@/components/AuroraGrain";
 import { inter } from "@/lib/fonts";
 
-// A compact preview of the ops console — the same "workspace" the visitor
+// A compact preview of the ops console - the same "workspace" the visitor
 // lands in fully expanded further down the page (TheSplit). Small here on
 // purpose: it's a window glimpsed on the desk, not a competing centerpiece.
-// Uses the "app" chrome variant, not "browser" — this is a desk tool, not
+// Uses the "app" chrome variant, not "browser" - this is a desk tool, not
 // a page you'd navigate to by URL, and it sits stacked against two real
 // browser-variant product windows so the trio doesn't read as three copies
 // of the same chrome.
@@ -25,7 +25,7 @@ const opsKpis = [
 ];
 
 const opsActivity = [
-  "Voice queue — line 2 answered in 8s",
+  "Voice queue - line 2 answered in 8s",
   "Chat #4821 resolved by Agent M.",
   "Chat #4823 assigned to Agent S.",
   "Ticket #2095 resolved by Agent K.",
@@ -73,8 +73,8 @@ function OpsPreviewWindow() {
 }
 
 // Renders `children` at its natural fixed `width` (the same size the
-// desktop version uses), then scales the whole thing down — text included,
-// not just the box — to fit whatever width the mobile column actually has.
+// desktop version uses), then scales the whole thing down - text included,
+// not just the box - to fit whatever width the mobile column actually has.
 // A narrower flex container alone wouldn't shrink the fixed-px text/padding
 // inside these windows; this is a real "zoom out", not a reflow.
 function ScaleToFit({ width, children }: { width: number; children: React.ReactNode }) {
@@ -120,7 +120,7 @@ interface DeskWindow {
   node: React.ReactNode;
 }
 
-// Depth recipe — index 0 is the focused/front window. Each step back sits
+// Depth recipe - index 0 is the focused/front window. Each step back sits
 // further away, slightly rotated, softly blurred and dimmed, so the stack
 // reads as real physical depth rather than a flat carousel.
 const DEPTH = [
@@ -165,7 +165,7 @@ export default function HeroSection() {
       onPointerMove={handlePointerMove}
       className="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden bg-[var(--bg)]"
     >
-      {/* Environmental atmosphere — the desk this hero opens on. Never empty
+      {/* Environmental atmosphere - the desk this hero opens on. Never empty
           white: layered light blooms, a faint blueprint grid, and slow
           drifting motes give the surface depth before any window loads. */}
       <div className="absolute inset-0 desk-surface" />
@@ -197,11 +197,11 @@ export default function HeroSection() {
 
       <div className="relative z-10 w-full max-w-[1360px] mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-[0.78fr_1.22fr] gap-14 lg:gap-10 items-center">
-          {/* Thesis — smaller than the visual, on purpose. `containerType:
+          {/* Thesis - smaller than the visual, on purpose. `containerType:
               inline-size` turns this column itself into the sizing
               reference for the headline below: the `cqw` unit in its
               font-size is a percentage of THIS column's actual resolved
-              width (post-grid, post-breakpoint), not the viewport — so the
+              width (post-grid, post-breakpoint), not the viewport - so the
               headline scales to fill exactly the space this section gives
               it at every width, instead of jumping between a few fixed
               breakpoint sizes. */}
@@ -213,7 +213,7 @@ export default function HeroSection() {
               className="flex items-center gap-2.5 mb-7"
             >
               <span className="font-brand text-[14px] font-bold tracking-[0.08em] uppercase text-[var(--text-1)]">
-                A live desk — click to explore
+                A live desk - click to explore
               </span>
             </motion.div>
 
@@ -256,12 +256,12 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Mobile — the absolute-positioned 3D depth stack below is built
+          {/* Mobile - the absolute-positioned 3D depth stack below is built
               on fixed pixel widths (320-460px) that clip against a <400px
               viewport, and the click-to-bring-forward interaction is a
               desktop hover/cursor idea anyway. Below `sm`, swap it for the
               same three windows at their real desktop size, zoomed out
-              (ScaleToFit) to the column width — same window, same text
+              (ScaleToFit) to the column width - same window, same text
               proportions, just smaller, instead of stretching them full
               width where the text stays desktop-sized and the layout
               reflows into a single tall column. */}
@@ -280,7 +280,7 @@ export default function HeroSection() {
             ))}
           </div>
 
-          {/* The window stack — hero centerpiece and signature interaction:
+          {/* The window stack - hero centerpiece and signature interaction:
               click any tile to bring it forward, like real window management. */}
           <motion.div
             initial={{ opacity: 0, y: 26 }}

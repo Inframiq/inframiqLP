@@ -10,7 +10,7 @@ export interface FaqItem {
   answer: string;
 }
 
-// FAQPage schema — mirrors the visible Q&A below exactly (same questions,
+// FAQPage schema - mirrors the visible Q&A below exactly (same questions,
 // same answers) rather than a separate hidden copy, so there's one source
 // of truth an AI/search crawler and a human visitor both see identically.
 function faqJsonLd(items: FaqItem[]) {
@@ -43,7 +43,7 @@ function FaqRow({ item, defaultOpen }: { item: FaqItem; defaultOpen: boolean }) 
       </button>
       {/* Always mounted (never conditionally rendered) so the answer text is
           present in the server-rendered HTML for every question, not just
-          the one open by default — search/AI crawlers read static markup,
+          the one open by default - search/AI crawlers read static markup,
           not post-hydration accordion state. */}
       <motion.div
         initial={false}

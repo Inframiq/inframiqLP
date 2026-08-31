@@ -1,11 +1,11 @@
 // Drives the live Simulyn pricing simulator on the homepage. Revenue follows
 // a logistic (S-curve) growth model rather than a flat rate per seat: slow
 // among small teams, steepest through the mid-market where most deals land,
-// then saturating toward a ceiling at enterprise scale — the standard shape
+// then saturating toward a ceiling at enterprise scale - the standard shape
 // for adoption-driven revenue, and one that visibly bends against a straight
 // reference line instead of reading as flat. Margin and break-even are
-// illustrative — what a founder would see for a hypothetical cost structure,
-// which is the entire premise of a pricing *simulator* — not a claim about
+// illustrative - what a founder would see for a hypothetical cost structure,
+// which is the entire premise of a pricing *simulator* - not a claim about
 // Inframiq's own finances.
 
 export const SEATS_MIN = 10;

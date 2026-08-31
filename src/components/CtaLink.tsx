@@ -24,7 +24,7 @@ function Inner({ group, className, icon }: Required<Pick<CtaLinkProps, "group">>
   );
 }
 
-// Same fallback pattern as HeadlineVariant — the control variant renders
+// Same fallback pattern as HeadlineVariant - the control variant renders
 // immediately (matching what SSR/first paint already shows), only swapping
 // once useSearchParams resolves a non-control ?<param>= on the client.
 export default function CtaLink({ group, className = "", icon }: CtaLinkProps) {

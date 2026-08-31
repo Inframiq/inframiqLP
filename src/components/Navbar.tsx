@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Package, Briefcase, Users, Mail } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import BrandMark from "@/components/BrandMark";
 
 const CTA_HREF = "/#demo";
 
@@ -59,8 +60,9 @@ export default function Navbar() {
             scrolled ? "shadow-[0_16px_40px_-16px_rgba(15,23,42,0.22)]" : "shadow-[0_10px_30px_-14px_rgba(15,23,42,0.14)]"
           }`}
         >
-          <Link href="/" className="flex items-center">
-            <span className="font-brand text-[19px] font-bold tracking-tight leading-none text-[var(--text-1)] select-none">
+          <Link href="/" className="flex items-center gap-2.5 text-[var(--text-1)]">
+            <BrandMark className="h-[26px] w-auto" />
+            <span className="font-brand text-[19px] font-bold tracking-tight leading-none select-none">
               inframIQ
             </span>
           </Link>

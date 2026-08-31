@@ -26,14 +26,39 @@ export default function OpengraphImage() {
         <div
           style={{
             display: "flex",
-            fontSize: 56,
-            fontWeight: 700,
-            color: "#ffffff",
-            letterSpacing: "-0.02em",
+            alignItems: "center",
+            gap: 20,
             marginBottom: 28,
           }}
         >
-          inframIQ
+          <svg width="60" height="84" viewBox="0 0 74 104" fill="none">
+            <circle cx="11" cy="10" r="8.5" fill="#ffffff" />
+            <path
+              d="M11 18 L11 50 C11 64 17 74 28 74 C40 74 45 66 42 54"
+              stroke="#ffffff"
+              strokeWidth="18"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M25 47 C25 34 26 26 36 26 C48 26 58 30 58 44 L58 74 C58 84 59 89 61 91"
+              stroke="#ffffff"
+              strokeWidth="18"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 56,
+              fontWeight: 700,
+              color: "#ffffff",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            inframIQ
+          </div>
         </div>
         <div
           style={{

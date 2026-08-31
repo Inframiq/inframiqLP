@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
+import BrandMark from "@/components/BrandMark";
 
 const navigateLinks = [
   { label: "Home", href: "/" },
@@ -39,7 +40,10 @@ export default function Footer() {
       >
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12">
           <motion.div variants={revealItem} className="max-w-sm">
-            <p className="font-brand text-[20px] font-bold tracking-tight text-[var(--text-1)] mb-4">inframIQ</p>
+            <p className="flex items-center gap-2.5 font-brand text-[20px] font-bold tracking-tight text-[var(--text-1)] mb-4">
+              <BrandMark className="h-[28px] w-auto" />
+              inframIQ
+            </p>
             <p className="text-[14px] text-[var(--text-2)] leading-relaxed">
               Real 24/7 support operations, alongside the security and business software Inframiq engineers to run them.
             </p>

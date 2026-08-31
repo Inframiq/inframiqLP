@@ -1,8 +1,16 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Inframiq — 24/7 Customer Support & Intelligent Software";
+
+// The 3D monogram, read off disk at render time and inlined as a data URI —
+// the light-on-dark version, since this card sits on a near-black field.
+const markSrc = `data:image/png;base64,${readFileSync(
+  join(process.cwd(), "public", "inframiq-mark-dark.png")
+).toString("base64")}`;
 
 // Root-level convention — applies to every route that doesn't define its
 // own opengraph-image, so every page gets a real preview image on social
@@ -31,23 +39,8 @@ export default function OpengraphImage() {
             marginBottom: 28,
           }}
         >
-          <svg width="60" height="84" viewBox="0 0 74 104" fill="none">
-            <circle cx="11" cy="10" r="8.5" fill="#ffffff" />
-            <path
-              d="M11 18 L11 50 C11 64 17 74 28 74 C40 74 45 66 42 54"
-              stroke="#ffffff"
-              strokeWidth="18"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M25 47 C25 34 26 26 36 26 C48 26 58 30 58 44 L58 74 C58 84 59 89 61 91"
-              stroke="#ffffff"
-              strokeWidth="18"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={markSrc} width={64} height={103} alt="" />
           <div
             style={{
               display: "flex",

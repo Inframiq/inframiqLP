@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { Home, Package, Briefcase, Users, Mail } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import BrandMark from "@/components/BrandMark";
 
 const CTA_HREF = "/#demo";
 
@@ -61,7 +61,25 @@ export default function Navbar() {
           }`}
         >
           <Link href="/" className="flex items-center gap-2.5 text-[var(--text-1)]">
-            <BrandMark className="h-[26px] w-auto" />
+            <Image
+              src="/inframiq-mark.png"
+              alt="Inframiq"
+              width={245}
+              height={393}
+              priority
+              className="brand-mark brand-mark--light h-[26px] w-auto"
+              style={{ width: "auto", height: "26px" }}
+            />
+            <Image
+              src="/inframiq-mark-dark.png"
+              alt=""
+              aria-hidden="true"
+              width={245}
+              height={393}
+              priority
+              className="brand-mark brand-mark--dark h-[26px] w-auto"
+              style={{ width: "auto", height: "26px" }}
+            />
             <span className="font-brand text-[19px] font-bold tracking-tight leading-none select-none">
               inframIQ
             </span>

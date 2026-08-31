@@ -842,3 +842,17 @@ select {
 :root[data-theme="dark"] .noise::after {
   opacity: 1;
 }
+
+/* Brand mark — the 3D monogram cut from the master logo, kept as a raster so
+   it keeps its dimensional shading. Two versions (navy for light, a light
+   version for dark) toggled on the [data-theme] set before paint in
+   layout.tsx, so the mark always has contrast against the chrome behind it. */
+.brand-mark--dark {
+  display: none;
+}
+:root[data-theme="dark"] .brand-mark--light {
+  display: none;
+}
+:root[data-theme="dark"] .brand-mark--dark {
+  display: block;
+}

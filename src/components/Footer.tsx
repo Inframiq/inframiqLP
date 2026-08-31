@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { revealContainer, revealItem } from "@/lib/motionVariants";
-import BrandMark from "@/components/BrandMark";
 
 const navigateLinks = [
   { label: "Home", href: "/" },
@@ -41,7 +41,23 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12">
           <motion.div variants={revealItem} className="max-w-sm">
             <p className="flex items-center gap-2.5 font-brand text-[20px] font-bold tracking-tight text-[var(--text-1)] mb-4">
-              <BrandMark className="h-[28px] w-auto" />
+              <Image
+                src="/inframiq-mark.png"
+                alt="Inframiq"
+                width={245}
+                height={393}
+                className="brand-mark brand-mark--light h-[28px] w-auto"
+                style={{ width: "auto", height: "28px" }}
+              />
+              <Image
+                src="/inframiq-mark-dark.png"
+                alt=""
+                aria-hidden="true"
+                width={245}
+                height={393}
+                className="brand-mark brand-mark--dark h-[28px] w-auto"
+                style={{ width: "auto", height: "28px" }}
+              />
               inframIQ
             </p>
             <p className="text-[14px] text-[var(--text-2)] leading-relaxed">

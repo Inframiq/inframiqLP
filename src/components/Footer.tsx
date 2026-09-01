@@ -101,7 +101,7 @@ export default function Footer() {
 
       <div className="border-t border-[var(--border)]">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[13px] text-[var(--text-3)]">© {new Date().getFullYear()} Inframiq Technologies, Inc.</p>
+          <p className="text-[13px] text-[var(--text-3)]">© {new Date().getFullYear()} Inframiq Solutions Pvt. Ltd.</p>
           <p className="text-[12px] text-[var(--text-3)]">
             Site last updated {new Date().toLocaleDateString(undefined, { month: "long", year: "numeric" })}
           </p>

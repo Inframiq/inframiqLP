@@ -163,7 +163,7 @@ export default function HeroSection() {
     <section
       ref={sectionRef}
       onPointerMove={handlePointerMove}
-      className="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden bg-[var(--bg)]"
+      className="relative min-h-screen flex items-center pt-28 pb-16 sm:pt-24 sm:pb-20 overflow-hidden bg-[var(--bg)]"
     >
       {/* Environmental atmosphere - the desk this hero opens on. Never empty
           white: layered light blooms, a faint blueprint grid, and slow
@@ -196,7 +196,7 @@ export default function HeroSection() {
       ))}
 
       <div className="relative z-10 w-full max-w-[1360px] mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-[0.78fr_1.22fr] gap-14 lg:gap-10 items-center">
+        <div className="grid lg:grid-cols-[0.78fr_1.22fr] gap-10 sm:gap-14 lg:gap-10 items-center">
           {/* Thesis - smaller than the visual, on purpose. `containerType:
               inline-size` turns this column itself into the sizing
               reference for the headline below: the `cqw` unit in its
@@ -210,9 +210,9 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-2.5 mb-7"
+              className="flex items-center gap-2.5 mb-5 sm:mb-7"
             >
-              <span className="font-brand text-[14px] font-bold tracking-[0.08em] uppercase text-[var(--text-1)]">
+              <span className="font-brand text-[12px] sm:text-[14px] font-bold tracking-[0.08em] uppercase text-[var(--text-1)]">
                 A live desk - click to explore
               </span>
             </motion.div>
@@ -220,7 +220,7 @@ export default function HeroSection() {
             <HeadlineVariant
               group="main"
               as="h1"
-              className={`${inter.className} font-semibold text-[clamp(3.5rem,16cqw,6.25rem)] leading-[1.03] tracking-[-0.03em] text-[var(--text-1)] mb-7`}
+              className={`${inter.className} font-semibold text-[clamp(2rem,10.5cqw,3.25rem)] lg:text-[clamp(3.5rem,16cqw,6.25rem)] leading-[1.06] lg:leading-[1.03] tracking-[-0.02em] lg:tracking-[-0.03em] text-[var(--text-1)] mb-5 sm:mb-7`}
               play={revealed}
             />
 
@@ -228,7 +228,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.18 }}
-              className="text-[15.5px] text-[var(--text-2)] leading-[1.7] max-w-[420px] mb-8"
+              className="text-[15px] sm:text-[15.5px] text-[var(--text-2)] leading-[1.7] max-w-[420px] mb-7 sm:mb-8"
             >
               Inframiq runs 24/7 voice and chat operations for your customers,
               and engineers the security and business software your company
@@ -240,7 +240,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.26 }}
-              className="flex flex-wrap items-center gap-8"
+              className="flex flex-wrap items-center gap-x-8 gap-y-4"
             >
               <CtaLink
                 group="main"
@@ -275,7 +275,10 @@ export default function HeroSection() {
                 className="rounded-xl overflow-hidden"
                 style={{ boxShadow: "0 30px 60px -28px rgba(15,23,42,0.28)" }}
               >
-                <ScaleToFit width={w.width}>{w.node}</ScaleToFit>
+                {/* Cap the natural width on phones so ScaleToFit isn't zooming
+                    a 460px window down to ~0.75 (which drops its text under
+                    11px) - a narrower target keeps the scale near 1:1. */}
+                <ScaleToFit width={Math.min(w.width, 360)}>{w.node}</ScaleToFit>
               </motion.div>
             ))}
           </div>

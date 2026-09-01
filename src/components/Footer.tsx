@@ -36,9 +36,9 @@ export default function Footer() {
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }}
         variants={revealContainer}
-        className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16"
+        className="max-w-[1400px] mx-auto px-6 lg:px-12 py-12 sm:py-16"
       >
-        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-10 sm:gap-12">
           <motion.div variants={revealItem} className="max-w-sm">
             <p className="flex items-center gap-2.5 font-brand text-[20px] font-bold tracking-tight text-[var(--text-1)] mb-4">
               <Image
@@ -65,7 +65,8 @@ export default function Footer() {
             </p>
           </motion.div>
 
-          <motion.div variants={revealItem} className="flex gap-16">
+          <motion.div variants={revealItem} className="grid grid-cols-2 gap-x-8 gap-y-10 sm:flex sm:gap-16">
+
             <div>
               <p className="font-mono text-[11px] uppercase tracking-wide text-[var(--text-3)] mb-4">Navigate</p>
               <ul className="space-y-3">

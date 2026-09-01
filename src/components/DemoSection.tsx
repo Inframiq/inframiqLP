@@ -75,16 +75,18 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
     setSubmitted(true);
   };
 
+  // 16px on mobile is deliberate - anything smaller makes iOS Safari
+  // zoom the viewport in when the field is focused.
   const inputClass =
-    "w-full h-10 bg-[var(--lw-surface)] border border-[var(--lw-border-strong)] rounded-md px-3 text-[13.5px] text-[var(--lw-text-1)] placeholder-[var(--lw-text-3)] focus:border-[var(--lw-accent)]/60 transition-all duration-150";
+    "w-full h-11 sm:h-10 bg-[var(--lw-surface)] border border-[var(--lw-border-strong)] rounded-md px-3 text-[16px] sm:text-[13.5px] text-[var(--lw-text-1)] placeholder-[var(--lw-text-3)] focus:border-[var(--lw-accent)]/60 transition-all duration-150";
 
   return (
     <section
       id="demo"
       className={
         standalone
-          ? "relative overflow-hidden pt-12 pb-28 lg:pb-36"
-          : "relative overflow-hidden py-28 lg:py-36 border-t border-[var(--border)]"
+          ? "relative overflow-hidden pt-10 pb-20 sm:pb-24 lg:pb-36"
+          : "relative overflow-hidden py-16 sm:py-20 lg:py-36 border-t border-[var(--border)]"
       }
     >
       <SectionAurora />
@@ -94,10 +96,10 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={revealContainer}
-          className="text-center mb-10"
+          className="text-center mb-8 sm:mb-10"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Get started</motion.p>
-          <motion.h2 variants={revealItem} className="font-brand text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)] mb-6">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-3 sm:mb-4">Get started</motion.p>
+          <motion.h2 variants={revealItem} className="font-brand text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)] mb-5 sm:mb-6">
             Let&apos;s talk about <span className="italic text-[var(--accent-strong)]">your support line.</span>
           </motion.h2>
           <motion.div variants={revealItem} className="flex flex-wrap justify-center gap-x-5 gap-y-2">
@@ -233,7 +235,7 @@ export default function DemoSection({ standalone = false }: DemoSectionProps) {
 
                     <button
                       type="submit"
-                      className="w-full h-10 rounded-md text-white text-[13.5px] font-medium active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 mt-1"
+                      className="w-full h-11 sm:h-10 rounded-md text-white text-[14px] sm:text-[13.5px] font-medium active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 mt-1"
                       style={{ backgroundColor: "var(--lw-accent)" }}
                     >
                       Submit Request

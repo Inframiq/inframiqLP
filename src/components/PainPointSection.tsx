@@ -66,24 +66,24 @@ function Card({ product, card, position }: { product: string; card: PainPointCar
 
 export default function PainPointSection() {
   return (
-    <section id="pain-points" className="relative py-24 lg:py-32 border-t border-[var(--border)]">
+    <section id="pain-points" className="relative py-16 sm:py-20 lg:py-32 border-t border-[var(--border)]">
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={revealContainer}
-          className="mb-14 max-w-xl"
+          className="mb-10 sm:mb-14 max-w-xl"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-3 sm:mb-4">
             Before / after
           </motion.p>
-          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             What these products actually solve.
           </motion.h2>
         </motion.div>
 
-        <div className="space-y-14">
+        <div className="space-y-10 sm:space-y-14">
           {groups.map((group) => {
             const Icon = group.icon;
             return (

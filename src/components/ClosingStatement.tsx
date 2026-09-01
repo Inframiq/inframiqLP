@@ -50,7 +50,7 @@ export default function ClosingStatement() {
   const statusRowDelay = cursor + 0.2;
 
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32 border-t border-[var(--border)] bg-[var(--bg-raised)]">
+    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-32 border-t border-[var(--border)] bg-[var(--bg-raised)]">
       <SectionAurora />
       <div className="relative max-w-[640px] mx-auto px-6">
         <motion.div
@@ -66,7 +66,7 @@ export default function ClosingStatement() {
             <span className="w-2 h-2 rounded-full bg-white/15" />
             <span className="ml-2 text-[11px] font-mono tracking-[0.03em] text-white/55">where this is going</span>
           </div>
-          <div className="p-6 lg:p-8 font-mono text-[13px] leading-[1.9]">
+          <div className="p-5 sm:p-6 lg:p-8 font-mono text-[12px] sm:text-[13px] leading-[1.9]">
             {lines.map((line, i) => (
               <motion.p
                 key={i}

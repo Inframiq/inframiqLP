@@ -267,7 +267,7 @@ export default function TheCrew() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32">
+    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-32">
       <SectionAurora />
       <div className="relative max-w-5xl mx-auto px-6 lg:px-10">
         <motion.div
@@ -275,10 +275,10 @@ export default function TheCrew() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={revealContainer}
-          className="mb-12 max-w-xl"
+          className="mb-10 sm:mb-12 max-w-xl"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">Team</motion.p>
-          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-3 sm:mb-4">Team</motion.p>
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             The people behind Inframiq.
           </motion.h2>
         </motion.div>

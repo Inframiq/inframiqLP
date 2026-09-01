@@ -65,7 +65,7 @@ interface FaqSectionProps {
 
 export default function FaqSection({ items, eyebrow = "FAQ", heading = "Frequently asked questions" }: FaqSectionProps) {
   return (
-    <section className="py-20 border-t border-[var(--border)]">
+    <section className="py-14 sm:py-20 border-t border-[var(--border)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(items)) }} />
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
         <motion.div
@@ -73,12 +73,12 @@ export default function FaqSection({ items, eyebrow = "FAQ", heading = "Frequent
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={revealContainer}
-          className="mb-10"
+          className="mb-8 sm:mb-10"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] uppercase mb-3 sm:mb-4">
             {eyebrow}
           </motion.p>
-          <motion.h2 variants={revealItem} className="font-brand text-[28px] lg:text-[32px] font-semibold tracking-[-0.02em] text-[var(--text-1)]">
+          <motion.h2 variants={revealItem} className="font-brand text-[24px] sm:text-[28px] lg:text-[32px] font-semibold tracking-[-0.02em] text-[var(--text-1)]">
             {heading}
           </motion.h2>
         </motion.div>

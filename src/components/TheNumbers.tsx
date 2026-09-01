@@ -24,7 +24,7 @@ const instruments = [
 // static row of tiles.
 export default function TheNumbers() {
   return (
-    <section id="about" className="relative overflow-hidden py-24 lg:py-32 border-t border-[var(--border)]">
+    <section id="about" className="relative overflow-hidden py-16 sm:py-20 lg:py-32 border-t border-[var(--border)]">
       <SectionAurora />
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         <motion.div
@@ -32,12 +32,12 @@ export default function TheNumbers() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={revealContainer}
-          className="mb-14"
+          className="mb-10 sm:mb-14"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--text-3)] uppercase mb-3 sm:mb-4">
             An early-stage company
           </motion.p>
-          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Built like it isn&apos;t.
           </motion.h2>
         </motion.div>
@@ -47,7 +47,7 @@ export default function TheNumbers() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="instrument-console mb-14 text-left"
+          className="instrument-console mb-12 sm:mb-14 text-left"
         >
           {/* Sweeping light - plays once on scroll-in, then loops slowly so
               the panel keeps reading as brushed metal, not a flat gradient. */}
@@ -96,12 +96,12 @@ export default function TheNumbers() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="text-[13.5px] text-[var(--text-2)] max-w-[480px] mx-auto mb-16"
+          className="text-[13.5px] text-[var(--text-2)] max-w-[480px] mx-auto mb-12 sm:mb-16"
         >
           We&apos;d rather show you exactly where we are than round up.
         </motion.p>
 
-        <div className="mt-14">
+        <div className="mt-10 sm:mt-14">
           {/* Signal rail - nodes live inside the same 3-col grid as the
               cards below, so each one is guaranteed to sit centered above
               its own card (grid alignment, not a guessed percentage) rather

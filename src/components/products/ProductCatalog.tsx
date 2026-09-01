@@ -155,7 +155,36 @@ const DIAGRAM_NODES = [
 
 function ProductsConstellation() {
   return (
-    <div className="relative w-full max-w-[420px] mx-auto aspect-[4/3]">
+    <>
+      {/* Phones: the absolute-positioned node cards below overlap and clip
+          the screen edges under ~430px, so swap the wired diagram for a
+          plain labelled stack of the same nodes. */}
+      <div className="sm:hidden">
+        <div className="mx-auto w-fit rounded-full border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-1 mb-3">
+          <span className="font-mono text-[9px] uppercase tracking-[0.06em] text-[var(--text-3)]">inframiq</span>
+        </div>
+        <div className="grid grid-cols-1 gap-2.5">
+          {products.map((p) => {
+            const Icon = p.categoryIcon;
+            return (
+              <div
+                key={p.slug}
+                className="flex items-center gap-3 rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-3"
+              >
+                <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-md bg-[var(--accent-dim)]">
+                  <Icon size={16} className="text-[var(--accent)]" />
+                </span>
+                <div className="min-w-0">
+                  <p className="font-mono text-[12px] text-[var(--text-1)] truncate">{p.name}</p>
+                  <p className="text-[10px] text-[var(--text-3)] truncate">{p.category}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="relative hidden sm:block w-full max-w-[420px] mx-auto aspect-[4/3]">
       <svg viewBox="0 0 400 300" className="absolute inset-0 w-full h-full" fill="none">
         {products.map((p, i) => (
           <path
@@ -223,7 +252,8 @@ function ProductsConstellation() {
           </motion.div>
         );
       })}
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -259,7 +289,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
         </span>
       </div>
 
-      <h2 className="font-brand text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-3">
+      <h2 className="font-brand text-[24px] sm:text-[30px] lg:text-[34px] font-semibold text-[var(--text-1)] tracking-[-0.02em] leading-tight mb-3">
         {product.name}
       </h2>
       {product.headlineGroup ? (
@@ -273,7 +303,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
       )}
       <p className="text-[13.5px] text-[var(--text-2)] leading-[1.75] mb-7 max-w-md">{product.description}</p>
 
-      <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
+      <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 mb-7 sm:mb-8">
         {product.features.slice(0, 6).map((f) => (
           <li key={f} className="flex items-start gap-2.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-[6px] flex-shrink-0" />
@@ -282,7 +312,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
         ))}
       </ul>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         {product.externalUrl ? (
           <a
             href={product.externalUrl}
@@ -326,15 +356,15 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8">
+    <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-6 sm:py-8">
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.55 }}
-        className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 lg:p-12 overflow-hidden"
+        className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-8 lg:p-12 overflow-hidden"
       >
-        <div className={`relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
+        <div className={`relative grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center ${!visualLeft ? "lg:[&>*:first-child]:order-last" : ""}`}>
           {visualLeft ? (
             <>
               {visual}
@@ -359,17 +389,17 @@ export default function ProductCatalog() {
   return (
     <>
       {/* Page header */}
-      <section className="relative bg-[var(--bg)] pt-[110px] pb-16 overflow-hidden">
+      <section className="relative bg-[var(--bg)] pt-[100px] pb-12 sm:pt-[110px] sm:pb-16 overflow-hidden">
         <AuroraGrain />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 sm:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="flex items-center gap-2 mb-8 text-[12px] text-[var(--text-3)]">
+              <div className="flex items-center gap-2 mb-6 sm:mb-8 text-[12px] text-[var(--text-3)]">
                 <Link href="/" className="hover:text-[var(--text-2)] transition-colors">
                   Inframiq
                 </Link>
@@ -377,9 +407,9 @@ export default function ProductCatalog() {
                 <span className="text-[var(--text-2)]">Products</span>
               </div>
 
-              <p className="font-brand text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">product suite</p>
+              <p className="font-brand text-[12px] sm:text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4 sm:mb-5">product suite</p>
 
-              <h1 className={`${inter.className} font-semibold text-[38px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-4`}>
+              <h1 className={`${inter.className} font-semibold text-[28px] sm:text-[38px] lg:text-[48px] leading-[1.12] sm:leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-4`}>
                 <KineticText as="span" text="Every problem," play={revealed} />
                 <br />
                 <KineticText as="span" text="engineered to an exacting standard." className="text-[var(--text-1)]" play={revealed} />

@@ -10,7 +10,7 @@ import { revealContainer, revealItem } from "@/lib/motionVariants";
 
 export default function ProductsShowcase() {
   return (
-    <section id="products" className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="products" className="relative py-16 sm:py-20 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 ambient-glow pointer-events-none" style={{ "--glow-x": "20%", "--glow-y": "0%" } as React.CSSProperties} />
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-70" style={{ "--glow-x": "85%", "--glow-y": "100%" } as React.CSSProperties} />
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
@@ -19,17 +19,17 @@ export default function ProductsShowcase() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={revealContainer}
-          className="mb-12 max-w-xl"
+          className="mb-10 sm:mb-12 max-w-xl"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-3 sm:mb-4">
             System 02 - Engineering
           </motion.p>
-          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Three products. Built to one standard.
           </motion.h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ export default function ProductsShowcase() {
             className="h-full flex flex-col"
           >
             <CareerCopilotWindow className="flex-1" />
-            <div className="flex items-center justify-between mt-4 px-1">
+            <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Land your dream job with AI.</p>
               <a
                 href="https://resumebuilder.inframiq.com"
@@ -62,7 +62,7 @@ export default function ProductsShowcase() {
             className="h-full flex flex-col"
           >
             <SimulynWindow className="flex-1" />
-            <div className="flex items-center justify-between mt-4 px-1">
+            <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Know your numbers before you set your price.</p>
               <CtaLink
                 group="simulyn"
@@ -81,7 +81,7 @@ export default function ProductsShowcase() {
             className="h-full flex flex-col"
           >
             <MailShieldWindow className="flex-1" />
-            <div className="flex items-center justify-between mt-4 px-1">
+            <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between mt-4 px-1">
               <p className="text-[12.5px] text-[var(--text-3)]">Scans every email the moment it&apos;s opened.</p>
               <CtaLink
                 group="mail-shield"

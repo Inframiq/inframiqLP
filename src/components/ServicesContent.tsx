@@ -360,7 +360,31 @@ const SERVICES_NODES = [
 
 function ServicesConstellation() {
   return (
-    <div className="relative w-full max-w-[420px] mx-auto aspect-[5/4]">
+    <>
+      {/* Phones: the pentagon of absolutely-placed node cards below clips the
+          screen edges under ~430px, so show the five service lines as a
+          plain grid tied to the same core label. */}
+      <div className="sm:hidden">
+        <div className="mx-auto w-fit rounded-full border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-1 mb-3">
+          <span className="font-mono text-[9px] uppercase tracking-[0.04em] text-[var(--text-3)]">inframiq</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2.5">
+          {services.map((s) => {
+            const Icon = s.icon;
+            return (
+              <div
+                key={s.tag}
+                className="flex items-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-2.5"
+              >
+                <Icon size={14} className="text-[var(--accent)] flex-shrink-0" />
+                <p className="font-mono text-[10px] text-[var(--text-1)] leading-tight">{s.title}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="relative hidden sm:block w-full max-w-[420px] mx-auto aspect-[5/4]">
       <svg viewBox="0 0 400 320" className="absolute inset-0 w-full h-full" fill="none">
         {services.map((s, i) => (
           <path
@@ -427,7 +451,8 @@ function ServicesConstellation() {
           </motion.div>
         );
       })}
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -436,28 +461,28 @@ export default function ServicesContent() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-[var(--bg)] pt-[110px] pb-16 overflow-hidden">
+      <section className="relative bg-[var(--bg)] pt-[100px] pb-12 sm:pt-[110px] sm:pb-16 overflow-hidden">
         <AuroraGrain />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-center">
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-10 sm:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <div className="flex items-center gap-2 mb-8 text-[12px] text-[var(--text-3)]">
+              <div className="flex items-center gap-2 mb-6 sm:mb-8 text-[12px] text-[var(--text-3)]">
                 <Link href="/" className="hover:text-[var(--text-2)] transition-colors">Inframiq</Link>
                 <span>/</span>
                 <span className="text-[var(--text-2)]">Services</span>
               </div>
 
-              <p className="font-brand text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">human-staffed, 24/7</p>
+              <p className="font-brand text-[12px] sm:text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4 sm:mb-5">human-staffed, 24/7</p>
 
               <HeadlineVariant
                 group="services"
                 as="h1"
-                className={`${inter.className} font-semibold text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-6 max-w-2xl`}
+                className={`${inter.className} font-semibold text-[27px] sm:text-[36px] lg:text-[44px] leading-[1.12] sm:leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-5 sm:mb-6 max-w-2xl`}
                 play={revealed}
               />
 
-              <p className="text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
+              <p className="text-[15px] sm:text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
                 Inframiq operates as your customer service team - deploying trained
                 agents for voice and chat support, staffed 24/7 to handle enquiries
                 and technical issues as they come in.
@@ -472,16 +497,16 @@ export default function ServicesContent() {
       </section>
 
       {/* Services - each with a real light dashboard window */}
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="space-y-16 lg:space-y-24">
+          <div className="space-y-12 sm:space-y-16 lg:space-y-24">
             {services.map((service, i) => {
               const Icon = service.icon;
               const flip = i % 2 === 1;
               return (
                 <div
                   key={service.title}
-                  className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${flip ? "lg:[&>*:first-child]:order-last" : ""}`}
+                  className={`grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center ${flip ? "lg:[&>*:first-child]:order-last" : ""}`}
                 >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -493,7 +518,7 @@ export default function ServicesContent() {
                       <Icon size={14} />
                       {service.tag}
                     </span>
-                    <h3 className="text-[24px] font-semibold text-[var(--text-1)] tracking-[-0.02em] mb-3">{service.title}</h3>
+                    <h3 className="text-[21px] sm:text-[24px] font-semibold text-[var(--text-1)] tracking-[-0.02em] mb-3">{service.title}</h3>
                     <p className="text-[14.5px] text-[var(--text-2)] leading-[1.75] mb-5 max-w-md">{service.description}</p>
                     <ul className="space-y-2">
                       {service.points.map((point) => (
@@ -521,12 +546,12 @@ export default function ServicesContent() {
       </section>
 
       {/* Why human agents */}
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">how we work</p>
-              <h2 className="font-brand text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-5 leading-tight">
+              <p className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">how we work</p>
+              <h2 className="font-brand text-[25px] sm:text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-5 leading-tight">
                 People on the line,
                 <br />
                 not a script.
@@ -572,14 +597,14 @@ export default function ServicesContent() {
       <FaqSection items={servicesFaq} eyebrow="Questions" heading="Frequently asked questions" />
 
       {/* CTA */}
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="window-chrome p-10 lg:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-8"
+            className="window-chrome p-6 sm:p-10 lg:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8"
           >
             <div>
               <h2 className="font-brand text-[24px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-2.5">

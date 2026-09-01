@@ -109,13 +109,13 @@ function SignalDiagram() {
         return (
           <div
             key={c.key}
-            className="absolute -translate-y-1/2 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-2.5 pr-3.5 py-2 shadow-[0_8px_24px_-16px_rgba(15,23,42,0.3)]"
+            className="absolute -translate-y-1/2 flex items-center gap-1.5 sm:gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-2 pr-2.5 sm:pl-2.5 sm:pr-3.5 py-1.5 sm:py-2 shadow-[0_8px_24px_-16px_rgba(15,23,42,0.3)]"
             style={{ left: 0, top: `${(c.y / 260) * 100}%` }}
           >
-            <span className="w-6 h-6 rounded-md flex items-center justify-center bg-[var(--accent-dim)]">
+            <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center bg-[var(--accent-dim)]">
               <Icon size={12} className="text-[var(--accent)]" />
             </span>
-            <span className="font-mono text-[11px] text-[var(--text-2)]">{c.label}</span>
+            <span className="font-mono text-[10px] sm:text-[11px] text-[var(--text-2)]">{c.label}</span>
           </div>
         );
       })}
@@ -131,8 +131,8 @@ function SignalDiagram() {
 
       {/* Resolved counter */}
       <div className="absolute -translate-y-1/2 text-right" style={{ right: 0, top: `${(DESK.y / 260) * 100}%` }}>
-        <p className="font-mono text-[18px] text-[var(--text-1)] tabular-nums leading-none">{resolved.toLocaleString()}</p>
-        <p className="font-mono text-[8.5px] uppercase tracking-wide text-[var(--text-3)] mt-1">resolved today</p>
+        <p className="font-mono text-[15px] sm:text-[18px] text-[var(--text-1)] tabular-nums leading-none">{resolved.toLocaleString()}</p>
+        <p className="font-mono text-[8px] sm:text-[8.5px] uppercase tracking-wide text-[var(--text-3)] mt-1">resolved today</p>
       </div>
     </div>
   );
@@ -140,7 +140,7 @@ function SignalDiagram() {
 
 export default function TheSplit() {
   return (
-    <section id="systems" className="relative border-t border-[var(--border)] py-24 lg:pt-32 lg:pb-16 overflow-hidden">
+    <section id="systems" className="relative border-t border-[var(--border)] py-16 sm:py-20 lg:pt-32 lg:pb-16 overflow-hidden">
       <div className="absolute inset-0 ambient-glow pointer-events-none opacity-80" style={{ "--glow-x": "90%", "--glow-y": "0%" } as React.CSSProperties} />
       <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
         <motion.div
@@ -148,12 +148,12 @@ export default function TheSplit() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={revealContainer}
-          className="mb-12 max-w-xl"
+          className="mb-10 sm:mb-12 max-w-xl"
         >
-          <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-4">
+          <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--trace)] uppercase mb-3 sm:mb-4">
             System 01 - Operations
           </motion.p>
-          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+          <motion.h2 variants={revealItem} className="font-brand font-semibold text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
             Real people, running a real shift.
           </motion.h2>
         </motion.div>
@@ -163,9 +163,9 @@ export default function TheSplit() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center"
+          className="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 sm:gap-12 lg:gap-16 items-center"
         >
-          <div className="pl-4 sm:pl-0">
+          <div className="-mx-2 sm:mx-0">
             <SignalDiagram />
           </div>
 

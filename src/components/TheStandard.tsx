@@ -74,7 +74,7 @@ export default function TheStandard() {
   };
 
   return (
-    <section id="solutions" className="py-24 lg:pt-16 lg:pb-0">
+    <section id="solutions" className="py-16 sm:py-20 lg:pt-16 lg:pb-0">
       {/* Tall scroll track, desktop-with-a-mouse only (pinEnabled). Header
           and card are pinned together as one unit - as the user scrolls
           through the track, the card below cycles through all 6 pillars
@@ -93,10 +93,10 @@ export default function TheStandard() {
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
               variants={revealContainer}
-              className="mb-14 max-w-xl"
+              className="mb-10 sm:mb-14 max-w-xl"
             >
-              <motion.p variants={revealItem} className="font-brand text-[13px] font-bold tracking-[0.08em] text-[var(--accent-strong)] mb-4">Why InframIQ?</motion.p>
-              <motion.h2 variants={revealItem} className="font-brand font-semibold text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
+              <motion.p variants={revealItem} className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.08em] text-[var(--accent-strong)] mb-3 sm:mb-4">Why InframIQ?</motion.p>
+              <motion.h2 variants={revealItem} className="font-brand font-semibold text-[25px] sm:text-[30px] lg:text-[36px] leading-[1.15] text-[var(--text-1)]">
                 Every product, built to the same standard.
               </motion.h2>
             </motion.div>
@@ -109,7 +109,7 @@ export default function TheStandard() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5 }}
-                className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-10 lg:p-14 overflow-hidden"
+                className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-10 lg:p-14 overflow-hidden"
               >
                 <div className="pillar-glow" aria-hidden>
                   <span className="pillar-glow-blob pillar-glow-blob-1" />
@@ -128,23 +128,23 @@ export default function TheStandard() {
                     <span className="font-mono text-[11px] tracking-[0.06em] text-[var(--accent)] uppercase">
                       0{active + 1} / 06 - {pillars[active].tag}
                     </span>
-                    <h3 className="font-brand font-semibold text-[26px] lg:text-[30px] text-[var(--text-1)] mt-3 mb-4">
+                    <h3 className="font-brand font-semibold text-[22px] sm:text-[26px] lg:text-[30px] text-[var(--text-1)] mt-3 mb-4">
                       {pillars[active].title}
                     </h3>
-                    <p className="text-[15px] text-[var(--text-2)] leading-[1.8] max-w-lg">
+                    <p className="text-[14.5px] sm:text-[15px] text-[var(--text-2)] leading-[1.8] max-w-lg">
                       {pillars[active].description}
                     </p>
                   </motion.div>
                 </AnimatePresence>
               </motion.div>
 
-              <div className="flex items-center gap-3 mt-6">
+              <div className="flex flex-wrap items-center gap-3 mt-6">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-40px" }}
                   variants={pillContainer}
-                  className="inline-flex flex-wrap gap-1 rounded-full bg-[var(--surface-2)] p-1"
+                  className="inline-flex flex-wrap gap-1 rounded-2xl sm:rounded-full bg-[var(--surface-2)] p-1"
                 >
                   {pillars.map((p, i) => {
                     const isActive = active === i;

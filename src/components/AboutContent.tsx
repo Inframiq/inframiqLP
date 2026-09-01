@@ -76,7 +76,7 @@ function ManifestoWindow() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="p-8 lg:p-10"
+            className="p-6 sm:p-8 lg:p-10"
           >
             <div className="flex items-center gap-2 mb-5">
               <Icon size={15} className="text-[var(--accent)]" strokeWidth={1.75} />
@@ -144,7 +144,7 @@ function PrinciplesDiagram() {
         })}
       </motion.div>
 
-      <div className="relative rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 lg:p-10 overflow-hidden">
+      <div className="relative rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8 lg:p-10 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -180,7 +180,28 @@ const ARCH_CENTER = { x: 200, y: 160 };
 
 function ArchitectureDiagram() {
   return (
-    <div className="relative w-full aspect-[4/3]">
+    <>
+      {/* Phones: the absolutely-placed corner nodes below overlap the core
+          and clip the viewport edges, so show the same four subsystems as a
+          plain grid instead of the wired diagram. */}
+      <div className="sm:hidden">
+        <div className="mx-auto w-fit rounded-full border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-1 mb-3">
+          <span className="font-mono text-[9px] uppercase tracking-[0.04em] text-[var(--text-3)]">core</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2.5">
+          {archNodes.map((n) => (
+            <div
+              key={n.key}
+              className="rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-3 py-2.5 text-center"
+            >
+              <p className="font-mono text-[10px] text-[var(--accent-strong)] mb-1">{n.label}</p>
+              <p className="text-[9.5px] text-[var(--text-3)]">{n.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative hidden sm:block w-full aspect-[4/3]">
       <svg viewBox="0 0 400 320" className="absolute inset-0 w-full h-full" fill="none">
         {archNodes.map((n) => (
           <path
@@ -245,7 +266,8 @@ function ArchitectureDiagram() {
           </div>
         </motion.div>
       ))}
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -254,27 +276,27 @@ export default function AboutContent() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-[var(--bg)] pt-[110px] pb-16 overflow-hidden">
+      <section className="relative bg-[var(--bg)] pt-[100px] pb-12 sm:pt-[110px] sm:pb-16 overflow-hidden">
         <AuroraGrain />
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 sm:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <div className="flex items-center gap-2 mb-8 text-[12px] text-[var(--text-3)]">
+              <div className="flex items-center gap-2 mb-6 sm:mb-8 text-[12px] text-[var(--text-3)]">
                 <Link href="/" className="hover:text-[var(--text-2)] transition-colors">Inframiq</Link>
                 <span>/</span>
                 <span className="text-[var(--text-2)]">About</span>
               </div>
 
-              <p className="font-brand text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-5">about inframiq</p>
+              <p className="font-brand text-[12px] sm:text-[14px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4 sm:mb-5">about inframiq</p>
 
-              <h1 className={`${inter.className} font-semibold text-[38px] lg:text-[48px] leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-6 max-w-2xl`}>
+              <h1 className={`${inter.className} font-semibold text-[28px] sm:text-[38px] lg:text-[48px] leading-[1.12] sm:leading-[1.1] tracking-[-0.02em] text-[var(--text-1)] mb-5 sm:mb-6 max-w-2xl`}>
                 <KineticText as="span" text="Built for people" play={revealed} />
                 <br />
                 <KineticText as="span" text="who expect things to just work." className="text-[var(--text-1)]" play={revealed} />
               </h1>
 
-              <p className="text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
+              <p className="text-[15px] sm:text-[16px] text-[var(--text-2)] leading-[1.8] max-w-xl">
                 Inframiq engineers intelligent software with uncompromising
                 precision - from enterprise-grade security infrastructure to
                 the refined, everyday tools businesses and individuals rely on.
@@ -290,7 +312,7 @@ export default function AboutContent() {
       </section>
 
       {/* Vision & Mission */}
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -304,17 +326,17 @@ export default function AboutContent() {
       </section>
 
       {/* Values - radial diagram */}
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="max-w-xl mb-14"
+            className="max-w-xl mb-10 sm:mb-14"
           >
-            <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4">how we work</p>
-            <h2 className="font-brand text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)]">
+            <p className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4">how we work</p>
+            <h2 className="font-brand text-[25px] sm:text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)]">
               Our operating principles
             </h2>
           </motion.div>
@@ -324,12 +346,12 @@ export default function AboutContent() {
       </section>
 
       {/* Timeline - rendered as a changelog window */}
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <p className="font-brand text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4">company</p>
-              <h2 className="font-brand text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-5">
+              <p className="font-brand text-[12px] sm:text-[13px] font-bold tracking-[0.04em] text-[var(--accent-strong)] mb-4">company</p>
+              <h2 className="font-brand text-[25px] sm:text-[30px] font-semibold tracking-[-0.02em] text-[var(--text-1)] mb-5">
                 Where we are today
               </h2>
               <p className="text-[14px] text-[var(--text-2)] leading-[1.8]">
@@ -357,7 +379,7 @@ export default function AboutContent() {
               </div>
               <div className="divide-y divide-[var(--border)]">
                 {timeline.map((item) => (
-                  <div key={item.hash} className="flex gap-4 px-6 py-5">
+                  <div key={item.hash} className="flex gap-4 px-5 sm:px-6 py-4 sm:py-5">
                     <span className="font-mono text-[11px] text-[var(--trace)] flex-shrink-0 pt-[1px]">{item.hash}</span>
                     <div>
                       <p className="font-mono text-[11px] text-[var(--accent-strong)] mb-1">{item.label.toLowerCase()}</p>

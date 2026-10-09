@@ -39,7 +39,7 @@ const teamJsonLd = {
     item: {
       "@type": "Person",
       name: member.name,
-      jobTitle: member.role,
+      jobTitle: member.role.replace(/\n/g, " "),
       worksFor: { "@type": "Organization", name: "Inframiq", url: SITE_URL },
       url: `${SITE_URL}/about`,
     },

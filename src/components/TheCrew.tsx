@@ -53,14 +53,14 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
   const bars = barcodeHeights(name, 22);
 
   return (
-    <div style={{ perspective: 900 }}>
+    <div className="h-full" style={{ perspective: 900 }}>
       <motion.div
         ref={ref}
         onPointerMove={handlePointerMove}
         onPointerLeave={() => setTilt({ x: 0, y: 0 })}
         animate={{ rotateX: tilt.x, rotateY: tilt.y }}
         transition={{ type: "spring", stiffness: 150, damping: 15 }}
-        className="relative w-full rounded-[28px] overflow-hidden"
+        className="relative w-full h-full flex flex-col rounded-[28px] overflow-hidden"
         style={{
           background: "linear-gradient(160deg, var(--accent-dim), var(--surface))",
           border: "1px solid var(--border)",
@@ -81,7 +81,7 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
           }}
         />
 
-        <div className="relative p-5">
+        <div className="relative p-5 flex-1 flex flex-col">
           <div className="flex items-start justify-between mb-5">
             <div
               className="w-7 h-5 rounded-[6px]"
@@ -118,9 +118,14 @@ function CredentialBadge({ name, role, employeeId }: { name: string; role: strin
           </div>
 
           <p className="text-[15px] text-[var(--text-1)] mb-1 truncate">{name}</p>
-          <p className="font-mono text-[10px] text-[var(--accent-strong)] uppercase tracking-[0.02em] truncate mb-4">{role}</p>
+          {/* A "\n" in a role splits it across lines; each line still truncates. */}
+          <div className="font-mono text-[10px] text-[var(--accent-strong)] uppercase tracking-[0.02em] mb-4">
+            {role.split("\n").map((line) => (
+              <p key={line} className="truncate">{line}</p>
+            ))}
+          </div>
 
-          <div className="flex items-end gap-[2px] h-5" aria-hidden>
+          <div className="flex items-end gap-[2px] h-5 mt-auto" aria-hidden>
             {bars.map((h, i) => (
               <span key={i} style={{ height: `${h}%` }} className="w-[2px] flex-1 rounded-full bg-[var(--text-3)] opacity-40" />
             ))}

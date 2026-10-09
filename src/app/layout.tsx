@@ -86,7 +86,7 @@ const organizationJsonLd = {
   employee: team.map((member) => ({
     "@type": "Person",
     name: member.name,
-    jobTitle: member.role,
+    jobTitle: member.role.replace(/\n/g, " "),
     worksFor: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
   })),
   makesOffer: [

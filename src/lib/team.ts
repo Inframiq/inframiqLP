@@ -23,4 +23,5 @@ export const team: TeamMember[] = [
   { name: "Mounika", role: "Service Desk Lead", employeeId: "2607006" },
   { name: "Hemanth", role: "Devops Engineer", employeeId: "2607007" },
   { name: "Harsha Reddi", role: "Technical Member", employeeId: "2607008" },
+  { name: "Sanjita Chitrothu", role: "Technical Member", employeeId: "2610002" },
 ];
